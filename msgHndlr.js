@@ -784,7 +784,7 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, listChannel, id)
             break
         case 'jadwaltv':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *!jadwalTv [channel]*', id)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *jadwalTv [channel]*', id)
             const query = body.slice(9).toLowerCase()
             const jadwal = await jadwalTv(query)
             client.reply(from, jadwal, id)
@@ -830,7 +830,8 @@ module.exports = msgHandler = async (client, message) => {
                 }
                 client.sendFileFromUrl(from, hentai, `Hentai${ext}`, 'Hentai!', id)
             }
-        case '!randomnsfwneko':
+        case 'randomnsfwneko':
+        case 'random nsfwneko':
             if (isGroupMsg) {
                 if (!isNsfw) return client.reply(from, 'Command/Perintah NSFW belum di aktifkan di group ini!', id)
                 const nsfwneko = await randomNimek('nsfw')
@@ -850,7 +851,8 @@ module.exports = msgHandler = async (client, message) => {
                 client.sendFileFromUrl(from, nsfwneko, `nsfwNeko${ext}`, 'Nsfwneko!', id)
             }
             break
-        case '!randomnekonime':
+        case 'randomnekonime':
+        case 'randomne konime':
             const nekonime = await get.get('https://mhankbarbar.herokuapp.com/api/nekonime').json()
             if (nekonime.result.endsWith('.png')) {
                 var ext = '.png'
@@ -859,7 +861,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             client.sendFileFromUrl(from, nekonime.result, `Nekonime${ext}`, 'Nekonime!', id)
             break
-        case '!randomtrapnime':
+        case 'randomtrapnime':
+        case 'random trapnime':
             const trap = await randomNimek('trap')
             if (trap.endsWith('.png')) {
                 var ext = '.png'
@@ -868,7 +871,9 @@ module.exports = msgHandler = async (client, message) => {
             }
             client.sendFileFromUrl(from, trap, `trapnime${ext}`, 'Trapnime!', id)
             break
-        case '!randomanime':
+
+        case 'randomanime':
+        case 'random anime':
             const nime = await randomNimek('anime')
             if (nime.endsWith('.png')) {
                 var ext = '.png'
@@ -891,7 +896,7 @@ module.exports = msgHandler = async (client, message) => {
             q7 = Math.floor(Math.random() * 890) + 1;
             client.sendFileFromUrl(from, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/'+q7+'.png','Pokemon.png',)
             break
-        case '!ss':
+        case 'ss':
             const _query = body.slice(4)
             if (!_query.match(isUrl)) return client.reply(from, mess.error.Iv, id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!ss [web]*\nContoh *!ss https://google.com*', id)
@@ -900,8 +905,14 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'quote':
         case 'quotes':
-            const quotes = await get.get('https://mhankbarbar.herokuapp.com/api/randomquotes').json()
-            client.reply(from, `➸ *Quotes* : ${quotes.quotes}\n➸ *Author* : ${quotes.author}`, id)
+            var urll = 'https://jagokata.com/kata-bijak/acak.html'
+            s.get(urll).then((result) => {
+                let $ = cheerio.load(result.data);
+                var author = $('a[class="auteurfbnaam"]').contents().first().text();
+                var kata = $('q[class="fbquote"]').contents().first().text();
+                client.reply(from, `➸ *Quotes* : _${kata}_\n➸ *Author* : ${author}`, id)
+            });
+            
             break
         case 'quotes anime':
             const skya = await get.get('https://mhankbarbar.herokuapp.com/api/quotesnime/random').json()
