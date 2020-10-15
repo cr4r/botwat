@@ -86,28 +86,32 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
-        case "p"||"Hai"||"bot"||"Bot?"||"bot?"||"Bot"||"hai"||"hi"||"hello"||"hay"||"kak"||"ini bot"||"ini bot?":
+        case 'p':
+        case 'hai':
+        case 'bot':
+        case 'bot?':
+        case 'hi':
+        case 'hello':
+        case 'hay':
+        case 'kak':
+        case 'ini bot':
+        case 'ini bot?':
             var sapa = ['hai','hello','hai kak','siapa?','ada apa','ya?','ada apa ya?','y','ya','ada apa kak','ya ada apa','ada yang bisa saya bantu?','hmm','oh yes','oh no']
             var pp = sapa[Math.floor(Math.random() * sapa.length)];
-            client.reply(pp)
+            client.reply(from, pp, id)
             break
+
         case "assalamualaikum":
-            client.reply('Walaikumsalam')
+        case "assalamu'alaikum":
+            client.reply(from, 'Wa\'laikumsalam', id)
             break
             
         case 'hitung':
             try{
-                client.reply(from,`*Kalkulator*\n${body.slice(7)} = ${evaluate(body.slice(7)).toString()}`)
+                client.reply(from,`*Kalkulator*\n${body.slice(7)} = ${evaluate(body.slice(7)).toString()}`, id)
             }
             catch(err){
-                client.reply(from,`anda salah masukkan symbol\n* : perkalian\n/ : pembagian+ : pertambahan\n- : pengurangan\n
-Contoh Penggunaan:
-        hitung 1.2*(2 + 4.5)  //7.8
-        hitung 9/3+2i  //3+2i
-        hitung det([-1, 2; 3, 1])  //-7
-        hitung 12.7 cm to inch  //5
-            
-            ${err}`)
+                client.reply(from,`anda salah masukkan symbol\n* : perkalian\n/ : pembagian+ : pertambahan\n- : pengurangan\n\nContoh Penggunaan:\n        hitung 1.2*(2 + 4.5)  //7.8\n        hitung 9/3+2i  //3+2i\n        hitung det([-1, 2; 3, 1])  //-7        hitung 12.7 cm to inch  //5\n\n ${err}`, id)
             }
             break
 
@@ -115,14 +119,10 @@ Contoh Penggunaan:
             var a = JSON.parse(JSON.stringify(body.slice(4).split('#')[0].toString()))
             var b = JSON.parse(JSON.stringify(body.slice(4).split('#')[1].toString()))
             try{
-                client.reply(from,`*Perpangkatan*\n${a}\^${b} = ${pow(a,b).toString()}`)
+                client.reply(from,`*Perpangkatan*\n${a}\^${b} = ${pow(a,b).toString()}`, id)
             }
             catch(err){
-                client.reply(from,`Salah: ${a}\n anda salah masukkan symbol\n* : perkalian\n/ : pembagian\n+ : pertambahan\n- : pengurangan\n
-Contoh Penggunaan:
-*pow 3#2*\n
-# adalah pembatasan untuk perpangkatan\n\n
-            ${err}`)
+                client.reply(from,`Salah: ${a}\n anda salah masukkan symbol\n* : perkalian\n/ : pembagian\n+ : pertambahan\n- : pengurangan\n\nContoh Penggunaan:\n    *pow 3#2*\n\n    # adalah pembatasan untuk perpangkatan\n\n\n            ${err}`, id)
 // *pow [[-1, 2],[3, 1]]#2*
             }
             break
@@ -132,10 +132,10 @@ Contoh Penggunaan:
             console.log(body.slice(6))
             var a = body.slice(6).split(',')[0]
             var b = body.slice(6).split(',')[1]
-            client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}`)
+            client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}`, id)
             }
         catch(err){
-            client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`)
+            client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`, id)
         }
             break
 
@@ -144,11 +144,11 @@ Contoh Penggunaan:
             if (isMedia && type === 'image') {
                 const mediaData = await decryptMedia(message, uaOverride)
                 const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
-                await client.sendImageAsSticker(from, imageBase64)
+                await client.sendImageAsSticker(from, imageBase64,id)
             } else if (quotedMsg && quotedMsg.type == 'image') {
                 const mediaData = await decryptMedia(quotedMsg, uaOverride)
                 const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
-                await client.sendImageAsSticker(from, imageBase64)
+                await client.sendImageAsSticker(from, imageBase64, id)
             } else if (args.length === 2) {
                 const url = args[1]
                 if (url.match(isUrl)) {
@@ -161,6 +161,8 @@ Contoh Penggunaan:
                     client.reply(from, mess.error.St, id)
             }
             break
+            
+        case 'gif':
         case 'stickergif':
         case 'stikergif':
         case 'sgif':
@@ -282,7 +284,7 @@ Contoh Penggunaan:
         case 'play':
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             var pilih = body.split(' ')[1]
-            let messageIndex = body.indexOf(pilih) + pilih.length-1;
+            let messageIndex = body.indexOf(pilih) + pilih.length+1;
             let namaLagu = body.slice(messageIndex, body.length);  
             var keyword = namaLagu.replace(/ /g, "+");
             console.log('Nama lagu: '+namaLagu+'\n\nkeyword: '+keyword+'\npilihan (mp3/4): '+pilih)
@@ -332,7 +334,7 @@ Contoh Penggunaan:
 
         case 'wiki':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *wiki [query]*\nContoh : *wiki asu*', id)
-            const query_ = body.slice(6)
+            const query_ = body.slice(5)
             const wiki = await get.get('https://mhankbarbar.herokuapp.com/api/wiki?q='+ query_).json()
             if (wiki.error) {
                 client.reply(from, wiki.error, id)
@@ -573,7 +575,7 @@ Contoh Penggunaan:
             }
             client.reply(from, 'Broadcast Success!', id)
             break
-        case '!adminlist':
+        case 'adminlist':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             let mimin = ''
             for (let admon of groupAdmins) {
@@ -582,23 +584,47 @@ Contoh Penggunaan:
             await sleep(2000)
             await client.sendTextWithMentions(from, mimin)
             break
-        case '!ownergroup':
+        case 'ownergroup':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const Owner_ = chat.groupMetadata.owner
             await client.sendTextWithMentions(from, `Owner Group : @${Owner_}`)
             break
-        case '!mentionall':
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
-            const groupMem = await client.getGroupMembers(groupId)
-            let hehe = '╔══✪〘 Mention All 〙✪══\n'
-            for (let i = 0; i < groupMem.length; i++) {
-                hehe += '╠➥'
-                hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
+        case 'member':
+            try{
+                if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+                if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
+                const groupMem = await client.getGroupMembers(groupId)
+                var pes = body.split(' ')[1]
+                var pesan = body.slice(7)
+                console.log(pesan)
+                if(pes===undefined){
+                    let hehe = `╔══✪〘 Hay semuanya 〙✪══\n`
+                }
+                else{
+                    let hehe = `╔══✪〘 Hay semuanya 〙✪══\n╠➥✪〘 ADA INFO DARI ADMIN 〙✪══\n╠➥✪〘 ${pesan} 〙✪══\n`
+                }
+
+                for (let i = 0; i < groupMem.length; i++) {
+                    hehe += '╠➥'
+                    hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
+                }
+                hehe += '╚═〘 BOT CR4R 〙'
+                await sleep(2000)
+                await client.sendTextWithMentions(from, hehe)
             }
-            hehe += '╚═〘 Shinomiya Kaguya BOT 〙'
-            await sleep(2000)
-            await client.sendTextWithMentions(from, hehe)
+            catch(err){
+                if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+                if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
+                const groupMem = await client.getGroupMembers(groupId)
+                let hehe = `╔══✪〘 Hay semuanya 〙✪══\n`
+                for (let i = 0; i < groupMem.length; i++) {
+                    hehe += '╠➥'
+                    hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
+                }
+                hehe += '╚═〘 BOT CR4R 〙'
+                await sleep(2000)
+                await client.sendTextWithMentions(from, hehe)
+            }
             break
         case '!kickall':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
@@ -681,42 +707,44 @@ Contoh Penggunaan:
             await client.demoteParticipant(groupId, mentionedJidList[0])
             await client.sendTextWithMentions(from, `Perintah diterima, menghapus jabatan @${mentionedJidList[0]}.`)
             break
-        case '!join':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *!join* linkgroup\n\nEx:\n!join https://chat.whatsapp.com/blablablablablabla', id)
-            const link = body.slice(6)
+        case 'join':
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *join* linkgroup\n\nEx:\njoin https://chat.whatsapp.com/blablablablablabla', id)
+            const link = body.split(' ')[1]
+            console.log(link)
             const tGr = await client.getAllGroups()
-            const minMem = 30
+            const minMem = 5
+            const maxMem = 255
             const isLink = link.match(/(https:\/\/chat.whatsapp.com)/gi)
             const check = await client.inviteInfo(link)
             if (!isLink) return client.reply(from, 'Ini link? 👊🤬', id)
-            if (tGr.length > 15) return client.reply(from, 'Maaf jumlah group sudah maksimal!', id)
-            if (check.size < minMem) return client.reply(from, 'Member group tidak melebihi 30, bot tidak bisa masuk', id)
+            if (tGr.length > maxMem) return client.reply(from, 'Maaf jumlah group sudah maksimal!', id)
+            if (check.size < minMem) return client.reply(from, 'Member group tidak melebihi 5, bot tidak bisa masuk', id)
             if (check.status === 200) {
-                await client.joinGroupViaLink(link).then(() => client.reply(from, 'Bot akan segera masuk!'))
+                await client.joinGroupViaLink(link.replace('https://chat.whatsapp.com/', '')).then(() => client.reply(from, 'Bot akan segera masuk!',id))
             } else {
                 client.reply(from, 'Link group tidak valid!', id)
             }
             break
-        case '!delete':
+        case 'delete':
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
             if (!quotedMsg) return client.reply(from, 'Salah!!, kirim perintah *!delete [tagpesanbot]*', id)
             if (!quotedMsgObj.fromMe) return client.reply(from, 'Salah!!, Bot tidak bisa mengahpus chat user lain!', id)
             client.deleteMessage(quotedMsgObj.chatId, quotedMsgObj.id, false)
             break
-        case '!getses':
+        case 'getses':
             const sesPic = await client.getSnapshot()
             client.sendFile(from, sesPic, 'session.png', 'Neh...', id)
             break
-        case '!lirik':
+        case 'lirik':
             if (args.length == 1) return client.reply(from, 'Kirim perintah *!lirik [optional]*, contoh *!lirik aku bukan boneka*', id)
             const lagu = body.slice(7)
             const lirik = await liriklagu(lagu)
             client.reply(from, lirik, id)
             break
-        case '!chord':
+        case 'chord':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!chord [query]*, contoh *!chord aku bukan boneka*', id)
-            const query__ = body.slice(7)
+            const query__ = body.slice(6)
             const chord = await get.get('https://mhankbarbar.herokuapp.com/api/chord?q='+ query__).json()
             if (chord.error) return client.reply(from, chord.error, id)
             client.reply(from, chord.result, id)
@@ -876,16 +904,16 @@ Contoh Penggunaan:
             const { postlink, title, subreddit, url, nsfw, spoiler } = response.data
             client.sendFileFromUrl(from, `${url}`, 'meme.jpg', `${title}`)
             break
-        case '!help':
-            client.sendText(from, help)
+        case 'help':
+            client.reply(from, help, id)
             break
-        case '!readme':
+        case 'readme':
             client.reply(from, readme, id)
             break
-        case '!info':
-            client.sendLinkWithAutoPreview(from, 'https://github.com/mhankbarbar/whatsapp-bot', info)
+        case 'info':
+            client.sendLinkWithAutoPreview(from, 'https://github.com/cr4r1/botwat', info)
             break
-        case '!snk':
+        case 'snk':
             client.reply(from, snk, id)
             break
         }
