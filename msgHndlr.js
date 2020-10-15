@@ -556,7 +556,7 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, 'Cara Penggunaan: \nquotemaker |teks|watermark|theme\n\nEx :\nquotemaker |ini contoh|bicit|random', id)
             }
             break
-        case '!linkgroup':
+        case 'linkgroup':
             if (!isBotGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
             if (isGroupMsg) {
                 const inviteLink = await client.getGroupInviteLink(groupId);
@@ -565,13 +565,13 @@ module.exports = msgHandler = async (client, message) => {
             	client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             }
             break
-        case '!bc':
+        case 'bc':
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot!', id)
             let msg = body.slice(4)
             const chatz = await client.getAllChatIds()
             for (let ids of chatz) {
                 var cvk = await client.getChatById(ids)
-                if (!cvk.isReadOnly) await client.sendText(ids, `[ Shinomiya Kaguya BOT Broadcast ]\n\n${msg}`)
+                if (!cvk.isReadOnly) await client.sendText(ids, `[ CR4R BOT Broadcast ]\n\n${msg}`)
             }
             client.reply(from, 'Broadcast Success!', id)
             break
@@ -596,7 +596,7 @@ module.exports = msgHandler = async (client, message) => {
                 const groupMem = await client.getGroupMembers(groupId)
                 var pesan = body.slice(7)
                 console.log(pesan)
-                if(body.split(' ').length==1){
+                if(body.split(' ').length==1||body.split(' ')[1]==undefined||body.split(' ')[1]==''){
                     let hehe = `╔══✪〘 Hay semuanya 〙✪══\n`
                 }
                 else if(body.split(' ').length>1){
