@@ -317,7 +317,7 @@ module.exports = msgHandler = async (client, message) => {
                         if (ytv.error) {
                             client.reply(from, ytv.error, id)
                         } else {
-                            if (Number(ytv.filesize.split(' MB')[0]) > 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
+                            if (Number(ytv.filesize.split(' MB')[0]) > 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!\n     lebih baik anda pilih mp3', id)
                             client.sendFileFromUrl(from, ytv.thumb, 'thumb.jpg', `➸ *Title* : ${ytv.title}\n➸ *Filesize* : ${ytv.filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                             await client.sendFileFromUrl(from, ytv.result, `${ytv.title}.mp4`, '', id).catch(() => client.reply(from, mess.error.Yt4, id))
                         }
