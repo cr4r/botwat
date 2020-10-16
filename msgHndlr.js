@@ -1,3 +1,4 @@
+const cheerio = require("cheerio");
 const yts = require("./lib/cmd.js");
 const { decryptMedia } = require('@open-wa/wa-decrypt')
 const fs = require('fs-extra')
@@ -217,8 +218,8 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'tulis':
         case 'nulis':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *nulis [teks]*', id)
-            const text = body.slice(6)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
+            const text = body.slice(7)
             client.reply(from, mess.wait, id)
             const splitText = text.replace(/(\S+\s*){1,10}/g, '$&\n')
             const fixHeight = splitText.split('\n').slice(0, 25).join('\n')
@@ -237,8 +238,9 @@ module.exports = msgHandler = async (client, message) => {
                 fixHeight,
                 './media/img/after.jpg'
             ])
+            .on('error', () => client.reply(from, `Error gan`, id))
             .on('exit', () => {
-                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', 'Nih gans', id)
+                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', 'Nih mhank', id)
             })
             break
         case 'ytmp3':
@@ -296,9 +298,9 @@ module.exports = msgHandler = async (client, message) => {
             (async () => {
                 try {
                     var idyt = await yts.searchYoutube(keyword);
-                    client.reply(from, mess.wait, id)
                     console.log(namaLagu)
                     urlll = `https://youtu.be/${idyt[0]}`
+                    client.reply(from, mess.wait+`\nSedangan mengambil link dari ${urlll}`, id)
                     console.log(urlll)
                     console.log(pilih)
                     if(pilih == 'mp3'){
@@ -906,7 +908,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'quote':
         case 'quotes':
             var urll = 'https://jagokata.com/kata-bijak/acak.html'
-            s.get(urll).then((result) => {
+            axios.get(urll).then((result) => {
                 let $ = cheerio.load(result.data);
                 var author = $('a[class="auteurfbnaam"]').contents().first().text();
                 var kata = $('q[class="fbquote"]').contents().first().text();
@@ -914,6 +916,9 @@ module.exports = msgHandler = async (client, message) => {
             });
             
             break
+        case 'quote anime':
+        case 'quoteanime':
+        case 'quote anime':
         case 'quotes anime':
             const skya = await get.get('https://mhankbarbar.herokuapp.com/api/quotesnime/random').json()
             skya_ = skya.data
