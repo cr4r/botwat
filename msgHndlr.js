@@ -87,6 +87,51 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
+        case 'hitung':
+            try{
+                client.reply(from,`*Kalkulator*\n${body.slice(7)} = ${evaluate(body.slice(7)).toString()}`)
+            }
+            catch(err){
+                client.reply(from,`anda salah masukkan symbol\n* : perkalian\n/ : pembagian+ : pertambahan\n- : pengurangan\n
+Contoh Penggunaan:
+        hitung 1.2*(2 + 4.5)  //7.8
+        hitung 9/3+2i  //3+2i
+        hitung det([-1, 2; 3, 1])  //-7
+        hitung 12.7 cm to inch  //5
+            
+            ${err}`)
+            }
+            break
+    
+        case 'pow':
+            var a = JSON.parse(JSON.stringify(body.slice(4).split('#')[0].toString()))
+            var b = JSON.parse(JSON.stringify(body.slice(4).split('#')[1].toString()))
+            try{
+                client.reply(from,`*Perpangkatan*\n${a}\^${b} = ${pow(a,b).toString()}`)
+            }
+            catch(err){
+                client.reply(from,`Salah: ${a}\n anda salah masukkan symbol\n* : perkalian\n/ : pembagian\n+ : pertambahan\n- : pengurangan\n
+Contoh Penggunaan:
+*pow 3#2*\n
+# adalah pembatasan untuk perpangkatan\n\n
+            ${err}`)
+// *pow [[-1, 2],[3, 1]]#2*
+            }
+            break
+        
+        case 'round':
+        try{
+            console.log(body.slice(6))
+            var a = body.slice(6).split(',')[0]
+            var b = body.slice(6).split(',')[1]
+            client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}`)
+            }
+        catch(err){
+            client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`)
+        }
+            break
+
+
         case 'p':
         case 'hai':
         case 'bot':
@@ -285,11 +330,8 @@ module.exports = msgHandler = async (client, message) => {
 
         case 'play':
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
-            var pilih = body.split(' ')[1]
-            let messageIndex = body.indexOf(pilih) + pilih.length+1;
-            let namaLagu = body.slice(messageIndex, body.length);  
+            let namaLagu = body.slice(5);  
             var keyword = namaLagu.replace(/ /g, "+");
-            console.log('Nama lagu: '+namaLagu+'\n\nkeyword: '+keyword+'\npilihan (mp3/4): '+pilih)
             function foreach(arr, func){
                 for(var i in arr){
                   func(i, arr[i]);
@@ -298,38 +340,20 @@ module.exports = msgHandler = async (client, message) => {
             (async () => {
                 try {
                     var idyt = await yts.searchYoutube(keyword);
-                    console.log(namaLagu)
+                    console.log('Nama lagu: '+namaLagu+'\n\nkeyword: '+keyword+'\nnamaLagu: '+idyt[0])
                     urlll = `https://youtu.be/${idyt[0]}`
-                    client.reply(from, mess.wait+`\nSedangan mengambil link dari ${urlll}`, id)
-                    console.log(urlll)
-                    console.log(pilih)
-                    if(pilih == 'mp3'){
-                        const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
-                        if (resp.error) {
-                            client.reply(from, resp.error, id)
-                        } else {
-                            const { title, thumb, filesize, result } = await resp
-                            if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
-                            client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch((error) => client.reply(from, error, id))
-                        }
-                    }
-                    else if(pilih == 'mp4'){
-                        const ytv = await get.get(`https://mhankbarbar.herokuapp.com/api/ytv?url=${urlll}`).json()
-                        if (ytv.error) {
-                            client.reply(from, ytv.error, id)
-                        } else {
-                            if (Number(ytv.filesize.split(' MB')[0]) > 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!\n     lebih baik anda pilih mp3', id)
-                            client.sendFileFromUrl(from, ytv.thumb, 'thumb.jpg', `➸ *Title* : ${ytv.title}\n➸ *Filesize* : ${ytv.filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            await client.sendFileFromUrl(from, ytv.result, `${ytv.title}.mp4`, '', id).catch(() => client.reply(from, mess.error.Yt4, id))
-                        }
-                    }
-                    else{
-                        client.reply(from, 'Maaf pilih mp3/mp4\nContoh: play mp3 goyang nasi padang\nContoh: play mp4 goyang nasi padang')
+                    console.log(urlll, pilih)
+                    const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
+                    if (resp.error) {
+                        client.reply(from, resp.error, id)
+                    } else {
+                        const { title, thumb, filesize, result } = await resp
+                        if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
+                        client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                        await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch((error) => client.reply(from, error, id))
                     }
                 } catch (err) {
-                    client.sendText(ownerNumber, 'Error command play : '+ err)
-                    client.reply(from, mess.error.Yt3, id)
+                    client.reply(ownerNumber, 'Error command play : '+ err)
                 }
             })();
             break
