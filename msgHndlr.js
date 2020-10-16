@@ -309,7 +309,7 @@ module.exports = msgHandler = async (client, message) => {
                             const { title, thumb, filesize, result } = await resp
                             if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
                             client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch(() => client.reply(from, mess.error.Yt3, id))
+                            await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch((error) => client.reply(from, error, id))
                         }
                     }
                     else if(pilih == 'mp4'){
@@ -430,7 +430,7 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'anime':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *anime [query]*\nContoh : *anime darling in the franxx*', id)
-            const animek = await get.get('https://mhankbarbar.herokuapp.com/api/dewabatch?q=' + body.slice(7)).json()
+            const animek = await get.get('https://mhankbarbar.herokuapp.com/api/dewabatch?q=' + body.slice(6)).json()
             if (animek.error) return client.reply(from, animek.error, id)
             const res_animek = `${animek.result}\n\n${animek.sinopsis}`
             client.sendFileFromUrl(from, animek.thumb, 'dewabatch.jpg', res_animek, id)
