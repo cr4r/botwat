@@ -568,20 +568,25 @@ Contoh Penggunaan:
                 client.sendFile(from, './media/img/tutod.jpg', 'Tutor.jpg', 'Neh contoh mhank!', id)
             }
             break
+        case 'buat quote':
+        case 'buatquote':
+        case 'quotes maker':
+        case 'quotesmaker':
         case 'quotemaker':
-            arg = body.trim().split('|')
+        case 'quote maker':
+            arg = body.split('|')
             if (arg.length >= 4) {
                 client.reply(from, mess.wait, id)
                 const quotes = arg[1]
                 const author = arg[2]
                 const theme = arg[3]
                 await quotemaker(quotes, author, theme).then(amsu => {
-                    client.sendFile(from, amsu, 'quotesmaker.jpg','neh...').catch(() => {
+                    client.sendFile(from, amsu, 'quotesmaker.jpg','nih gans...').catch(() => {
                        client.reply(from, mess.error.Qm, id)
                     })
                 })
             } else {
-                client.reply(from, 'Cara Penggunaan: \nquotemaker |teks|watermark|theme\n\nEx :\nquotemaker |ini contoh|bicit|random', id)
+                client.reply(from, 'Cara Penggunaan: \nquotemaker |teks|watermark|theme\Contoh :\nquotemaker |ini contoh|bicit|random', id)
             }
             break
         case 'linkgroup':
