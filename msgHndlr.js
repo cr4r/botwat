@@ -331,34 +331,38 @@ Contoh Penggunaan:
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let namaLagu = body.slice(5);
             var keyword = namaLagu.replace(/ /g, "+");
-            if (namaLagu.match('https://youtube.com/').toString() == 'https://youtube.com/'||namaLagu.match('https://youtu.be/').toString() == 'https://youtu.be/') return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
-            function foreach(arr, func){
-                for(var i in arr){
-                  func(i, arr[i]);
-                }
+            if (namaLagu.match('https://youtube.com/').toString() == 'https://youtube.com/'||namaLagu.match('https://youtu.be/').toString() == 'https://youtu.be/') {
+                client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             }
-            (async () => {
-                try {
-                    var idyt = await yts.searchYoutube(keyword);
-                    urlll = `https://youtu.be/${idyt[0]}`
-                    console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+urlll)
-                    const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
-                    if (resp.error) {
-                        client.reply(from, resp.error, id)
+            else{
+                function foreach(arr, func){
+                    for(var i in arr){
+                      func(i, arr[i]);
                     }
-                    else if(idyt[0]==undefined){
-                        client.reply(from, 'Maaf kak, bot nya error.\nSilahkan chat nomor ini dan beritahu kalau play nya error',id)
-                    }
-                    else {
-                        const { title, thumb, filesize, result } = await resp
-                        if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
-                        client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                        await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch((error) => client.reply(from, error, id))
-                    }
-                } catch (err) {
-                    client.reply(ownerNumber, 'Error command play : '+ err)
                 }
-            })();
+                (async () => {
+                    try {
+                        var idyt = await yts.searchYoutube(keyword);
+                        urlll = `https://youtu.be/${idyt[0]}`
+                        console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+urlll)
+                        const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
+                        if (resp.error) {
+                            client.reply(from, resp.error, id)
+                        }
+                        else if(idyt[0]==undefined){
+                            client.reply(from, 'Maaf kak, bot nya error.\nSilahkan chat nomor ini dan beritahu kalau play nya error',id)
+                        }
+                        else {
+                            const { title, thumb, filesize, result } = await resp
+                            if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
+                            client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                            await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch((error) => client.reply(from, error, id))
+                        }
+                    } catch (err) {
+                        client.reply(ownerNumber, 'Error command play : '+ err)
+                    }
+                })();
+            }
             break
 
         case 'wiki':
