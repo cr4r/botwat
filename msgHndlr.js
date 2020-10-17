@@ -66,7 +66,8 @@ module.exports = msgHandler = async (client, message) => {
                 Iv: '[❗] Link yang anda kirim tidak valid!'
             }
         }
-
+        var sapa = ['hai','hello','hai kak','siapa?','ada apa','ya?','ada apa ya?','y','ya','ada apa kak','ya ada apa','ada yang bisa saya bantu?','hmm','oh yes','oh no','kenapa bang','ada apa bang','muehehehe']
+        var pp = sapa[Math.floor(Math.random() * sapa.length)];
         const time = moment(t * 1000).format('HH:mm:ss')
         const botNumber = await client.getHostNumber()
         const blockNumber = await client.getBlockedIds()
@@ -84,6 +85,7 @@ module.exports = msgHandler = async (client, message) => {
         if (isGroupMsg && command.startsWith('!')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
         if (!isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname))
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
+        if (body.length==1) client.reply(from, pp, id)
         if (isBlocked) return
         //if (!isOwner) return
 
@@ -132,8 +134,6 @@ Contoh Penggunaan:
         }
             break
 
-
-        case 'p':
         case 'hai':
         case 'bot':
         case 'bot?':
@@ -143,8 +143,6 @@ Contoh Penggunaan:
         case 'kak':
         case 'ini bot':
         case 'ini bot?':
-            var sapa = ['hai','hello','hai kak','siapa?','ada apa','ya?','ada apa ya?','y','ya','ada apa kak','ya ada apa','ada yang bisa saya bantu?','hmm','oh yes','oh no']
-            var pp = sapa[Math.floor(Math.random() * sapa.length)];
             client.reply(from, pp, id)
             break
 
