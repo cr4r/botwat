@@ -630,7 +630,7 @@ Contoh Penggunaan:
                     await sleep(2000)
                     await client.sendTextWithMentions(from, hehe)
                 }
-                else(body.split('member ').length>1){
+                else{
                     let hehe = `╔══✪〘 Hay semuanya 〙✪══\n╠➥✪〘 ADA INFO DARI ADMIN 〙✪══\n╠➥✪〘 ${pesan} 〙✪══\n`
                     for (let i = 0; i < groupMem.length; i++) {
                         hehe += '╠➥'
