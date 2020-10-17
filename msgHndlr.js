@@ -85,7 +85,7 @@ module.exports = msgHandler = async (client, message) => {
         if (isGroupMsg && command.startsWith('!')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
         if (!isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname))
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
-        if (body.length==1) client.reply(from, pp, id); else return
+        if (body.length===1) client.reply(from, pp, id); else return
         if (isBlocked) return
         //if (!isOwner) return
 
@@ -331,6 +331,7 @@ Contoh Penggunaan:
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let namaLagu = body.slice(5);  
             var keyword = namaLagu.replace(/ /g, "+");
+            if (namaLagu.match('https://youtube.com/').toString() == 'https://youtube.com/'||namaLagu.match('https://youtu.be/').toString() == 'https://youtu.be/') return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             function foreach(arr, func){
                 for(var i in arr){
                   func(i, arr[i]);
