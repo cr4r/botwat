@@ -1,5 +1,5 @@
 {
-  "name": "Whatsapp Bot",
+  "name": "cr4r",
   "version": "3.0.0",
   "description": "Untuk bot Whatsapp versi wa-automate, yang memungkinkan mengirim pesan, gambar, stiker, video, dll secara otomatis sesuai perintah yang dimasukkan dalam script",
   "main": "index.js",
