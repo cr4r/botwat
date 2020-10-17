@@ -843,7 +843,7 @@ Contoh Penggunaan:
             const rindKiy = ditiJsin[rindIndix]
             client.sendFileFromUrl(from, rindKiy.image, 'Husbu.jpg', rindKiy.teks, id)
             break
-        case 'randomhentai'
+        case 'randomhentai':
         case 'random hentai':
             if (isGroupMsg) {
                 if (!isNsfw) return client.reply(from, 'Command/Perintah NSFW belum di aktifkan di group ini!', id)
