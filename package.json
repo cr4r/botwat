@@ -1,51 +1,49 @@
 {
-  "name": "whatsapp-bot",
-  "version": "2.0.0",
-  "description": "Halo sesama pengguna, <b>whatsapp-bot</b> adalah skrip otomatisasi whatsapp atau lebih seperti bot yang merespons kata kunci tertentu dan beberapa fitur lain yang sedang kami kerjakan.",
+  "name": "Whatsapp Bot",
+  "version": "3.0.0",
+  "description": "Untuk bot Whatsapp versi wa-automate, yang memungkinkan mengirim pesan, gambar, stiker, video, dll secara otomatis sesuai perintah yang dimasukkan dalam script",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node index.js"
   },
-  "author": "Mhank BarBar",
-  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cr4r1/botwat.git"
+  },
+  "keywords": [
+    "Bot",
+    "whatsapp"
+  ],
+  "author": "cr4r",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cr4r1/botwat/issues"
+  },
+  "homepage": "https://github.com/cr4r1/botwat#readme",
   "dependencies": {
-    "@open-wa/wa-automate": "^2.0.28",
+    "@open-wa/wa-automate": "^2.1.6",
     "@open-wa/wa-decrypt": "^2.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "brainly-scraper": "^1.0.2",
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
-    "emoji-regex": "^9.0.0",
+    "child_process": "^1.0.2",
+    "fetcher": "^0.2.0",
     "fs-extra": "^9.0.1",
     "gify-cli": "^1.0.2",
     "got": "^11.7.0",
     "mathjs": "^7.5.1",
+    "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
     "needle": "^2.5.2",
     "nhentai-api": "^3.0.2",
     "nhentai-js": "^4.0.0",
-    "node-fetch": "^2.6.1",
     "node-gtts": "^2.0.2",
+    "process": "^0.11.10",
     "remove.bg": "^1.3.0",
-    "request": "^2.88.2",
     "tiktok-scraper": "^1.3.4",
     "translate": "^1.1.2",
-    "video-url-link": "^0.1.4"
-  },
-  "directories": {
-    "lib": "lib"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mhankbarbar/whatsapp-bot.git"
-  },
-  "keywords": [
-    "Whatsapp-Bot"
-  ],
-  "bugs": {
-    "url": "https://github.com/mhankbarbar/whatsapp-bot/issues"
-  },
-  "homepage": "https://github.com/mhankbarbar/whatsapp-bot#readme"
+    "video-url-link": "^0.1.5"
+  }
 }
