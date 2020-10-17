@@ -41,10 +41,10 @@ const start = async (client = new Client()) => {
         }))*/
 
         // listening on Incoming Call
-        client.onIncomingCall(( async (call) => {
-            await client.sendText(call.peerJid, 'Maaf, saya tidak bisa menerima panggilan. nelfon = block!')
-            .then(() => client.contactBlock(call.peerJid))
-        }))
+        // client.onIncomingCall(( async (call) => {
+        //     await client.sendText(call.peerJid, 'Maaf, saya tidak bisa menerima panggilan. nelfon = block!')
+        //     .then(() => client.contactBlock(call.peerJid))
+        // }))
     }
 
 create('BarBar', options(true, start))

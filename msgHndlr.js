@@ -349,7 +349,7 @@ Contoh Penggunaan:
                         if (resp.error) {
                             client.reply(from, resp.error, id)
                         }
-                        else if(idyt[0]==undefined){
+                        efmaaflse if(idyt[0]==undefined){
                             client.reply(from, 'Maaf kak, bot nya error.\nSilahkan chat nomor ini dan beritahu kalau play nya error',id)
                         }
                         else {
