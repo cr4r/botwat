@@ -1,7 +1,7 @@
 echo 'Silahkan tunggu, instalasi berjalan dilatar belakang'
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &>/dev/null&&sudo dpkg -i google-chrome*&&cd /opt&&sudo chmod -R 755 ./&&sudo wget https://nodejs.org/dist/latest/node-v14.14.0-linux-x64.tar.gz &>/dev/null&&sudo tar -xvf node-* &>/dev/null
-sudo su&&echo """# NodeJS
-export NODEJS_HOME=/opt/node-v14.14.0-linux-x64/bin
-export PATH=\$NODEJS_HOME:\$PATH""" >>/etc/bash.bashrc&&sudo apt-get update&&sudo apt fix-broken install -y&&sudo apt-get dist-upgrade -y&&exit
+#wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &>/dev/null&&sudo dpkg -i google-chrome*&&cd /opt&&sudo chmod -R 755 ./&&sudo wget https://nodejs.org/dist/latest/node-v14.14.0-linux-x64.tar.gz &>/dev/null&&sudo tar -xvf node-* &>/dev/null
+#sudo su&&echo """# NodeJS
+#export NODEJS_HOME=/opt/node-v14.14.0-linux-x64/bin
+#export PATH=\$NODEJS_HOME:\$PATH""" >>/etc/bash.bashrc&&sudo apt-get update&&sudo apt fix-broken install -y&&sudo apt-get dist-upgrade -y&&exit
 npm install gify-cli&&npm i axios&&npm i cheerio&&npm i mathjs&&npm i
 sudo apt install imagemagick -y&>/dev/null
