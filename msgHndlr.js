@@ -331,10 +331,10 @@ Contoh Penggunaan:
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let namaLagu = body.slice(5);
             var keyword = namaLagu.replace(/ /g, "+");
-            if (namaLagu.match('https://youtube.com/').toString() == 'https://youtube.com/'||namaLagu.match('https://youtu.be/').toString() == 'https://youtu.be/') {
-                client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
+            try{
+                if (namaLagu.match('https://youtube.com/').toString() == 'https://youtube.com/'||namaLagu.match('https://youtu.be/').toString() == 'https://youtu.be/') return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             }
-            else{
+            catch(error){
                 function foreach(arr, func){
                     for(var i in arr){
                       func(i, arr[i]);
