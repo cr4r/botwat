@@ -344,7 +344,11 @@ Contoh Penggunaan:
                     const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
                     if (resp.error) {
                         client.reply(from, resp.error, id)
-                    } else {
+                    }
+                    else if(idyt[0]==undefined){
+                        client.reply(from, 'Maaf kak, bot nya error.\nSilahkan chat nomor ini dan beritahu kalau play nya error',id)
+                    }
+                    else {
                         const { title, thumb, filesize, result } = await resp
                         if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
                         client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
@@ -631,7 +635,7 @@ Contoh Penggunaan:
                     await client.sendTextWithMentions(from, hehe)
                 }
                 else{
-                    let hehe = `╔══✪〘 Hay semuanya 〙✪══\n╠➥✪〘 ADA INFO DARI ADMIN 〙✪══\n╠➥✪〘 ${pesan} 〙✪══\n`
+                    let hehe = `╔══✪〘 Hay semuanya 〙✪══\n╠➥✪〘 ADA INFO DARI ADMIN 〙\n╠➥✪〘 ${pesan} 〙\n`
                     for (let i = 0; i < groupMem.length; i++) {
                         hehe += '╠➥'
                         hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
@@ -771,13 +775,13 @@ Contoh Penggunaan:
             client.sendFile(from, sesPic, 'session.png', 'Neh...', id)
             break
         case 'lirik':
-            if (args.length == 1) return client.reply(from, 'Kirim perintah *!lirik [optional]*, contoh *!lirik aku bukan boneka*', id)
+            if (args.length == 1) return client.reply(from, 'Kirim perintah *lirik [optional]*, contoh *!lirik aku bukan boneka*', id)
             const lagu = body.slice(7)
             const lirik = await liriklagu(lagu)
             client.reply(from, lirik, id)
             break
         case 'chord':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *!chord [query]*, contoh *!chord aku bukan boneka*', id)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *chord [query]*, contoh *!chord aku bukan boneka*', id)
             const query__ = body.slice(6)
             const chord = await get.get('https://mhankbarbar.herokuapp.com/api/chord?q='+ query__).json()
             if (chord.error) return client.reply(from, chord.error, id)
@@ -794,8 +798,10 @@ Contoh Penggunaan:
             }
             client.sendTextWithMentions(from, hih, id)
             break
+        case 'jadwalsolat':
+        case 'jadwalsholat':
         case 'jadwalshalat':
-            if (args.length === 1) return client.reply(from, '[❗] Kirim perintah *jadwalShalat [daerah]*\ncontoh : *!jadwalShalat Tangerang*\nUntuk list daerah kirim perintah *!listDaerah*')
+            if (args.length === 1) return client.reply(from, '[❗] Kirim perintah *jadwalShalat [daerah]*\ncontoh : *jadwalShalat Tangerang*\nUntuk list daerah kirim perintah *!listDaerah*')
             const daerah = body.slice(13)
             const jadwalShalat = await get.get(`https://mhankbarbar.herokuapp.com/api/jadwalshalat?daerah=${daerah}`).json()
             if (jadwalShalat.error) return client.reply(from, jadwalShalat.error, id)
@@ -837,6 +843,7 @@ Contoh Penggunaan:
             const rindKiy = ditiJsin[rindIndix]
             client.sendFileFromUrl(from, rindKiy.image, 'Husbu.jpg', rindKiy.teks, id)
             break
+        case 'randomhentai'
         case 'random hentai':
             if (isGroupMsg) {
                 if (!isNsfw) return client.reply(from, 'Command/Perintah NSFW belum di aktifkan di group ini!', id)
@@ -941,9 +948,7 @@ Contoh Penggunaan:
             });
             
             break
-        case 'quote anime':
         case 'quoteanime':
-        case 'quote anime':
         case 'quotes anime':
             const skya = await get.get('https://mhankbarbar.herokuapp.com/api/quotesnime/random').json()
             skya_ = skya.data
