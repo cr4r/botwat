@@ -1,2 +1,2 @@
-sudo npm install gify-cli -g&npm i axios&&npm i cheerio&&npm i mathjs&&npm i
-wget https://www.imagemagick.org/download/ImageMagick.tar.gz&&tar xf ImageMagick.tar.gz&&cd ImageMagick-7*&&./configure&&make&&make install&&sudo ldconfig /usr/local/lib&&identify -version&&make check
+npm install gify-cli&&npm i axios&&npm i cheerio&&npm i mathjs&&npm i
+sudo apt install imagemagick -y
