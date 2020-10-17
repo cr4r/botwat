@@ -14,6 +14,7 @@ const { help, snk, info, donate, readme, listChannel } = require('./lib/help')
 const { stdout } = require('process')
 const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'))
 const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
+const { pow,round, log , evaluate, parse, derivative } = require('mathjs')
 
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 
@@ -263,9 +264,9 @@ Contoh Penggunaan:
             break
         case 'tulis':
         case 'nulis':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
-            const text = body.slice(7)
-            client.reply(from, mess.wait, id)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *nulis [teks]*', id)
+            const text = body.slice(6)
+            // client.reply(from, mess.wait, id)
             const splitText = text.replace(/(\S+\s*){1,10}/g, '$&\n')
             const fixHeight = splitText.split('\n').slice(0, 25).join('\n')
             spawn('convert', [
@@ -285,7 +286,7 @@ Contoh Penggunaan:
             ])
             .on('error', () => client.reply(from, `Error gan`, id))
             .on('exit', () => {
-                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', 'Nih mhank', id)
+                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', 'Nih mhank\n\nDitulis oleh bot CR4R', id)
             })
             break
         case 'ytmp3':
@@ -340,9 +341,8 @@ Contoh Penggunaan:
             (async () => {
                 try {
                     var idyt = await yts.searchYoutube(keyword);
-                    console.log('Nama lagu: '+namaLagu+'\n\nkeyword: '+keyword+'\nnamaLagu: '+idyt[0])
                     urlll = `https://youtu.be/${idyt[0]}`
-                    console.log(urlll, pilih)
+                    console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+urlll)
                     const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
                     if (resp.error) {
                         client.reply(from, resp.error, id)
