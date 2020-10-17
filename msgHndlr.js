@@ -231,7 +231,7 @@ Contoh Penggunaan:
             client.sendLinkWithAutoPreview(from, 'https://saweria.co/cr4r', donate)
             break
         case 'tts':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *tts [id, en, jp, ar] [teks]*, contoh *tts id halo semua*')
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *tts [id, en, jp, ar] [teks]*, contoh *tts [id] halo semua*')
             const ttsId = require('node-gtts')('id')
             const ttsEn = require('node-gtts')('en')
 	        const ttsJp = require('node-gtts')('ja')
@@ -257,7 +257,7 @@ Contoh Penggunaan:
                     client.sendPtt(from, './media/tts/resAr.mp3', id)
                 })
             } else {
-                client.reply(from, 'Masukkan data bahasa : [id] untuk indonesia, [en] untuk inggris, [jp] untuk jepang, dan [ar] untuk arab', id)
+                client.reply(from, 'Kirim perintah *tts [id, en, jp, ar] [teks]*, contoh *tts [id] halo semua*',id)
             }
             break
         case 'tulis':
@@ -383,8 +383,8 @@ Contoh Penggunaan:
             const epbe = await fb(args[1])
             client.sendFileFromUrl(from, epbe.url, `Cuih${epbe.exts}`, epbe.capt, id)
             break
-        case '!creator':
-            client.sendContact(from, '6285892766102@c.us')
+        case 'creator':
+            client.sendContact(from, '6282237416678@c.us')
             break
         case 'ig':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *!readme*')
@@ -503,7 +503,7 @@ Contoh Penggunaan:
         case 'brainly':
             if (args.length >= 2){
                 const BrainlySearch = require('./lib/brainly')
-                let tanya = body.slice(9)
+                let tanya = body.slice(8)
                 let jum = Number(tanya.split('.')[1]) || 2
                 if (jum > 10) return client.reply(from, 'Max 10!', id)
                 if (Number(tanya[tanya.length-1])){
@@ -620,23 +620,26 @@ Contoh Penggunaan:
                 const groupMem = await client.getGroupMembers(groupId)
                 var pesan = body.slice(7)
                 console.log(pesan)
-                if(body.split(' ').length==1||body.split(' ')[1]==undefined||body.split(' ')[1]==''){
+                if(body.split('member ').length==1||body.split('member ')[1]==undefined||body.split('member ')[1]==''){
                     let hehe = `╔══✪〘 Hay semuanya 〙✪══\n`
+                    for (let i = 0; i < groupMem.length; i++) {
+                        hehe += '╠➥'
+                        hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
+                    }
+                    hehe += '╚═〘 BOT CR4R 〙'
+                    await sleep(2000)
+                    await client.sendTextWithMentions(from, hehe)
                 }
-                else if(body.split(' ').length>1){
+                else(body.split('member ').length>1){
                     let hehe = `╔══✪〘 Hay semuanya 〙✪══\n╠➥✪〘 ADA INFO DARI ADMIN 〙✪══\n╠➥✪〘 ${pesan} 〙✪══\n`
+                    for (let i = 0; i < groupMem.length; i++) {
+                        hehe += '╠➥'
+                        hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
+                    }
+                    hehe += '╚═〘 BOT CR4R 〙'
+                    await sleep(2000)
+                    await client.sendTextWithMentions(from, hehe)
                 }
-                else{
-                    let hehe = `╔══✪〘 Hay semuanya 〙✪══\n`
-                }
-
-                for (let i = 0; i < groupMem.length; i++) {
-                    hehe += '╠➥'
-                    hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
-                }
-                hehe += '╚═〘 BOT CR4R 〙'
-                await sleep(2000)
-                await client.sendTextWithMentions(from, hehe)
             }
             catch(err){
                 if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
