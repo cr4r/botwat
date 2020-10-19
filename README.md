@@ -1,5 +1,5 @@
 # Bot Whatsapp
-script untuk menjalankan bot pada whatsapp sesuai dengan perintah di script tersebut<br>
+script untuk menjalankan bot pada whatsapp sesuai dengan perintah di script tersebut <br><br>
 "Makin aku banyak membaca, makin aku banyak berpikir<br>
 makin aku banyak belajar, makin aku sadar bahwa aku tak mengetahui apa pun." - Voltaire
 ## Aplikasi yang harus di install
