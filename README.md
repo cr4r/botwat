@@ -23,8 +23,8 @@ Jika sudah terinstall module nya, tidak ada kendala silahkan jalankan menggunaka
 node index.js
 ```
 ## Error saat melakukan ./install
-jika error pada saat penginstalan di scritpt install<br>
-silahkan download module disini https://cr4r.me/node_modules.tar.gz, letakkan file yang sudah di download di folder botwat. lalu extrac dengan cara <br>
+jika error pada saat penginstalan di file install<br>
+silahkan download module disini https://cr4r.me/node_modules.tar.gz, letakkan file yang sudah di download di folder botwat. lalu extrak dengan cara <br>
 ```bash
 tar -xvf node_modules.tar.gz
 ```
