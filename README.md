@@ -13,41 +13,39 @@ silahkan download module disini https://cr4r.me/node_modules.tar.gz, letakkan fi
 'tar -xvf node_modules.tar.gz'<br>
 lalu jalankan script dengan menggunakan perintah 'node index.js'
 # Alur Direktori botwat
-├── functions.js
-├── index.js
-├── install
-├── installChrome
-├── installNode
-├── lib
-│   ├── brainly.js
-│   ├── cmd.js
-│   ├── color.js
-│   ├── fetcher.js
-│   ├── functions.js
-│   ├── help.js
-│   ├── husbu.json
-│   ├── msgFilter.js
-│   ├── NSFW.json
-│   ├── welcome.js
-│   └── welcome.json
-├── media
-│   ├── img
-│   │   ├── after.jpg
-│   │   ├── before.jpg
-│   │   ├── Kaguya.png
-│   │   ├── nimek.jpg
-│   │   ├── screenshot.jpeg
-│   │   └── tutod.jpg
-│   ├── mp4
-│   │   └── bd5m12UEHWI.mkv
-│   └── tts
-│       └── nope.txt
-├── msgHndlr.js
-├── node_modules
-│   ├── abbrev
-│   ├── accepts
-│   ├── after
-│   ├── adm-zip
-│   ├── dan folder lainnya....
-├── options.js
-└── README.md
+├── functions.js <br>
+├── index.js <br>
+├── install <br>
+├── installChrome <br>
+├── installNode <br>
+├── lib <br>
+│   ├── brainly.js <br>
+│   ├── cmd.js <br>
+│   ├── color.js <br>
+│   ├── fetcher.js <br>
+│   ├── functions.js <br>
+│   ├── help.js <br>
+│   ├── husbu.json <br>
+│   ├── msgFilter.js <br>
+│   ├── NSFW.json <br>
+│   ├── welcome.js <br>
+│   └── welcome.json <br>
+├── media <br>
+│   ├── img <br>
+│   │   ├── after.jpg <br>
+│   │   ├── before.jpg <br>
+│   │   ├── Kaguya.png <br>
+│   │   ├── nimek.jpg <br>
+│   │   ├── screenshot.jpeg <br>
+│   │   └── tutod.jpg <br>
+│   ├── mp4 <br>
+│   └── tts <br>
+├── msgHndlr.js <br>
+├── node_modules <br>
+│   ├── abbrev <br>
+│   ├── accepts <br>
+│   ├── after <br>
+│   ├── adm-zip <br>
+│   ├── dan folder lainnya.... <br>
+├── options.js <br>
+└── README.md <br>
