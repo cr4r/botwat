@@ -1,8 +1,12 @@
-# botwat
+# Bot Whatsapp
 bot-wa dari wa-automate<br>
-# Aplikasi yang harus di install
+## Aplikasi yang harus di install
 Google-Chrome, Nodejs
-# Tata cara penginstalan
+## Clone this project
+```bash
+> git clone https://github.com/cr4r1/botwat
+```
+## Tata cara penginstalan
 Jika belum ada google-chrome maka silahkan install dengan cara './installChrome'<br>
 Jika belum ada nodeJS maka silahkan install dengan cara 
 ```bash
@@ -16,7 +20,7 @@ Jika sudah terinstall module nya, tidak ada kendala silahkan jalankan menggunaka
 ```bash
 > node index.js
 ```
-# Error saat melakukan ./install
+## Error saat melakukan ./install
 jika error pada saat penginstalan di scritpt install<br>
 silahkan download module disini https://cr4r.me/node_modules.tar.gz, letakkan file yang sudah di download di folder botwat. lalu extrac dengan cara <br>
 ```bash
@@ -26,7 +30,68 @@ lalu jalankan script dengan menggunakan perintah
 ```bash
 > node index.js
 ```
-# Alur Direktori botwat
+## Features
+
+| Sticker Creator |                Feature           |
+| :-----------: | :--------------------------------: |
+|       ✅       | Kirim foto dengan caption          |
+|       ✅       | Reply A Photo                    |
+|       ✅       | Image Url                        |
+|       ✅       | Send Video or GIF with Caption   |
+
+
+| Downloader |                     Feature                |
+| :------------: | :---------------------------------------------: |
+|       ✅        |   YouTube mp3/mp4 Downloader                    |
+|       ❌        |   Doujin Downloader         |
+|       ❌        |   Instagram Video/Image Downloader                  |
+|       ❌        |   Facebook Video Downloader                  |
+
+
+| Other  |                     Feature                     |
+| :------------: | :---------------------------------------------: |
+|       ✅        |   Get a random meme             |
+|       ✅        |   Text to speech                |
+|       ✅        |   Get a random waifu images     |
+|       ✅        |   Get a random quotes           |
+|       ✅        |   Get a random anime quotes     |
+|       ✅        |   Get info gempa from BMKG      |
+|       ✅        |   Weather's report's     |
+|       ✅        |   Wikipedia                 |
+|       ✅        |   Anime searcher    |
+|       ✅        |   Get a random cat images       |
+|       ✅        |   Get a random dog images       |
+|      And        |   Others...                     |
+
+
+| Group Only  |                     Feature                     |
+| :------------: | :---------------------------------------------: |
+|       ✅        |   Panggil semua member          |
+|       ✅        |   Panggil semua member dengan Komentar          |
+|       ✅        |   Promote User                  |
+|       ✅        |   Demote User                   |
+|       ✅        |   Kick User                     |
+|       ✅        |   Add User                      |
+|       ✅        |   Mention All User              |
+|       ✅        |   Get link group                |
+|       ✅        |   Get Admin list                |
+|       ✅        |   Get owner group               |
+|       ✅        |   enable or disable nsfw command|
+|       ✅        |   enable or disable welcome feature|
+
+
+| Owner Group Only  |              Feature                |
+| :------------: | :---------------------------------------------: |
+|       ✅        |   Kick All Member Group                 |
+
+| Owner Bot Only  |              Feature                |
+| :------------: | :---------------------------------------------: |
+|       ✅        |   leave all group                   |
+|       ✅        |   clear all message                 |
+|       ✅        |   Broadcast                      |
+
+
+## Alur Direktori botwat
 ├── functions.js <br>
 ├── index.js <br>
 ├── install <br>
