@@ -1,5 +1,7 @@
 # Bot Whatsapp
-bot-wa dari wa-automate<br>
+script untuk menjalankan bot pada whatsapp sesuai dengan perintah di script tersebut<br>
+"Makin aku banyak membaca, makin aku banyak berpikir<br>
+makin aku banyak belajar, makin aku sadar bahwa aku tak mengetahui apa pun." - Voltaire
 ## Aplikasi yang harus di install
 Google-Chrome, Nodejs
 ## Clone this project
