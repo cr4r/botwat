@@ -3,7 +3,8 @@ script untuk menjalankan bot pada whatsapp sesuai dengan perintah di script ters
 "Makin aku banyak membaca, makin aku banyak berpikir<br>
 makin aku banyak belajar, makin aku sadar bahwa aku tak mengetahui apa pun." - Voltaire
 ## Aplikasi yang harus di install
-Google-Chrome, Nodejs
+Google-Chrome, Nodejs<br>
+Sudah di test melalui OS Ubuntu 18.04 Bionic dan Debian 10 Buster
 ## Clone this project
 ```bash
 git clone https://github.com/cr4r1/botwat
