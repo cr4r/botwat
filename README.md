@@ -4,31 +4,31 @@ bot-wa dari wa-automate<br>
 Google-Chrome, Nodejs
 ## Clone this project
 ```bash
-> git clone https://github.com/cr4r1/botwat
+git clone https://github.com/cr4r1/botwat
 ```
 ## Tata cara penginstalan
 Jika belum ada google-chrome maka silahkan install dengan cara './installChrome'<br>
 Jika belum ada nodeJS maka silahkan install dengan cara 
 ```bash
-> ./installNode
+./installNode
 ```
 Jika sudah tersedia semua silahkan ketik perintah
 ```bash
-> ./install
+./install
 ```
 Jika sudah terinstall module nya, tidak ada kendala silahkan jalankan menggunakan perintah
 ```bash
-> node index.js
+node index.js
 ```
 ## Error saat melakukan ./install
 jika error pada saat penginstalan di scritpt install<br>
 silahkan download module disini https://cr4r.me/node_modules.tar.gz, letakkan file yang sudah di download di folder botwat. lalu extrac dengan cara <br>
 ```bash
-> tar -xvf node_modules.tar.gz
+tar -xvf node_modules.tar.gz
 ```
 lalu jalankan script dengan menggunakan perintah
 ```bash
-> node index.js
+node index.js
 ```
 ## Features
 
