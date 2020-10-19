@@ -25,7 +25,9 @@ const start = async (client = new Client()) => {
             await welcome(client, heuh)
             //left(client, heuh)
             }))
-        
+
+        // Hilangkan tanda // jika ingin mengaktifkan fiturnya
+        //fitur out otomatis
         // client.onAddedToGroup(((chat) => {
         //     let totalMem = chat.groupMetadata.participants.length
         //     if (totalMem < 30) { 
