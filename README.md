@@ -67,7 +67,7 @@ lalu jalankan script dengan menggunakan perintah
 | Group Only  |                     Feature                     |
 | :------------: | :---------------------------------------------: |
 |       ✅        |   Panggil semua member          |
-|       ✅        |   Panggil semua member dengan Komentar          |
+|       ✅        |   Panggil semua member dengan Pesan          |
 |       ✅        |   Promote User                  |
 |       ✅        |   Demote User                   |
 |       ✅        |   Kick User                     |
