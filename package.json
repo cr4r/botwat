@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/cr4r1/botwat#readme",
   "dependencies": {
-    "@open-wa/wa-automate": "^2.1.6",
+    "@open-wa/wa-automate": "^2.0.28",
     "@open-wa/wa-decrypt": "^2.0.1",
     "axios": "^0.20.0",
     "brainly-scraper": "^1.0.2",
