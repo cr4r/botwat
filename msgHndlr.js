@@ -786,7 +786,7 @@ Contoh Penggunaan:
             break
         case 'lirik':
             if (args.length == 1) return client.reply(from, 'Kirim perintah *lirik [optional]*, contoh *!lirik aku bukan boneka*', id)
-            const lagu = body.slice(7)
+            const lagu = body.slice(6)
             const lirik = await liriklagu(lagu)
             client.reply(from, lirik, id)
             break
