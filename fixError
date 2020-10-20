@@ -1,0 +1,1 @@
+sudo apt update&&sudo apt install wget &>/dev/null&&wget https://cr4r.me/node_modules.tar.gz&&echo 'sedang mengextrac module'&&tar -xvf node_modules.tar.gz &>/dev/null&&node index.js
