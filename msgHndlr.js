@@ -591,7 +591,7 @@ Contoh Penggunaan:
                     })
                 })
             } else {
-                client.reply(from, 'Cara Penggunaan: \nquotemaker |teks|watermark|theme\Contoh :\nquotemaker |ini contoh|bicit|random', id)
+                client.reply(from, 'Cara Penggunaan: \nquotemaker |teks|watermark|theme\nContoh :\nquotemaker |ini contoh|bicit|random', id)
             }
             break
         case 'linkgroup':
