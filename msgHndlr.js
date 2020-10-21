@@ -93,8 +93,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'nama':
             var nama = msg.body.split("nama ")[1];
             var req = urlencode(nama.replace(/ /g,"+"));
-            var url = 'http://www.primbon.com/arti_nama.php?nama1='+ req +'&proses=+Submit%21+';
-            axios.get(url).then((result) => {
+            var asiap = 'http://www.primbon.com/arti_nama.php?nama1='+ req +'&proses=+Submit%21+';
+            axios.get(asiap).then((result) => {
                 let $ = cheerio.load(result.data);
                 var y = $.html().split('arti:')[1];
                 var t = y.split('method="get">')[1];
@@ -110,8 +110,8 @@ module.exports = msgHandler = async (client, message) => {
             var gh = body.split("pasangan ")[1];
             var namamu = gh.split('&')[0]
             var pasangan = gh.split('&')[1]
-            var url= 'http://www.primbon.com/kecocokan_nama_pasangan.php?nama1='+ namamu +'&nama2='+ pasangan +'&proses=+Submit%21+';
-            axios.get(url).then((result) => {
+            var pasan= 'http://www.primbon.com/kecocokan_nama_pasangan.php?nama1='+ namamu +'&nama2='+ pasangan +'&proses=+Submit%21+';
+            axios.get(pasan).then((result) => {
                 let $ = cheerio.load(result.data);
                 var y = $.html().split('<b>KECOCOKAN JODOH BERDASARKAN NAMA PASANGAN</b><br><br>')[1];
                 var t = y.split('.<br><br>')[1];
