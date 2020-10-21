@@ -1,1 +1,1 @@
-npm i cheerio fs-extra axios moment-timezone got child_process request nhentai-js nhentai-api process mathjs fetcher emoji-regex node-fetch fs-extra
+npm i cheerio fs-extra axios moment-timezone got child_process request nhentai-js nhentai-api process mathjs fetcher emoji-regex node-gtts node-fetch fs-extra @open-wa/wa-decrypt @open-wa/wa-decrypt brainly-scraper request-promise 
