@@ -1,2 +1,3 @@
-npm install gify-cli&&npm i axios&&npm i cheerio&&npm i mathjs&&npm i
+npm i cheerio fs-extra axios moment-timezone got child_process request nhentai-js nhentai-api process mathjs fetcher emoji-regex node-gtts node-fetch fs-extra @open-wa/wa-decrypt brainly-scraper request-promise translate video-url-link youtube-dl chalk gify-cli needle remove.bg tiktok-scraper @open-wa/wa-automate
 sudo apt install imagemagick -y&>/dev/null
+
