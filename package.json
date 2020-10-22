@@ -48,6 +48,7 @@
     "request-promise": "^4.2.6",
     "tiktok-scraper": "^1.3.5",
     "translate": "^1.1.2",
+    "urlencode": "^1.1.0",
     "video-url-link": "^0.1.5",
     "youtube-dl": "^3.0.2"
   }
