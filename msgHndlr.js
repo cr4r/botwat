@@ -126,7 +126,7 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'wget':
-            var pesan = body.split(' ')[1];
+            var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
             exec(`wget ${pesan} \-O media\/file\/${namaFile}`, (error, stdout) => {
                 if (error) {
