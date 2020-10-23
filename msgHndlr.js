@@ -104,7 +104,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             else if(limit.length<21){
                 var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
-                if (nomor.length<6||nomor){
+                if (nomor.length<6){
                     client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
                 }
                 else{
