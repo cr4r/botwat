@@ -111,7 +111,7 @@ module.exports = msgHandler = async (client, message) => {
                     else{
                         let messageIndex = body.indexOf(nomor) + nomor.length;
                         let message = body.slice(messageIndex, body.length);
-                        console.log(`Pesan :${message}\nNomor: ${nomor}`)
+                        console.log(`Pesan :${message}\nNomor: ${nomor+'@c.us'}`)
                         for(i=0;i<limit;i++){
                             client.sendText(nomor+'@c.us',message)
                         }
@@ -129,7 +129,7 @@ module.exports = msgHandler = async (client, message) => {
                 else{
                     let messageIndex = body.indexOf(nomor) + nomor.length;
                     let message = body.slice(messageIndex, body.length);
-                    console.log(`Pesan :${message}\nNomor: ${nomor}`)
+                    console.log(`Pesan :${message}\nNomor: ${nomor+'@c.us'}`)
                     for(i=0;i<limit;i++){
                         client.sendText(nomor+'@c.us',message)
                     }
