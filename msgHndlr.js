@@ -94,8 +94,28 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
+        case 'spam':
+            var limit = body.split(' ')[1]
+            if (limit.length>20&&limit.length<=30){
+                client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
+            }
+            else if(limit.length>=31&&limit.length<=50){
+                client.reply(from, 'Hadeh lu ada otak gak\nBatasan spam hanya 20 pesan',id)
+            }
+            else{
+                var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
+                if (nomor.length<6||nomor){
+                    client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
+                }
+                else{
+                    let messageIndex = body.indexOf(nomor) + nomor.length;
+                    let message = body.slice(messageIndex, body.length);
+                    client.sendText(nomor+'@c.us',message)
+                }
+            }
+            break
         case 'nmap':
-            var pesan = body.slice(5).replace('-','\-');
+            var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             exec(`nmap ${pesan}`, (error, stdout) => {
                 if (error) {
                     client.reply(from,`ERROR => ${error.message}`,id);
@@ -106,7 +126,7 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'wget':
-            var pesan = body.slice(5);
+            var pesan = body.split(' ')[1];
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
             exec(`wget ${pesan} \-O media\/file\/${namaFile}`, (error, stdout) => {
                 if (error) {
