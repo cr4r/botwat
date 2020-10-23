@@ -148,7 +148,7 @@ module.exports = msgHandler = async (client, message) => {
                 var memfree = stdout.replace('\n','')
                 exec('cat \/proc\/meminfo \| grep MemTotal',(error,stdout,stderr)=>{
                     var memtotal = stdout.replace('\n','')
-                    client.reply(from, `Hallo aku bot dari cr4r\n*Jangan lupa donasi ya :)*\nBattery HPku tersisa ${battery}\%\nPenggunaan RAM : ${memfree.replace('MemFree\:          ','')}\\${memtotal.replace('MemTotal\:        ','')}`,id)
+                    client.reply(from, `Hallo aku bot dari cr4r\n*Jangan lupa donasi ya :)*\nBattery HPku tersisa ${battery}\%\nPenggunaan RAM : ${memfree.replace('MemFree\:','').replace(' ','')}\\${memtotal.replace('MemTotal\:','').replace(' ','')}`,id)
                 });
             });
             break
