@@ -102,7 +102,7 @@ module.exports = msgHandler = async (client, message) => {
             else if(limit.length>=31&&limit.length<=50){
                 client.reply(from, 'Hadeh lu ada otak gak\nBatasan spam hanya 20 pesan',id)
             }
-            else{
+            else if(limit.length<21){
                 var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
                 if (nomor.length<6||nomor){
                     client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
@@ -112,6 +112,9 @@ module.exports = msgHandler = async (client, message) => {
                     let message = body.slice(messageIndex, body.length);
                     client.sendText(nomor+'@c.us',message)
                 }
+            }
+            else{
+                client.reply(from,'hemmm eror gan',id)
             }
             break
         case 'nmap':
