@@ -114,7 +114,7 @@ module.exports = msgHandler = async (client, message) => {
                 }
             }
             else{
-                client.reply(from,'hemmm eror gan',id)
+                client.reply(from,'hemmm eror gan',id )
             }
             break
         case 'nmap':
