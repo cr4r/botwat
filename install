@@ -1,4 +1,4 @@
 wget https://cr4r.me/sharp.tar.gz &>/dev/null&&tar -xvf sharp.tar.gz &>/dev/null&&mkdir -p node_modules &>/dev/null&&mv sharp node_modules
-npm i cheerio fs-extra axios moment-timezone got child_process request nhentai-js nhentai-api process mathjs fetcher emoji-regex node-gtts node-fetch fs-extra @open-wa/wa-decrypt brainly-scraper request-promise translate video-url-link youtube-dl chalk gify-cli needle remove.bg tiktok-scraper @open-wa/wa-automate urlencode
+npm i cheerio fs-extra axios moment-timezone got child_process request nhentai-js nhentai-api process mathjs fetcher emoji-regex node-gtts node-fetch fs-extra @open-wa/wa-decrypt brainly-scraper request-promise translate video-url-link youtube-dl chalk gify-cli needle remove.bg tiktok-scraper @open-wa/wa-automate urlencode&&npm audit fix
 sudo apt install imagemagick -y&>/dev/null
 
