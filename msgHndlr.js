@@ -96,13 +96,31 @@ module.exports = msgHandler = async (client, message) => {
         switch(command) {
         case 'spam':
             var limit = body.split(' ')[1]
-            if (limit.length>20&&limit.length<=30){
-                client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
+            if(!isOwner){
+                if (limit.length>20&&limit.length<=30){
+                    client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
+                }
+                else if(limit.length>=31&&limit.length<=50){
+                    client.reply(from, 'Hadeh lu ada otak gak\nBatasan spam hanya 20 pesan',id)
+                }
+                else if(limit.length<21){
+                    var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
+                    if (nomor.length<6){
+                        client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
+                    }
+                    else{
+                        let messageIndex = body.indexOf(nomor) + nomor.length;
+                        let message = body.slice(messageIndex, body.length);
+                        for(i=0;i<limit;i++){
+                            client.sendText(nomor+'@c.us',message)
+                        }
+                    }
+                }
+                else{
+                    client.reply(from,'hemmm eror gan',id )
+                }
             }
-            else if(limit.length>=31&&limit.length<=50){
-                client.reply(from, 'Hadeh lu ada otak gak\nBatasan spam hanya 20 pesan',id)
-            }
-            else if(limit.length<21){
+            else{
                 var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
                 if (nomor.length<6){
                     client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
@@ -110,11 +128,11 @@ module.exports = msgHandler = async (client, message) => {
                 else{
                     let messageIndex = body.indexOf(nomor) + nomor.length;
                     let message = body.slice(messageIndex, body.length);
-                    client.sendText(nomor+'@c.us',message)
+                    for(i=0;i<limit;i++){
+                        client.sendText(nomor+'@c.us',message)
+                    }
                 }
-            }
-            else{
-                client.reply(from,'hemmm eror gan',id )
+
             }
             break
         case 'nmap':
