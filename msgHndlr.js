@@ -135,6 +135,7 @@ module.exports = msgHandler = async (client, message) => {
                 else{
                     client.sendFile(from, `./media/file/${namaFile}`, `${namaFile}`, id)
                     client.reply(`${stdout}`)
+                    exec(`rm ./media/file/${namaFile}`)
                 }
             });
             break
