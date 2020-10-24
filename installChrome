@@ -1,2 +1,2 @@
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &>/dev/null&&sudo dpkg -i google-chrome* &>/dev/null
-sudo apt update &>/dev/null&&sudo apt --fix-broken install &>/dev/null
+sudo apt update &>/dev/null&&sudo apt --fix-broken install -y &>/dev/null
