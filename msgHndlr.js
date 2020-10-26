@@ -456,8 +456,8 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                             console.log(linknya)
                             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`
-                            client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Title* : ${judul}\n➸\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            client.sendFileFromUrl(from, linknya, `${judul}.mp3`,'', id).catch(() => client.reply(from, mess.error.Yt3, id))
+                            client.sendFileFromUrl(from, imag, 'thumb.jpg', `*Title* : ${judul}\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                            client.sendFileFromUrl(from, linknya, `${judul}.mp3`,' ', id).catch(() => client.reply(from, mess.error.Yt3, id))
                         }
                         else{
                             console.log('error gans');
