@@ -463,7 +463,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                 // console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
                                 try{
                                     (async () => {
-                                        await client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`, `Silahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id);
+                                        await client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`, {caption: `Silahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.` }, id);
                                         // console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
                                         client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
                                         os.execCommand(`rm \'media/file/${judul}.mp3\'`)
