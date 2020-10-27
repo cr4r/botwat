@@ -466,9 +466,8 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                    })
                 }
                 else{
-                    return 'error'
+                    client.reply('Error gans :)\n\n'+error)
                 }
-                // console.log(ids)
             })
             break
 
