@@ -462,27 +462,26 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                 os.execCommand(`wget -O media/file/thumb.jpg ${imag}`).then(res=> {
                                     console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
                                     try{
-                                        client.sendImage(from, `media/file/thumb.jpg`, `thumb.jpg`, `Judul : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                        client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`, `Silahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id);
                                         try{
-                                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                                            client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
-                                            os.execCommand(`rm \'media/file/${judul}.mp3\'`)
-                                        } catch(err){
+                                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`);
+                                            client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id);
+                                            os.execCommand(`rm \'media/file/${judul}.mp3\'`);
+                                        } catch (err) {
                                             client.reply(`error gan saat mengirim lagu ${judul}.mp3\n\n${err}`)
                                         }
-                                    }catch (err){
+                                    }catch (err) {
                                         client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${err}`)
                                     }
-                                        
                                 }).catch(err=> {client.reply(`error gan saat ambil gambar\n\n${err}`)});
                             }).catch(err=> {client.reply(`error gan saat ambil file dari link ${linknya}\n\n${err}`)});
                         }
                         else{
-                            console.log('error gans');
+                            client.reply('link tidak valid');
                         }
                     })
                 }else{
-                    client.repl('error gan')
+                    client.reply('link tidak valid')
                 }
             })
 
