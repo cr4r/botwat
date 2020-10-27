@@ -484,22 +484,6 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                     client.reply('link tidak valid')
                 }
             })
-
-            // try {
-            //     client.reply(from, mess.wait, id)
-            //     const resp = await get.get('https://mhankbarbar.herokuapp.com/api/yta?url='+ args[1]).json()
-            //     if (resp.error) {
-            //         client.reply(from, resp.error, id)
-            //     } else {
-            //         const { title, thumb, filesize, result } = await resp
-            //         if (Number(filesize.split(' MB')[0]) >= 30.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
-                        // client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)            //         // 
-            //         await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch(() => client.reply(from, mess.error.Yt3, id))
-            //     }
-            // } catch (err) {
-            //     client.sendText(ownerNumber, 'Error ytmp3 : '+ err)
-            //     client.reply(from, mess.error.Yt3, id)
-            // }
             break
         case 'ytmp4':
             let isLin = args[1].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
