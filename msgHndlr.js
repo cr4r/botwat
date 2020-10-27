@@ -459,12 +459,12 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             os.execCommand(`wget ${imag}`)
                             console.log(`SEDANG MENGAMBIL FILE ${judul}.mp3`)
                             os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
-                                // console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
-                                // console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
+                                console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
+                                console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
                                 try{
-                                    client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`,`➸ *Title* : ${judul}\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id);
-                                    // console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                                    client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
+                                    client.sendImage(from, 'media/file/thumb.jpg', 'muehehe.jpg','➸ *Judul* : '+judul+'\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.', id);
+                                    console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
+                                    client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}.mp3`, id)
                                     os.execCommand('rm \''+'media/file/'+judul+'.mp3\'')
                                 } catch(error) {
                                     client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${error}`)
