@@ -506,8 +506,8 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                         if (!error && response.statusCode == 200) {
                             linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                             console.log(linknya)
-                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                            client.sendFileFromUrl(from, linknya, `${judul}.mp3`, `➸ *Judul* : ${judul}`, id)
+                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp4`)
+                            client.sendFileFromUrl(from, linknya, `${judul}.mp4`, `➸ *Judul* : ${judul}`, id)
                         }
                         else{
                             linknya = 'error gans';
