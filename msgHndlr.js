@@ -473,7 +473,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                 }).catch(error=>{
                                     client.reply(`error gan saat ambil file dari link ${linknya}\n\n${error}`)
                                 })
-                            })();
+                            })()
                         }else{
                             client.reply('link tidak valid');
                         }
