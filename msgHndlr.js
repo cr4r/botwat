@@ -466,7 +466,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                         try{
                                             console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
                                             client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
-                                            os.execCommand(`rm ./media/file/${judul}.mp3`)
+                                            os.execCommand(`rm \'media/file/${judul}.mp3\'`)
                                         } catch(err){
                                             client.reply(`error gan saat mengirim lagu ${judul}.mp3\n\n${err}`)
                                         }
