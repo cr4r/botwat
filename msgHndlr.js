@@ -530,61 +530,58 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
 
         case 'play':
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
+            let isLinks = args[2].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
+            if (isLinks) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*', id)
             let namaLagu = body.slice(5);
             var keyword = namaLagu.replace(/ /g, "+");
-            try{
-                if (namaLagu.match('https://youtube.com/').toString() == 'https://youtube.com/'||namaLagu.match('https://youtu.be/').toString() == 'https://youtu.be/') return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
+            function foreach(arr, func){
+                for(var i in arr){
+                    func(i, arr[i]);
+                }
             }
-            catch(error){
-                function foreach(arr, func){
-                    for(var i in arr){
-                      func(i, arr[i]);
-                    }
+            try {
+                var idyt = yts.searchYoutube(keyword)
+                linkk = `https://youtu.be/${idyt[0]}`
+                console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+linkk)
+                var headers = {
+                    'User-Agent':       'Super Agent/0.0.1',
+                    'Content-Type':     'application/x-www-form-urlencoded'
                 }
-                try {
-                    var idyt = yts.searchYoutube(keyword)
-                    linkk = `https://youtu.be/${idyt[0]}`
-                    console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+urlll)
-                    var headers = {
-                        'User-Agent':       'Super Agent/0.0.1',
-                        'Content-Type':     'application/x-www-form-urlencoded'
-                    }
-                    var options = {
-                        url: 'https://www.y2mate.com/mates/mp3/ajax',
-                        method: 'POST',
-                        headers: headers,
-                        form: {'url': linkk, 'q_auto': 1, 'ajax':1}
-                    }
-                    request(options, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            // Print out the response body
-                            var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                            var ids = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                            var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                            var down = {
-                                url: 'https://www.y2mate.com/mates/mp3Convert',
-                                method: 'POST',
-                                headers: headers,
-                                form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'mp3_type':128,'token':""}
+                var options = {
+                    url: 'https://www.y2mate.com/mates/mp3/ajax',
+                    method: 'POST',
+                    headers: headers,
+                    form: {'url': linkk, 'q_auto': 1, 'ajax':1}
+                }
+                request(options, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        // Print out the response body
+                        var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                        var ids = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                        var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                        var down = {
+                            url: 'https://www.y2mate.com/mates/mp3Convert',
+                            method: 'POST',
+                            headers: headers,
+                            form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'mp3_type':128,'token':""}
+                        }
+                        request(down, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                console.log(linknya)
                             }
-                            request(down, function (error, response, body) {
-                                if (!error && response.statusCode == 200) {
-                                    linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                    console.log(linknya)
-                                }
-                                else{
-                                    client.reply('Error gans :)\n\n'+error)
-                                }
-                            })
-                        }
-                        else{
-                            client.reply('Error gans :)\n\n'+error)
-                        }
-                    })
+                            else{
+                                client.reply('Error gans :)\n\n'+error)
+                            }
+                        })
+                    }
+                    else{
+                        client.reply('Error gans :)\n\n'+error)
+                    }
+                })
 
-                } catch (err) {
-                    client.reply(ownerNumber, 'Error command play : '+ err)
-                }
+            } catch (err) {
+                client.reply(ownerNumber, 'Error command play : '+ err)
             }
             break
 
