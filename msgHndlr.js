@@ -437,7 +437,9 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 headers: headers,
                 form: {'url': linkk, 'q_auto': 1, 'ajax':1}
             }
-
+            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
+            console.log(`SEDANG MENGIRIM GAMBAR thum.jpg`)
+            client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
             // // Start the request
             request(options, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
@@ -455,24 +457,19 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                         if (!error && response.statusCode == 200) {
                             linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                             console.log(linknya)
-                            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
-                            try{
-                                console.log(`SEDANG MENGIRIM GAMBAR thum.jpg`)
-                                client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Title* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                                console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                                client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
-                                os.execCommand(`rm \'media/file/${judul}.mp3\'`)
-                            } catch(error) {
-                                client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${error}`)
-                            }
-                        }else{
-                            client.reply('link tidak valid');
+                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
+                            client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
                         }
-                    })
-                }else{
-                    client.reply('link tidak valid')
+                        else{
+                            linknya = 'error gans';
+                        }
+                   })
                 }
-            });
+                else{
+                    return 'error'
+                }
+                // console.log(ids)
+            })
             break
 
         case 'ytmp4':
