@@ -462,11 +462,11 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                 os.execCommand(`wget -O media/file/thumb.jpg ${imag}`).then(res=> {
                                     console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
                                     try{
-                                        client.sendImage(from, `media/file/thumb.jpg`, `thumb.jpg`, `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                        client.sendImage(from, `media/file/thumb.jpg`, `thumb.jpg`, `Judul : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                                         try{
                                             console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
                                             client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
-                                            os.execCommand(`rm \'media/file/${judul}.mp3\'`)
+                                            os.execCommand(`rm media/file/\'${judul}.mp3\'`)
                                         } catch(err){
                                             client.reply(`error gan saat mengirim lagu ${judul}.mp3\n\n${err}`)
                                         }
