@@ -439,7 +439,6 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
             }
             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
             console.log(`SEDANG MENGIRIM GAMBAR thum.jpg`)
-            client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
             // // Start the request
             request(options, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
@@ -447,6 +446,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                     var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
                     var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
                     var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                    client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                     var down = {
                         url: 'https://www.y2mate.com/mates/mp3Convert',
                         method: 'POST',
