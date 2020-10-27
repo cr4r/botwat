@@ -457,7 +457,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             console.log(linknya)
                             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
                             console.log(`SEDANG MENGAMBIL FILE ${judul}.mp3`)
-                            os.execCommand(`wget -O media/file/${judul}.mp3 ${linknya}`).then(res=> {
+                            os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
                                 console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
                                 os.execCommand(`wget -O media/file/thumb.jpg ${imag}`).then(res=> {
                                     console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
