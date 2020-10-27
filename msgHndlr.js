@@ -427,6 +427,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
             if (!isLinks) return client.reply(from, mess.error.Iv, id)
             var piliha = body.split(' ')[1]
             var linkk = body.split(' ')[2]
+            console.log(linkk)
             var videoid = linkk.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
             var headers = {
                 'User-Agent':       'Super Agent/0.0.1',
