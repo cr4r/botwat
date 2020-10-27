@@ -456,11 +456,14 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                             console.log(linknya)
                             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`
-                            exec(`wget -O media/file/thumb.jpg ${imag}`)
-                            exec(`wget -O media/file/${judul}.mp3 ${linknya}`)
-                            client.sendImage(from, `./media/file/thumb.jpg`, `thumb.jpg`, '➸ *Title* : ${title}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.', id)
-                            client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
-                            exec(`rm ./media/file/${judul}.mp3`)
+                            os.execCommand(`wget -O media/file/${judul}.mp3 ${linknya}`).then(res=> {
+                                os.execCommand(`wget -O media/file/thumb.jpg ${imag}`).then(res=> {
+                                    client.sendImage(from, `./media/file/thumb.jpg`, `thumb.jpg`, '➸ *Title* : ${title}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.', id).then(res=> {
+                                        client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id).catch(err=> {client.reply(`error gan saat mengirim lagu ${judul}.mp3\n\n${err}`)
+                                        os.execCommand(`rm ./media/file/${judul}.mp3`)
+                                    }).catch(err=> {client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${err}`)
+                                }).catch(err=> {client.reply(`error gan saat ambil gambar\n\n${err}`)
+                            }).catch(err=> {client.reply(`error gan saat ambil file dari link ${linknya}\n\n${err}`)
                         }
                         else{
                             console.log('error gans');
