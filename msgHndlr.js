@@ -457,9 +457,9 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             console.log(linknya)
                             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`
                             exec(`wget -O media/file/thumb.jpg ${imag}`)
-                            exec(`wget ${linknya} -O media/file/${judul.mp3}`)
+                            exec(`wget -O media/file/${judul}.mp3 ${linknya}`)
                             client.sendImage(from, `./media/file/thumb.jpg`, `thumb.jpg`, '➸ *Title* : ${title}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.', id)
-                            client.sendFile(from, `./media/file/${judul}.mp3`, `${namaFile}`, id)
+                            client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
                             exec(`rm ./media/file/${judul}.mp3`)
                         }
                         else{
