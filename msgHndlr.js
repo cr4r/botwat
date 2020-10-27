@@ -455,7 +455,8 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                         if (!error && response.statusCode == 200) {
                             linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                             console.log(linknya)
-                            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`
+                            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
+                            os.execCommand(`wget ${imag}`)
                             console.log(`SEDANG MENGAMBIL FILE ${judul}.mp3`)
                             (async () => {
                                 os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
