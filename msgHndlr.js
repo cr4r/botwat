@@ -500,7 +500,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                         url: 'https://www.y2mate.com/mates/Convert',
                         method: 'POST',
                         headers: headers,
-                        form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'ajax':1,'token':'','ftype':'mp4','fquality':'360'}
+                        form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'ajax':1,'token':'','ftype':'mp4','fquality':'360'}
                     }
                     request(down, function (error, response, body) {
                         if (!error && response.statusCode == 200) {
