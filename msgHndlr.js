@@ -522,6 +522,9 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 else{
                     client.reply('Maaf gans seharusnya\nyt mp3 linkyoutubenya\natau\nyt mp4 linkyoutubenya')
                 }
+            } catch (err) {
+                client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
+                client.reply(from, mess.error.Yt4, id)
             }
             break
 
