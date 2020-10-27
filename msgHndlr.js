@@ -456,7 +456,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                             console.log(linknya)
                             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`
-                            exec(`wget ${image} -O media/file/thumb.jpg`)
+                            exec(`wget ${imag} -O media/file/thumb.jpg`)
                             exec(`wget ${linknya} -O media/file/${judul.mp3}`)
                             client.sendImage(from, `./media/file/${judul}.jpg`, `thumb.jpg`, '➸ *Title* : ${title}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.', id)
                             client.sendFile(from, `./media/file/${judul}.mp3`, `${namaFile}`, id)
