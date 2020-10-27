@@ -451,36 +451,38 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                         headers: headers,
                         form: {'type': 'youtube', '_id': kid, 'v_id':id, 'mp3_type':128,'token':""}
                     }
-                    request(down, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                            console.log(linknya)
-                            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
-                            console.log(`SEDANG MENGAMBIL FILE ${judul}.mp3`)
-                            os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
-                                console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
-                                os.execCommand(`wget -O media/file/thumb.jpg ${imag}`).then(res=> {
-                                    console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
-                                    try{
-                                        await client.sendImage(from, `media/file/thumb.jpg`, `thumb.jpg`, `Judul : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                    (async () => {
+                        request(down, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                console.log(linknya)
+                                var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
+                                console.log(`SEDANG MENGAMBIL FILE ${judul}.mp3`)
+                                os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
+                                    console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
+                                    os.execCommand(`wget -O media/file/thumb.jpg ${imag}`).then(res=> {
+                                        console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
                                         try{
-                                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                                            client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
-                                            os.execCommand(`rm media/file/\'${judul}.mp3\'`)
-                                        } catch(err){
-                                            client.reply(`error gan saat mengirim lagu ${judul}.mp3\n\n${err}`)
+                                            await client.sendImage(from, `media/file/thumb.jpg`, `thumb.jpg`, `Judul : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                            try{
+                                                console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
+                                                await client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
+                                                os.execCommand(`rm media/file/\'${judul}.mp3\'`)
+                                            } catch(err){
+                                                client.reply(`error gan saat mengirim lagu ${judul}.mp3\n\n${err}`)
+                                            }
+                                        }catch (err){
+                                            client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${err}`)
                                         }
-                                    }catch (err){
-                                        client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${err}`)
-                                    }
-                                        
-                                }).catch(err=> {client.reply(`error gan saat ambil gambar\n\n${err}`)});
-                            }).catch(err=> {client.reply(`error gan saat ambil file dari link ${linknya}\n\n${err}`)});
-                        }
-                        else{
-                            console.log('error gans');
-                        }
-                    })
+                                            
+                                    }).catch(err=> {client.reply(`error gan saat ambil gambar\n\n${err}`)});
+                                }).catch(err=> {client.reply(`error gan saat ambil file dari link ${linknya}\n\n${err}`)});
+                            }
+                            else{
+                                console.log('error gans');
+                            }
+                        })
+                    })();
                 }else{
                     client.repl('error gan')
                 }
