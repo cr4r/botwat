@@ -461,7 +461,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                 client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Title* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                                 console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
                                 client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
-                                os.execCommand(`rm \'media/file/${judul.mp3\'`)
+                                os.execCommand(`rm \'media/file/${judul}.mp3\'`)
                             } catch(error) {
                                 client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${error}`)
                             }
