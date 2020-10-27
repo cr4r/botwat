@@ -539,20 +539,20 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                     func(i, arr[i]);
                 }
             }
+            var idyt = yts.searchYoutube(keyword)
+            linkk = `https://youtu.be/${idyt[0]}`
+            console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+linkk)
+            var headers = {
+                'User-Agent':       'Super Agent/0.0.1',
+                'Content-Type':     'application/x-www-form-urlencoded'
+            }
+            var options = {
+                url: 'https://www.y2mate.com/mates/mp3/ajax',
+                method: 'POST',
+                headers: headers,
+                form: {'url': linkk, 'q_auto': 1, 'ajax':1}
+            }
             try {
-                var idyt = yts.searchYoutube(keyword)
-                linkk = `https://youtu.be/${idyt[0]}`
-                console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+linkk)
-                var headers = {
-                    'User-Agent':       'Super Agent/0.0.1',
-                    'Content-Type':     'application/x-www-form-urlencoded'
-                }
-                var options = {
-                    url: 'https://www.y2mate.com/mates/mp3/ajax',
-                    method: 'POST',
-                    headers: headers,
-                    form: {'url': linkk, 'q_auto': 1, 'ajax':1}
-                }
                 request(options, function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         // Print out the response body
