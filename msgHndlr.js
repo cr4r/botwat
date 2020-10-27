@@ -423,103 +423,105 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
             })
             break
         case 'yt':
-            let isLinks = args[2].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
-            if (!isLinks) return client.reply(from, mess.error.Iv, id)
             var piliha = body.split(' ')[1]
             var linkk = body.split(' ')[2]
             console.log(linkk)
-            var videoid = linkk.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
             var headers = {
                 'User-Agent':       'Super Agent/0.0.1',
                 'Content-Type':     'application/x-www-form-urlencoded'
             }
-            if(piliha === 'mp3'){
-                var options = {
-                    url: 'https://www.y2mate.com/mates/mp3/ajax',
-                    method: 'POST',
-                    headers: headers,
-                    form: {'url': linkk, 'q_auto': 1, 'ajax':1}
-                }
-                try{
-                    request(options, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            // Print out the response body
-                            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
-                            var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                            var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                            var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                            client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            var down = {
-                                url: 'https://www.y2mate.com/mates/mp3Convert',
-                                method: 'POST',
-                                headers: headers,
-                                form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+            try{
+                let isLinks = args[2].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
+                if (!isLinks) return client.reply(from, mess.error.Iv, id)
+                var videoid = linkk.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
+                if(piliha === 'mp3'){
+                    var options = {
+                        url: 'https://www.y2mate.com/mates/mp3/ajax',
+                        method: 'POST',
+                        headers: headers,
+                        form: {'url': linkk, 'q_auto': 1, 'ajax':1}
+                    }
+                    try{
+                        request(options, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                // Print out the response body
+                                var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
+                                var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                var down = {
+                                    url: 'https://www.y2mate.com/mates/mp3Convert',
+                                    method: 'POST',
+                                    headers: headers,
+                                    form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+                                }
+                                request(down, function (error, response, body) {
+                                    if (!error && response.statusCode == 200) {
+                                        linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                        console.log(linknya)
+                                        console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
+                                        client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
+                                    }
+                                    else{
+                                        linknya = 'error gans';
+                                    }
+                               })
                             }
-                            request(down, function (error, response, body) {
-                                if (!error && response.statusCode == 200) {
-                                    linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                    console.log(linknya)
-                                    console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                                    client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
-                                }
-                                else{
-                                    linknya = 'error gans';
-                                }
-                           })
-                        }
-                        else{
-                            client.reply('Error gans :)\n\n'+error)
-                        }
-                    })
-                } catch (err) {
-                    client.sendText(ownerNumber, 'Error ytmp3 : '+ err)
-                    client.reply(from, mess.error.Yt4, id)
-                }
-            }
-            else if(piliha === 'mp4'){
-                var options = {
-                    url: 'https://www.y2mate.com/mates/analyze/ajax',
-                    method: 'POST',
-                    headers: headers,
-                    form: {'url': linkk, 'q_auto': 1, 'ajax':1}
-                }
-                try{
-                    request(options, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            // Print out the response body
-                            var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                            var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                            var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                            // client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            var down = {
-                                url: 'https://www.y2mate.com/mates/convert',
-                                method: 'POST',
-                                headers: headers,
-                                form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'ajax':1,'token':"",'ftype':'mp4','fquality':'360'}
+                            else{
+                                client.reply('Error gans :)\n\n'+error)
                             }
-                            request(down, function (error, response, body) {
-                                if (!error && response.statusCode == 200) {
-                                    linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                    console.log(linknya)
-                                    console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp4`)
-                                    client.sendFileFromUrl(from, linknya, `${judul}.mp4`, `➸ *Judul* : ${judul}`, id)
-                                }
-                                else{
-                                    linknya = 'error gans';
-                                }
-                           })
-                        }
-                        else{
-                            client.reply('Error gans :)\n\n'+error)
-                        }
-                    })
-                } catch (err) {
-                    client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
-                    client.reply(from, mess.error.Yt4, id)
+                        })
+                    } catch (err) {
+                        client.sendText(ownerNumber, 'Error ytmp3 : '+ err)
+                        client.reply(from, mess.error.Yt4, id)
+                    }
                 }
-            }
-            else{
-                client.reply('Maaf gans seharusnya\nyt mp3 linkyoutubenya\natau\nyt mp4 linkyoutubenya')
+                else if(piliha === 'mp4'){
+                    var options = {
+                        url: 'https://www.y2mate.com/mates/analyze/ajax',
+                        method: 'POST',
+                        headers: headers,
+                        form: {'url': linkk, 'q_auto': 1, 'ajax':1}
+                    }
+                    try{
+                        request(options, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                // Print out the response body
+                                var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                // client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                var down = {
+                                    url: 'https://www.y2mate.com/mates/convert',
+                                    method: 'POST',
+                                    headers: headers,
+                                    form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'ajax':1,'token':"",'ftype':'mp4','fquality':'360'}
+                                }
+                                request(down, function (error, response, body) {
+                                    if (!error && response.statusCode == 200) {
+                                        linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                        console.log(linknya)
+                                        console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp4`)
+                                        client.sendFileFromUrl(from, linknya, `${judul}.mp4`, `➸ *Judul* : ${judul}`, id)
+                                    }
+                                    else{
+                                        client.reply('Error gans :)\n\n'+error)
+                                    }
+                               })
+                            }
+                            else{
+                                client.reply('Error gans :)\n\n'+error)
+                            }
+                        })
+                    } catch (err) {
+                        client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
+                        client.reply(from, mess.error.Yt4, id)
+                    }
+                }
+                else{
+                    client.reply('Maaf gans seharusnya\nyt mp3 linkyoutubenya\natau\nyt mp4 linkyoutubenya')
+                }
             }
             break
 
@@ -539,21 +541,45 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 (async () => {
                     try {
                         var idyt = await yts.searchYoutube(keyword);
-                        urlll = `https://youtu.be/${idyt[0]}`
+                        linkk = `https://youtu.be/${idyt[0]}`
                         console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+urlll)
-                        const resp = await get.get(`https://mhankbarbar.herokuapp.com/api/yta?url=${urlll}`).json()
-                        if (resp.error) {
-                            client.reply(from, resp.error, id)
+                        var headers = {
+                            'User-Agent':       'Super Agent/0.0.1',
+                            'Content-Type':     'application/x-www-form-urlencoded'
                         }
-                        else if(idyt[0]==undefined){
-                            client.reply(from, 'Maaf kak, bot nya error.\nSilahkan chat nomor ini dan beritahu kalau play nya error',id)
+                        var options = {
+                            url: 'https://www.y2mate.com/mates/mp3/ajax',
+                            method: 'POST',
+                            headers: headers,
+                            form: {'url': linkk, 'q_auto': 1, 'ajax':1}
                         }
-                        else {
-                            const { title, thumb, filesize, result } = await resp
-                            if (Number(filesize.split(' MB')[0]) >= 50.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
-                            client.sendFileFromUrl(from, thumb, 'thumb.jpg', `➸ *Title* : ${title}\n➸ *Filesize* : ${filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                            await client.sendFileFromUrl(from, result, `${title}.mp3`, '', id).catch((error) => client.reply(from, error, id))
-                        }
+                        request(options, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                // Print out the response body
+                                var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                var ids = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                var down = {
+                                    url: 'https://www.y2mate.com/mates/mp3Convert',
+                                    method: 'POST',
+                                    headers: headers,
+                                    form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'mp3_type':128,'token':""}
+                                }
+                                request(down, function (error, response, body) {
+                                    if (!error && response.statusCode == 200) {
+                                        linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                        console.log(linknya)
+                                    }
+                                    else{
+                                        client.reply('Error gans :)\n\n'+error)
+                                    }
+                               })
+                            }
+                            else{
+                                client.reply('Error gans :)\n\n'+error)
+                            }
+                        })
+
                     } catch (err) {
                         client.reply(ownerNumber, 'Error command play : '+ err)
                     }
