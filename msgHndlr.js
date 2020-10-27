@@ -443,13 +443,13 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 if (!error && response.statusCode == 200) {
                     // Print out the response body
                     var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                    var id = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                    var ids = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
                     var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
                     var down = {
                         url: 'https://www.y2mate.com/mates/mp3Convert',
                         method: 'POST',
                         headers: headers,
-                        form: {'type': 'youtube', '_id': kid, 'v_id':id, 'mp3_type':128,'token':""}
+                        form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'mp3_type':128,'token':""}
                     }
                     request(down, function (error, response, body) {
                         if (!error && response.statusCode == 200) {
@@ -462,7 +462,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                                 // console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
                                 // console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
                                 try{
-                                    client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`, id);
+                                    client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`,`➸ *Title* : ${judul}\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id);
                                     // console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
                                     client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
                                     os.execCommand('rm \''+'media/file/'+judul+'.mp3\'')
