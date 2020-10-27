@@ -474,20 +474,68 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
         case 'ytmp4':
             let isLin = args[1].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
             if (!isLin) return client.reply(from, mess.error.Iv, id)
-            try {
-                client.reply(from, mess.wait, id)
-                const ytv = await get.get('https://mhankbarbar.herokuapp.com/api/ytv?url='+ args[1]).json()
-                if (ytv.error) {
-                    client.reply(from, ytv.error, id)
-                } else {
-                    if (Number(ytv.filesize.split(' MB')[0]) > 40.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
-                    client.sendFileFromUrl(from, ytv.thumb, 'thumb.jpg', `➸ *Title* : ${ytv.title}\n➸ *Filesize* : ${ytv.filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                    await client.sendFileFromUrl(from, ytv.result, `${ytv.title}.mp4`, '', id).catch(() => client.reply(from, mess.error.Yt4, id))
-                }
-            } catch (err) {
-                client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
-                client.reply(from, mess.error.Yt4, id)
+            var linkk = body.split(' ')[1]
+            var videoid = linkk.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
+            var headers = {
+                'User-Agent':       'Super Agent/0.0.1',
+                'Content-Type':     'application/x-www-form-urlencoded'
             }
+            var options = {
+                url: 'https://www.y2mate.com/mates/mp3/ajax',
+                method: 'POST',
+                headers: headers,
+                form: {'url': linkk, 'q_auto': 1, 'ajax':1}
+            }
+            var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
+            console.log(`SEDANG MENGIRIM GAMBAR thum.jpg`)
+            // // Start the request
+            request(options, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    // Print out the response body
+                    var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                    var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                    var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                    // client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                    var down = {
+                        url: 'https://www.y2mate.com/mates/mp3Convert',
+                        method: 'POST',
+                        headers: headers,
+                        form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+                    }
+                    request(down, function (error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                            console.log(linknya)
+                            console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
+                            client.sendFileFromUrl(from, linknya, `${judul}.mp3`, `➸ *Judul* : ${judul}`, id)
+                        }
+                        else{
+                            linknya = 'error gans';
+                        }
+                   })
+                }
+                else{
+                    client.reply('Error gans :)\n\n'+error)
+                }
+            })
+
+
+
+
+            // try {
+            //     client.reply(from, mess.wait, id)
+            //     const ytv = await get.get('https://mhankbarbar.herokuapp.com/api/ytv?url='+ args[1]).json()
+            //     if (ytv.error) {
+            //         client.reply(from, ytv.error, id)
+            //     } else {
+            //         if (Number(ytv.filesize.split(' MB')[0]) > 40.00) return client.reply(from, 'Maaf durasi video sudah melebihi batas maksimal!', id)
+            //         client.sendFileFromUrl(from, ytv.thumb, 'thumb.jpg', `➸ *Title* : ${ytv.title}\n➸ *Filesize* : ${ytv.filesize}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+            //         await client.sendFileFromUrl(from, ytv.result, `${ytv.title}.mp4`, '', id).catch(() => client.reply(from, mess.error.Yt4, id))
+            //     }
+            // } catch (err) {
+            //     client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
+            //     client.reply(from, mess.error.Yt4, id)
+            // }
             break
 
         case 'play':
