@@ -481,7 +481,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 'Content-Type':     'application/x-www-form-urlencoded'
             }
             var options = {
-                url: 'https://www.y2mate.com/mates/mp3/ajax',
+                url: 'https://www.y2mate.com/mates/analyze/ajax',
                 method: 'POST',
                 headers: headers,
                 form: {'url': linkk, 'q_auto': 1, 'ajax':1}
@@ -497,10 +497,10 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                     var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
                     // client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                     var down = {
-                        url: 'https://www.y2mate.com/mates/mp3Convert',
+                        url: 'https://www.y2mate.com/mates/Convert',
                         method: 'POST',
                         headers: headers,
-                        form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+                        form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'ajax':1,'token':'','ftype':'mp4','fquality':'360'}
                     }
                     request(down, function (error, response, body) {
                         if (!error && response.statusCode == 200) {
