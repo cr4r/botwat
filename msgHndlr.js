@@ -457,20 +457,22 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                             console.log(linknya)
                             var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`
                             console.log(`SEDANG MENGAMBIL FILE ${judul}.mp3`)
-                            os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
-                                console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
-                                console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
-                                try{
-                                    client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`, `Silahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id);
-                                    console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
-                                    client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
-                                    os.execCommand(`rm \'media/file/${judul}.mp3\'`)
-                                } catch(error) {
-                                    client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${error}`)
-                                }
-                            }).catch(error=>{
-                                client.reply(`error gan saat ambil file dari link ${linknya}\n\n${error}`)
-                            })
+                            (async () => {
+                                os.execCommand(`wget -O \'media/file/${judul}.mp3\' ${linknya}`).then(res=> {
+                                    console.log(`SEDANG MENGAMBIL GAMBAR di ${imag}`)
+                                    console.log(`SEDANG MENGIRIM GAMBAR DI ./media/file/thumb.jpg`)
+                                    try{
+                                        client.sendImage(from, `media/file/thumb.jpg`, `muehehe.jpg`, `Silahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id);
+                                        console.log(`SEDANG MENGIRIM MUSIK DI ./media/file/${judul}.mp3`)
+                                        client.sendFile(from, `media/file/${judul}.mp3`, `${namaFile}`, id)
+                                        os.execCommand(`rm \'media/file/${judul}.mp3\'`)
+                                    } catch(error) {
+                                        client.reply(`error gan saat mengirim gambar ${judul}.jpg\n\n${error}`)
+                                    }
+                                }).catch(error=>{
+                                    client.reply(`error gan saat ambil file dari link ${linknya}\n\n${error}`)
+                                })
+                            })();
                         }else{
                             client.reply('link tidak valid');
                         }
