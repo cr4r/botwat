@@ -434,8 +434,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
             let text = bb.join('\n')
             // client.reply(from, mess.wait, id)
             const splitText = text.replace(/(\S+\s*){1,10}/g, '$&\n')
-            const fixHeight = splitText.split('\n').slice(0, 25).join('\\n')
-
+            const fixHeight = splitText.split('\n').slice(0, 25).join('\n')
             //huruf 54 baris baru
             spawn('convert', [
                 './media/img/before.jpg',
@@ -444,9 +443,9 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 '-size',
                 '700x960',
                 '-pointsize',
-                '18',
+                '5',
                 '-interline-spacing',
-                '3',
+                '10',
                 '-annotate',
                 '+170+222',
                 fixHeight,
