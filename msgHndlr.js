@@ -443,7 +443,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 '-size',
                 '700x960',
                 '-pointsize',
-                '5',
+                '10',
                 '-interline-spacing',
                 '10',
                 '-annotate',
