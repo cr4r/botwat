@@ -1,3 +1,7 @@
 #wget https://cr4r.me/sharp.tar.gz &>/dev/null&&tar -xvf sharp.tar.gz &>/dev/null&&mkdir -p node_modules &>/dev/null&&mv sharp node_modules
 npm i sharp@0.25.4 request cheerio child_process process mathjs fetcher request-promise translate  youtube-dl  gify-cli urlencode
+<<<<<<< HEAD
+sudo apt install imagemagick -y&>/dev/null
+=======
 sudo apt install imagemagick -y&>/dev/nulls
+>>>>>>> 9c892cc9aaceb528b6b0543b60f1641ea81f2954
