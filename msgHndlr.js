@@ -430,7 +430,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
             if (args.length === 1) return client.reply(from, 'Kirim perintah *nulis [teks]*', id)
             let text11 = body.slice(6)
             let bb = []
-            for(let i=0, ilen=text11.length;i<ilen;i+=54){bb.push(text11.substring(i, i+54))}
+            for(let i=0, ilen=text11.length;i<ilen;i+=57){bb.push(text11.substring(i, i+54))}
             let text = bb.join('\n')
             // client.reply(from, mess.wait, id)
             const splitText = text.replace(/(\S+\s*){1,10}/g, '$&\n')
