@@ -445,7 +445,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                 '-pointsize',
                 '10',
                 '-interline-spacing',
-                '10',
+                '0',
                 '-annotate',
                 '+170+222',
                 fixHeight,
