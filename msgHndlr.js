@@ -98,6 +98,9 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
+        case 'coba':
+            client.reply(from,client.getAllNewMessages())
+            break
         case 'short':
             if (args.length === 1) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
             if (args.length === 2) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
@@ -120,6 +123,7 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'spam':
             var limit = body.split(' ')[1]
+            var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
             if(!isOwner){
                 if (limit.length>20&&limit.length<=30){
                     client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
@@ -128,34 +132,35 @@ module.exports = msgHandler = async (client, message) => {
                     client.reply(from, 'Hadeh lu ada otak gak\nBatasan spam hanya 20 pesan',id)
                 }
                 else if(limit.length<21){
-                    var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
+                    console.log(nomor)
+                    console.log('hahahahhaa     '+from)
                     if (nomor.length<6){
                         client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
                     }
                     else{
                         let messageIndex = body.indexOf(nomor) + nomor.length;
-                        let message = body.slice(messageIndex, body.length);
-                        console.log(`Pesan :${message}\nNomor: ${nomor+'@c.us'}`)
+                        let psn = body.slice(messageIndex, body.length);
+                        console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
                         for(i=0;i<limit;i++){
-                            client.sendText(nomor+'@c.us',message)
+                            client.reply(nomor+'@c.us',psn)
                         }
                     }
                 }
                 else{
                     client.reply(from,'hemmm eror gan',id )
                 }
-            }
-            else{
+            }else{
                 var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
                 if (nomor.length<6){
                     client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777')
                 }
                 else{
+                    console.log('hahahahhaa     '+from)
                     let messageIndex = body.indexOf(nomor) + nomor.length;
-                    let message = body.slice(messageIndex, body.length);
-                    console.log(`Pesan :${message}\nNomor: ${nomor+'@c.us'}`)
+                    let pesn = body.slice(messageIndex, body.length);
+                    console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
                     for(i=0;i<limit;i++){
-                        client.sendText(nomor+'@c.us',message)
+                        client.reply(nomor+'@c.us',psn)
                     }
                 }
 
@@ -482,7 +487,7 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
             ])
             .on('error', () => client.reply(from, `Error gan`, id))
             .on('exit', () => {
-                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', 'Nih mhank\n\nDitulis oleh bot CR4R', id)
+                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', 'Nih kak\n\nDitulis oleh bot CR4R', id)
             })
             break
         case 'yt':
@@ -609,55 +614,61 @@ Contoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏�
                     func(i, arr[i]);
                 }
             }
-            var idyt = yts.searchYoutube(keyword)
-            linkk = `https://youtu.be/${idyt[0]}`
-            if(linkk===undefined){
-                client.reply('Error gans :)')
-                console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+linkk)
-            }
-            else{
-                console.log('Nama lagu: '+namaLagu+'\nkeyword: '+keyword+'\nlink: '+linkk)
-                var headers = {
-                    'User-Agent':       'Super Agent/0.0.1',
-                    'Content-Type':     'application/x-www-form-urlencoded'
-                }
-                var options = {
-                    url: 'https://www.y2mate.com/mates/mp3/ajax',
-                    method: 'POST',
-                    headers: headers,
-                    form: {'url': linkk, 'q_auto': 1, 'ajax':1}
-                }
-                try {
+            try{
+                axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${keyword}&page=1`).then(resp =>{
+                    urlala = resp.data.results[0].video.url
+                    console.log(urlala)
+                    judual = resp.data.results[0].video.title
+                    durationa = resp.data.results[0].video.duration
+                    vie = resp.data.results[0].video.views
+                    idss = resp.data.results[0].video.id
+                    tumb = resp.data.results[0].video.thumbnail_src
+                    dt = resp.data.results[0].video.upload_date
+                    client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                    var headers = {
+                        'User-Agent':       'Super Agent/0.0.1',
+                        'Content-Type':     'application/x-www-form-urlencoded'
+                    }
+                    var options = {
+                        url: 'https://www.y2mate.com/mates/mp3/ajax',
+                        method: 'POST',
+                        headers: headers,
+                        form: {'url': urlala, 'q_auto': 1, 'ajax':1}
+                    }
                     request(options, function (error, response, body) {
                         if (!error && response.statusCode == 200) {
                             // Print out the response body
                             var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                            var ids = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                            var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
                             var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
                             var down = {
                                 url: 'https://www.y2mate.com/mates/mp3Convert',
                                 method: 'POST',
                                 headers: headers,
-                                form: {'type': 'youtube', '_id': kid, 'v_id':ids, 'mp3_type':128,'token':""}
+                                form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
                             }
                             request(down, function (error, response, body) {
                                 if (!error && response.statusCode == 200) {
                                     linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
                                     console.log(linknya)
+                                    console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
+                                    try{
+                                        client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
+                                    }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
                                 }
                                 else{
-                                    client.reply('Error gans :)\n\n'+error)
+                                    linknya = 'error gans';
                                 }
-                            })
+                           })
                         }
                         else{
                             client.reply('Error gans :)\n\n'+error)
                         }
                     })
-
-                } catch (err) {
-                    client.reply(ownerNumber, 'Error command play : '+ err)
-                }
+                    
+                })
+            }catch(error){
+                client.reply(from, 'Error gan, ulangi setelah 10 detik', id)
             }
             break
 
