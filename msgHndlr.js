@@ -72,7 +72,7 @@ module.exports = msgHandler = async (client, message) => {
             }
         }
         function aca(lsls){return lsls[Math.floor(Math.random() * lsls.length)]}
-        var donasi = 'Donasinya (ovo/gopay/dana/pulsa)\n082237416678\n\natau\nhttps://saweria.co/cr4r/\nMakasih donasinya :)'
+        var donasi = 'Donasinya (ovo/gopay/dana/pulsa)\n082237416678\natau\nhttps://saweria.co/cr4r/\nMakasih donasinya :)'
         var pagi = ['pagi', 'jg', 'pgi jga','pgi','pagi']
         var sapa = ['hai','hello','hai kak','siapa?','ada apa','ya?','ada apa ya?','y','ya','ada apa kak','ya ada apa','ada yang bisa saya bantu?','hmm','oh yes','oh no','kenapa bang','ada apa bang','muehehehe']
         var syg = ['ngp sayang', 'apa sayang','apa bebeb','apa beb','opo','apo','ngp','apaan','apoh syang','ap beb','ngp beb', 'yo sayang']
