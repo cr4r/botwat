@@ -53,6 +53,7 @@
     "translate": "^1.1.2",
     "urlencode": "^1.1.0",
     "video-url-link": "^0.1.5",
+    "xml2json": "^0.12.0",
     "youtube-dl": "^3.0.2"
   }
 }
