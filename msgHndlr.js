@@ -20,6 +20,7 @@ const { pow,round, log , evaluate, parse, derivative } = require('mathjs')
 const request = require('request');
 const urlencode = require("urlencode");
 const url3 = require('url');
+const { duration } = require('moment-timezone');
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 
 module.exports = msgHandler = async (client, message) => {
@@ -483,49 +484,61 @@ module.exports = msgHandler = async (client, message) => {
                 if (!isLinks) return client.reply(from, mess.error.Iv, id)
                 var videoid = linkk.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
                 if(piliha === 'mp3'){
-                    var options = {
-                        url: 'https://www.y2mate.com/mates/mp3/ajax',
-                        method: 'POST',
-                        headers: headers,
-                        form: {'url': linkk, 'q_auto': 1, 'ajax':1}
-                    }
                     try{
-                        request(options, function (error, response, body) {
-                            if (!error && response.statusCode == 200) {
-                                // Print out the response body
-                                var imag = `https://i.ytimg.com/vi/${videoid[1]}/0.jpg`;
-                                var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                                var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                                var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                                client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                                var down = {
-                                    url: 'https://www.y2mate.com/mates/mp3Convert',
+                        axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${linkk}&page=1`).then(resp =>{
+                            urlala = resp.data.results[0].video.url
+                            console.log(urlala)
+                            judual = resp.data.results[0].video.title
+                            durationa = resp.data.results[0].video.duration
+                            if(durationa.split(':').length>2){
+                                client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id)
+                            }else{
+                                vie = resp.data.results[0].video.views
+                                idss = resp.data.results[0].video.id
+                                tumb = resp.data.results[0].video.thumbnail_src
+                                dt = resp.data.results[0].video.upload_date
+                                usernamee = resp.data.results[0].uploader.username
+                                client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\nDurasi: ${durationa}\nYoutube: ${usernamee}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                var headers = {
+                                    'User-Agent':       'Super Agent/0.0.1',
+                                    'Content-Type':     'application/x-www-form-urlencoded'
+                                }
+                                var options = {
+                                    url: 'https://www.y2mate.com/mates/mp3/ajax',
                                     method: 'POST',
                                     headers: headers,
-                                    form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+                                    form: {'url': urlala, 'q_auto': 1, 'ajax':1}
                                 }
-                                request(down, function (error, response, body) {
-                                    if (!error && response.statusCode == 200) {
-                                        linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                        console.log(linknya)
-                                        console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
-                                        try{
-                                            client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
-                                            return linknya
-                                        }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
+                                try{
+                                    var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                    var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                    var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                    var down = {
+                                        url: 'https://www.y2mate.com/mates/mp3Convert',
+                                        method: 'POST',
+                                        headers: headers,
+                                        form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
                                     }
-                                    else{
-                                        linknya = 'error gans';
-                                    }
-                               })
-                            }
-                            else{
-                                client.reply('Error gans :)\n\n'+error)
-                            }
+                                    request(down, function (error, response, body) {
+                                        if (!error && response.statusCode == 200) {
+                                            linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                            console.log(linknya)
+                                            console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
+                                            try{
+                                                client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
+                                            }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
+                                        }
+                                        else{
+                                            linknya = 'error gans';
+                                        }
+                                   })
+                                }catch(error){
+                                    return client.reply(from,'Maaf kak, sepertinya saya kena banned\ndikarenakan salah satu orang yang menggunakan bot tidak ada otak request lagu yang melebihi dari 1 jam',id)
+                                }
+                            }        
                         })
-                    } catch (error) {
-                        client.sendText(ownerNumber, 'Error ytmp3 : '+ err)
-                        client.reply(from, mess.error.Yt4, id)
+                    }catch(error){
+                        client.reply(from, 'Error gan, ulangi setelah 10 detik', id)
                     }
                 }
                 else if(piliha === 'mp4'){
@@ -536,57 +549,68 @@ module.exports = msgHandler = async (client, message) => {
                         form: {'url': linkk, 'q_auto': 1, 'ajax':1}
                     }
                     try{
-                        request(options, function (error, response, body) {
-                            if (!error && response.statusCode == 200) {
-                                // Print out the response body
-                                var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                                var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                                var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                                // client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                                var down = {
-                                    url: 'https://www.y2mate.com/mates/convert',
-                                    method: 'POST',
-                                    headers: headers,
-                                    form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'ajax':1,'token':"",'ftype':'mp4','fquality':'360'}
-                                }
-                                request(down, function (error, response, body) {
+                        axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${linkk}&page=1`).then(resp =>{
+                            urlala = resp.data.results[0].video.url
+                            console.log(urlala)
+                            judual = resp.data.results[0].video.title
+                            durationa = resp.data.results[0].video.duration
+                            if(durationa.split(':').length>2){
+                                client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id)
+                            }else{
+                                vie = resp.data.results[0].video.views
+                                idss = resp.data.results[0].video.id
+                                tumb = resp.data.results[0].video.thumbnail_src
+                                dt = resp.data.results[0].video.upload_date
+                                request(options, function (error, response, body) {
                                     if (!error && response.statusCode == 200) {
-                                        linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                        console.log(linknya)
-                                        console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp4`)
-                                        try{
-                                            client.sendFileFromUrl(from, linknya, `${judul}.mp4`, `➸ *Judul* : ${judul}`,id)
-                                        }catch(error){
-                                            return client.repy(from, `Ada yang error gan\n\n${error}`,id)
+                                        // Print out the response body
+                                        var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                        var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                        var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                        var usernamee = resp.data.results[0].uploader.username
+                                        // client.sendFileFromUrl(from, imag, 'thumb.jpg', `➸ *Judul* : ${judul}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                                        var down = {
+                                            url: 'https://www.y2mate.com/mates/convert',
+                                            method: 'POST',
+                                            headers: headers,
+                                            form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'ajax':1,'token':"",'ftype':'mp4','fquality':'360'}
                                         }
+                                        request(down, function (error, response, body) {
+                                            if (!error && response.statusCode == 200) {
+                                                linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                                console.log(linknya)
+                                                console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp4`)
+                                                try{
+                                                    client.sendFileFromUrl(from, linknya, `${judul}.mp4`, `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\nDurasi: ${durationa}\nYoutube: ${usernamee}\n\n${donasi}`,id)
+                                                }catch(error){
+                                                    return client.repy(from, `Ada yang error gan\n\n${error}`,id)
+                                                }
+                                            }
+                                            else{
+                                                client.reply('Error gans :)\n\n'+error)
+                                            }
+                                       })
                                     }
                                     else{
                                         client.reply('Error gans :)\n\n'+error)
                                     }
-                               })
-                            }
-                            else{
-                                client.reply('Error gans :)\n\n'+error)
-                            }
+                                })
+                            }        
                         })
-                    } catch (err) {
-                        client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
-                        client.reply(from, mess.error.Yt4, id)
+                    }catch(error){
+                        client.reply(from, 'Error gan, ulangi setelah 10 detik', id)
                     }
+                }else{
+                    client.reply(from,'Maaf gans seharusnya\nyt mp3 linkyoutubenya\natau\nyt mp4 linkyoutubenya',id)
                 }
-                else{
-                    client.reply('Maaf gans seharusnya\nyt mp3 linkyoutubenya\natau\nyt mp4 linkyoutubenya')
-                }
-            } catch (err) {
-                client.sendText(ownerNumber, 'Error ytmp4 : '+ err)
+            }catch (error) {
+                client.sendText(ownerNumber, 'Error ytmp4 : '+ error)
                 client.reply(from, mess.error.Yt4, id)
             }
             break
 
         case 'play':
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
-            let isLinks = args[2].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
-            if (isLinks) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*\n\nDonasinya (ovo/gopay/dana/pulsa)\n082237416678\nMakasih donasinya :)', id)
             let namaLagu = body.slice(5);
             var keyword = namaLagu.replace(" ", "+");
             function foreach(arr, func){
@@ -595,57 +619,65 @@ module.exports = msgHandler = async (client, message) => {
                 }
             }
             try{
-                axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${keyword}&page=1`).then(resp =>{
+                axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${linkk}&page=1`).then(resp =>{
                     urlala = resp.data.results[0].video.url
                     console.log(urlala)
                     judual = resp.data.results[0].video.title
                     durationa = resp.data.results[0].video.duration
-                    vie = resp.data.results[0].video.views
-                    idss = resp.data.results[0].video.id
-                    tumb = resp.data.results[0].video.thumbnail_src
-                    dt = resp.data.results[0].video.upload_date
-                    client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
-                    var headers = {
-                        'User-Agent':       'Super Agent/0.0.1',
-                        'Content-Type':     'application/x-www-form-urlencoded'
-                    }
-                    var options = {
-                        url: 'https://www.y2mate.com/mates/mp3/ajax',
-                        method: 'POST',
-                        headers: headers,
-                        form: {'url': urlala, 'q_auto': 1, 'ajax':1}
-                    }
-                    request(options, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            // Print out the response body
-                            var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                            var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                            var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                            var down = {
-                                url: 'https://www.y2mate.com/mates/mp3Convert',
-                                method: 'POST',
-                                headers: headers,
-                                form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+                    if(durationa.split(':').length>2){
+                        client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id)
+                    }else{
+                        vie = resp.data.results[0].video.views
+                        idss = resp.data.results[0].video.id
+                        tumb = resp.data.results[0].video.thumbnail_src
+                        dt = resp.data.results[0].video.upload_date
+                        usernamee = resp.data.results[0].uploader.username
+                        client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\nDurasi: ${durationa}\nYoutube: ${usernamee}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                        var headers = {
+                            'User-Agent':       'Super Agent/0.0.1',
+                            'Content-Type':     'application/x-www-form-urlencoded'
+                        }
+                        var options = {
+                            url: 'https://www.y2mate.com/mates/mp3/ajax',
+                            method: 'POST',
+                            headers: headers,
+                            form: {'url': urlala, 'q_auto': 1, 'ajax':1}
+                        }
+                        request(options, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                // Print out the response body
+                                try{
+                                    var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                    var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                    var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                    var down = {
+                                        url: 'https://www.y2mate.com/mates/mp3Convert',
+                                        method: 'POST',
+                                        headers: headers,
+                                        form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
+                                    }
+                                    request(down, function (error, response, body) {
+                                        if (!error && response.statusCode == 200) {
+                                            linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                            console.log(linknya)
+                                            console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
+                                            try{
+                                                client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
+                                            }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
+                                        }
+                                        else{
+                                            linknya = 'error gans';
+                                        }
+                                   })
+                                }catch(error){
+                                    return client.reply(from,'Maaf kak, sepertinya saya kena banned\ndikarenakan salah satu orang yang menggunakan bot tidak ada otak request lagu yang melebihi dari 1 jam',id)
+                                }
                             }
-                            request(down, function (error, response, body) {
-                                if (!error && response.statusCode == 200) {
-                                    linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                    console.log(linknya)
-                                    console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
-                                    try{
-                                        client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
-                                    }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
-                                }
-                                else{
-                                    linknya = 'error gans';
-                                }
-                           })
-                        }
-                        else{
-                            client.reply('Error gans :)\n\n'+error)
-                        }
-                    })
-
+                            else{
+                                client.reply('Error gans :)\n\n'+error)
+                            }
+                        })
+                    }        
                 })
             }catch(error){
                 client.reply(from, 'Error gan, ulangi setelah 10 detik', id)
