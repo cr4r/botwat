@@ -588,7 +588,7 @@ module.exports = msgHandler = async (client, message) => {
             let isLinks = args[2].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
             if (isLinks) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*\n\nDonasinya (ovo/gopay/dana/pulsa)\n082237416678\nMakasih donasinya :)', id)
             let namaLagu = body.slice(5);
-            var keyword = namaLagu.replace(/ /g, "+");
+            var keyword = namaLagu.replace(" ", "+");
             function foreach(arr, func){
                 for(var i in arr){
                     func(i, arr[i]);
@@ -604,7 +604,7 @@ module.exports = msgHandler = async (client, message) => {
                     idss = resp.data.results[0].video.id
                     tumb = resp.data.results[0].video.thumbnail_src
                     dt = resp.data.results[0].video.upload_date
-                    client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\n\n${donasi}\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
+                    client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                     var headers = {
                         'User-Agent':       'Super Agent/0.0.1',
                         'Content-Type':     'application/x-www-form-urlencoded'
@@ -745,7 +745,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'infogempa':
             axios.get(`https://data.bmkg.go.id/autogempa.xml`).then(resp =>{
                 jsonn = JSON.parse(xml2js.toJson(resp.data)).Infogempa.gempa
-                urlla = `https://www.google.com/maps/search/${jsonn.Lintang.split(' ')[0]}+${jsonn.Bujur.split(' ')[0]}`
+                urlla = `https://www.google.com/maps/search/${jsonn.Lintang.split(' ')[0]},${jsonn.Bujur.split(' ')[0]}`
                 console.log(urlla)
                 ss(urlla)
                 client.reply(from,`Info Gempa Terkini\n\nTanggal  : ${jsonn.Tanggal}\nJam      : ${jsonn.Jam}\nLintang  : ${jsonn.Lintang}\nBujur    : ${jsonn.Bujur}\nMagnitude: ${jsonn.Magnitude}\nKedalaman: ${jsonn.Kedalaman}\n\nPada wilayah\n${jsonn.Wilayah1}\n${jsonn.Wilayah2}\n${jsonn.Wilayah3}\n${jsonn.Wilayah4}\n${jsonn.Wilayah5}\n\njsonn.Potensi\nBuka Maps: ${urlla}`,id)
@@ -922,8 +922,9 @@ module.exports = msgHandler = async (client, message) => {
         case 'member':
             try{
                 if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-                if (!isGroupAdmins||!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
+                if (!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
                 const groupMem = await client.getGroupMembers(groupId)
+		console.log(!isOwner)
                 var pesan = body.slice(7)
                 console.log(pesan)
                 if(body.split('member ').length==1||body.split('member ')[1]==undefined||body.split('member ')[1]==''){
@@ -951,7 +952,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             catch(err){
                 if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-                if (!isGroupAdmins||!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
+                if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
                 const groupMem = await client.getGroupMembers(groupId)
                 let hehe = `╔══✪〘 Hay semuanya 〙✪══\n`
                 for (let i = 0; i < groupMem.length; i++) {
