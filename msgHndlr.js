@@ -112,9 +112,6 @@ module.exports = msgHandler = async (client, message) => {
             else{
                 return client.reply(from, 's')
             }
-            exec(`sudo \.\/vpn ${ab} ${abc}`, (error, stdout) => {
-                if(stdout === )
-            })
         case 'coba':
             nmor = body.split(' ')[1]
             pesan = body.split(`coba ${nmor} `)[1]
