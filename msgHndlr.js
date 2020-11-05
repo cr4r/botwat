@@ -101,6 +101,20 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
+        case 'vpn':
+            var ab = body.split(' ')[1]
+            var abc = body.split(' ')[2]
+            if (ab === 'buat'){
+                var ab = '1'
+            }else if(ab === 'hapus'){
+                var ab = '2'
+            }
+            else{
+                return client.reply(from, 's')
+            }
+            exec(`sudo \.\/vpn ${ab} ${abc}`, (error, stdout) => {
+                if(stdout === )
+            })
         case 'coba':
             nmor = body.split(' ')[1]
             pesan = body.split(`coba ${nmor} `)[1]
@@ -490,7 +504,7 @@ module.exports = msgHandler = async (client, message) => {
                             console.log(urlala)
                             judual = resp.data.results[0].video.title
                             durationa = resp.data.results[0].video.duration
-                            if(durationa.split(':').length>2){
+                            if(durationa.split(':').length>=3){
                                 client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id)
                             }else{
                                 vie = resp.data.results[0].video.views
@@ -510,28 +524,30 @@ module.exports = msgHandler = async (client, message) => {
                                     form: {'url': urlala, 'q_auto': 1, 'ajax':1}
                                 }
                                 try{
-                                    var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
-                                    var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
-                                    var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
-                                    var down = {
-                                        url: 'https://www.y2mate.com/mates/mp3Convert',
-                                        method: 'POST',
-                                        headers: headers,
-                                        form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
-                                    }
-                                    request(down, function (error, response, body) {
-                                        if (!error && response.statusCode == 200) {
-                                            linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
-                                            console.log(linknya)
-                                            console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
-                                            try{
-                                                client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
-                                            }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
+                                    request(options, function (error, response, body){
+                                        var kid = JSON.parse(body).result.split('var k__id = \"')[1].split('\"')[0]
+                                        var idds = JSON.parse(body).result.split('data-id=\"')[1].split('\"')[0]
+                                        var judul = JSON.parse(body).result.split('\<b\>')[1].split('\<\/b\>')[0]
+                                        var down = {
+                                            url: 'https://www.y2mate.com/mates/mp3Convert',
+                                            method: 'POST',
+                                            headers: headers,
+                                            form: {'type': 'youtube', '_id': kid, 'v_id':idds, 'mp3_type':128,'token':""}
                                         }
-                                        else{
-                                            linknya = 'error gans';
-                                        }
-                                   })
+                                        request(down, function (error, response, body) {
+                                            if (!error && response.statusCode == 200) {
+                                                linknya = JSON.parse(body).result.split('href=\"')[1].split('\"')[0]
+                                                console.log(linknya)
+                                                console.log(`SEDANG MENGIRIM MUSIK ${judul}.mp3`)
+                                                try{
+                                                    client.sendFileFromUrl(from, linknya, `${judul}.mp3`, '', id)
+                                                }catch(error){return client.repy(from, `Ada yang error gan\n\n${error},id`)}
+                                            }
+                                            else{
+                                                linknya = 'error gans';
+                                            }
+                                       })
+                                    })
                                 }catch(error){
                                     return client.reply(from,'Maaf kak, sepertinya saya kena banned\ndikarenakan salah satu orang yang menggunakan bot tidak ada otak request lagu yang melebihi dari 1 jam',id)
                                 }
@@ -554,7 +570,7 @@ module.exports = msgHandler = async (client, message) => {
                             console.log(urlala)
                             judual = resp.data.results[0].video.title
                             durationa = resp.data.results[0].video.duration
-                            if(durationa.split(':').length>2){
+                            if(durationa.split(':').length>=3){
                                 client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id)
                             }else{
                                 vie = resp.data.results[0].video.views
@@ -612,25 +628,27 @@ module.exports = msgHandler = async (client, message) => {
         case 'play':
             if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let namaLagu = body.slice(5);
-            var keyword = namaLagu.replace(" ", "+");
+            var keyword = namaLagu;
             function foreach(arr, func){
                 for(var i in arr){
                     func(i, arr[i]);
                 }
             }
             try{
-                axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${linkk}&page=1`).then(resp =>{
-                    urlala = resp.data.results[0].video.url
+                axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${keyword}&page=1`).then(resp =>{
+                    aaa = resp.data.results[0]
+                    if(aaa.video === undefined) return client.reply(from,'Maaf kak video ini bertype radio di youtube, silahkan coba lagi',id)
+                    urlala = aaa.video.url
                     console.log(urlala)
-                    judual = resp.data.results[0].video.title
-                    durationa = resp.data.results[0].video.duration
-                    if(durationa.split(':').length>2){
+                    judual = aaa.video.title
+                    durationa = aaa.video.duration
+                    if(durationa.split(':').length>=3){
                         client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id)
                     }else{
-                        vie = resp.data.results[0].video.views
-                        idss = resp.data.results[0].video.id
-                        tumb = resp.data.results[0].video.thumbnail_src
-                        dt = resp.data.results[0].video.upload_date
+                        vie = aaa.video.views
+                        idss = aaa.video.id
+                        tumb = aaa.video.thumbnail_src
+                        dt = aaa.video.upload_date
                         usernamee = resp.data.results[0].uploader.username
                         client.sendFileFromUrl(from, tumb, 'thumb.jpg', `➸ *Judul* : ${judual}\nUpload: ${dt}\nViewers: ${vie}\nDurasi: ${durationa}\nYoutube: ${usernamee}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id)
                         var headers = {
