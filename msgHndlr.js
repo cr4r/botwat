@@ -88,7 +88,7 @@ module.exports = msgHandler = async (client, message) => {
         const groupAdmins = isGroupMsg ? await client.getGroupAdmins(groupId) : ''
         const isGroupAdmins = isGroupMsg ? groupAdmins.includes(sender.id) : false
         const isBotGroupAdmins = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false
-        const ownerNumber = '6282237416678s@c.us'
+        const ownerNumber = '6282237416678@c.us'
         const isOwner = sender.id === ownerNumber
         const isBlocked = blockNumber.includes(sender.id)
         const isNsfw = isGroupMsg ? nsfw_.includes(chat.id) : false
@@ -257,7 +257,7 @@ module.exports = msgHandler = async (client, message) => {
                 }
             })
             break
-        case 'spam':
+        case './spam':
             if (args.length <= 3) return client.reply(from,`Ketik\nspam jumlah nomornya pesan kamu\nContoh:\nspam 5 628222 hay sayang`,id)
             var limit = body.split(' ')[1]
             var nomor = body.split(' ')[2].split(' ')[0].replace("@","").replace("c.us","")
