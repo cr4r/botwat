@@ -8,6 +8,7 @@ const axios = require('axios')
 const moment = require('moment-timezone')
 const get = require('got')
 const color = require('./lib/color')
+const tranlstae = require('./lib/translate')
 const { spawn, exec } = require('child_process')
 const nhentai = require('nhentai-js')
 const { API } = require('nhentai-api')
@@ -21,6 +22,7 @@ const request = require('request');
 const urlencode = require("urlencode");
 const url3 = require('url');
 const { duration } = require('moment-timezone');
+const { isFunction } = require('util');
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 
 module.exports = msgHandler = async (client, message) => {
@@ -101,17 +103,123 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
+        case 'translate':
+            if (args.length != 1) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh translate id`, id)
+            if (!quotedMsg) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh translate id`, id)
+            var quoteText = quotedMsg.type == 'chat' ? quotedMsg.body : quotedMsg.type == 'image' ? quotedMsg.caption : ''
+            tranlstae(quoteText, args[0])
+                .then((result) => client.sendText(from, result))
+                .catch(() => client.sendText(from, 'Error, Kode bahasa salah.'))
+            break
+        case 'des':
+        case 'asci':
+        case 'hex':
+            var pl = body.split(' ')[0]
+            console.log(pl)
+            if(pl==='des'){
+                var pili = body.split(' ')[1]
+                var pesan = body.split(' ')[2]
+                if(pili==='asci'){
+                    let psn = ""
+                    for (var i = 0, len = pesan.length; i < len; i++) {
+                        psn += pesan[i].charCodeAt()+' '
+                    }
+                    client.reply(from,psn,id)
+                }else if(pili==='hex'){
+                    var he = Buffer.from(pesan, 'utf8').toString('hex')
+                    client.reply(from,he,id)
+                }else{client.reply(from,'Salah memasukkan perintah',id)}
+            }
+            else if(pl === 'bin'){
+                var pili = body.split(' ')[1]
+                var pesan = body.split(' ')[2]
+                if(pili === 'hex'){
+                    var ps = parseInt(pesan,2).toString(16)
+                    if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka binary bukan huruf',id)
+                    client.reply(from,ps,id)
+                }else if(pili === 'des'){
+                    ps = parseInt(pesan, 2)
+                    if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka binary bukan huruf',id)
+                    client.reply(from,ps,id)
+                }else{client.reply(from,'Salah memasukkan perintah',id)}
+            }else if(pl === 'hex'){
+                var pili = body.split(' ')[1]
+                var pesan = body.split(' ')[2]
+                if(pili === 'des'){
+                    ps = parseInt(pesan, 8)
+                    if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka hex bukan huruf',id)
+                    client.reply(from,ps,id)
+                }else{client.reply(from,'Salah memasukkan perintah',id)}
+            }else{
+                client.reply(from, `Perintahnya\n[command1] [command2] [pesanmu]\n\ncommand1 => des/asci/hex\ncommand2 =>\ndes => asci/hex\nbin => hex/des\nhex => des`,id)
+            }
+            break
+            
         case 'vpn':
-            var ab = body.split(' ')[1]
-            var abc = body.split(' ')[2]
-            if (ab === 'buat'){
-                var ab = '1'
-            }else if(ab === 'hapus'){
-                var ab = '2'
+            if (!isGroupMsg){
+                if (args.length === 1) return client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id)
+                var ab = body.split(' ')[1]
+                var lokasiBot = '/home/ubuntu/bot'
+                var userLinuxnya = 'ubuntu:ubuntu'
+                if(ab === 'help'){
+                    client.reply(from,`*Android*\n1. Jika kakak menggunakan android, silahkan download Openvpn\n2. Download lah konfigurasi yang telah saya kirimkan\n3. Import file namaFilemu.ovpn di aplikasi openvpn\n4. Lalu klik konek\n\n*PC Linux*\n1. Install Openvpn \'sudo apt install openvpn -y\'\n2. Download File yang telah di kirimkan namaFilemu.ovpn\n3. Ketik \'sudo openvpn --config namaFilemu.ovpn\'\n4. Masukkan username anda, dan password dikosongkan\n\n*Windows*\n1. Silahkan download di https\:\/\/bit\.ly\/ovpnWin\n2. Installah seperti pada umumnya\n3. Download config yang dikirimkan di whatsapp\n4. Silahkan masukkan username, password dikosongkan`,id)
+                }else if(ab === 'snk'){
+                    client.reply(from, `Mohon dibaca Semua pesan saya sebelum menggunakan vpn\nSyarat & Ketentuan:\n1. Jangan melakukan tindakan ilegal\n2. Jika anda melakukannya, kami tidak segan\" akan melaporkan ke pihak berwajib\n3. Jika anda menggunakan vpn untuk menonton, dosa ditanggung anda sendiri\n4. Semua aktivitas anda berada di kendali server bot ini\n\nJika kakak setuju silahkan ikuti petunjuk dengan mengirim pesan\nvpn help`,id)
+                }else if (ab === 'buat'){
+                    var abc = body.split(' ')[2]
+                    lokasin = `media/vpn/${abc}.ovpn`
+                    var ab = 'buat'
+                    exec(`sudo chown -R ${userLinuxnya} /etc/openvpn&&ack ${abc} /etc/openvpn/server/easy-rsa/pki/index.txt  | grep \"\^V\" | cut -d \'=\' -f 2`,(error,stdout) => {
+                        if(error){
+                            client.reply(from, `error pada saat mengecek username \n${error}`,id)
+                        }
+                        if(abc === stdout.replace('\n','')){
+                            client.reply(from,'Halo kak, username yang kakak buat sudah ada, silahkan masukkan username berbeda',id)
+                        }
+                        else{
+                            exec(`cd /etc/openvpn/server/easy-rsa/&&EASYRSA_CERT_EXPIRE=3650 ./easyrsa build-client-full ${abc} nopass&>/dev/null&&cd /home/ubuntu/bot&&sudo chown -R ${userLinuxnya} /etc/openvpn&>/dev/null`,(error,stdout) => {
+                                if(error){
+                                    return client.reply(from, `error pada saat membuat config \n${error}`,id)
+                                }
+                                var common = fs.readFileSync('/etc/openvpn/server/client-common.txt','utf-8')+'\n\n<ca>\n'
+                                var ca = fs.readFileSync('/etc/openvpn/server/easy-rsa/pki/ca.crt','utf-8')+'</ca>\n<cert>\n'
+                                fs.writeFile(lokasin,common+ca,(err)=>{if(err) return console.log(err)})
+                                exec(`sed -ne \'\/BEGIN CERTIFICATE\/,\$ p\' /etc/openvpn/server/easy-rsa/pki/issued/${abc}.crt >> ${lokasin}`,(error, stdout) => {
+                                    if(error) return client.reply(from, `error gan saat import sertifikat ca nya\n\n${error}`,id)
+                                    var key = '</cert>\n<key>\n'+fs.readFileSync(`/etc/openvpn/server/easy-rsa/pki/private/${abc}.key`,'utf-8')+'</key>\n<tls-crypt>\n'
+                                    fs.writeFile(lokasin, key, { flag: 'a+' }, err => {if(err) return console.log(err)})
+                                    exec(`sed -ne \'/BEGIN OpenVPN Static key/,\$ p\' /etc/openvpn/server/tc.key>>${lokasin}&&echo \"</tls-crypt>\">>${lokasin}`,(error)=>{
+                                        if(error) return client.reply(from, `error gan\n\n${error}`,id)
+                                        client.reply(from,`Halo kak, vpn sudah dibuat\nSilahkan ketik vpn help\nuntuk Tutorial cara menggunakannya\nUntuk melihat Syarat \& dan ketentuan berlaku silahkan ketik\nvpn snk`,id)
+                                        client.sendFile(from,lokasin,`${abc}.ovpn`,id)
+                                    })
+                                })
+                            })
+                        }
+                    })
+                }else if(ab === 'hapus'){
+                    var abc = body.split(' ')[2]
+                    exec(`sudo chown -R ${userLinuxnya} /etc/openvpn&&ack ${abc} /etc/openvpn/server/easy-rsa/pki/index.txt  | grep \"^V\" | cut -d \'=\' -f 2`,(error,stdout) => {
+                        if(error){
+                            client.reply(from, `error pada saat mengecek username \n${error}`,id)
+                        }
+                        console.log(stdout)
+                        if(abc === stdout.replace('\n','')){
+                            exec(`cd /etc/openvpn/server/easy-rsa/&&./easyrsa --batch revoke ${abc}&>/dev/null&&EASYRSA_CRL_DAYS=3650 ./easyrsa gen-crl&>/dev/null&&sudo rm /etc/openvpn/server/crl.pem&>/dev/null&&sudo cp /etc/openvpn/server/easy-rsa/pki/crl.pem /etc/openvpn/server/crl.pem&&sudo chown -R ${userLinuxnya} /etc/openvpn&&cd ${lokasiBot}`,(error)=>{
+                                if(error) return client.reply(from, `Hem ada yang error nih coba lagi kak`,id)
+                                client.reply(from,`Halo kak, user ${abc} sudah dihapus di server saya. terima kasih sudah mencoba vpn kami`,id)
+                            })
+                        }else{
+                            client.reply(from,`Halo kak, User yang anda ketik tidak ada\n Masukkan user yang benar untuk menghapusnya`,id)
+                        }
+                    })
+                }else{
+                    client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id)
+                }
+            }else{
+                client.reply(from, `Halo kak, Untuk masalah privasi. Fitur vpn ini hanya untuk chat only.`,id)
             }
-            else{
-                return client.reply(from, 's')
-            }
+            break
         case 'coba':
             nmor = body.split(' ')[1]
             pesan = body.split(`coba ${nmor} `)[1]
@@ -119,17 +227,18 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(nmor+'\@c.us',pesan)
             break
         case 'short':
+            if (args.length === 1) return client.reply(from,`Ketik\nshort https://linknya`,id)
+            var userLinuxnya = 'ubuntu:ubuntu'
             if (args.length === 1) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
             if (args.length === 2) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
             var nam = body.split(' ')[1]
             var likk = body.split(' ')[2]
             var isLinkud = likk.match(/(?:https?:\/\/)/gi)
             if (!isLinkud) return client.reply(from, 'Maaf link yang anda masukkan salah!!\n\nContoh:\nshort google https://google.com', id)
-            var randommm = crypto.randomBytes(4).toString('hex');
             if (nam === 'rnd'){
                 var nam = crypto.randomBytes(4).toString('hex');
             }else{nam = nam}
-            exec(`ack \'${nam}\' \/var\/www\/html\/link`, (error, stdout) => {
+            exec(`sudo chown ${userLinuxnya} /var/www/html/link&&ack \'${nam}\' /var/www/html/link`, (error, stdout) => {
                 if(stdout.split(' ')[0] === nam){
                     client.reply(from,'Maaf nama shortLink anda sudah di pakai, silahkan pakai nama lain',id)
                 }else{
@@ -139,6 +248,8 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'spam':
+            if (args.length === 1) return client.reply(from,`Ketik\nspam jumlah nomornya`,id)
+            if (args.length === 2) return client.reply(from,`Ketik\nspam jumlah nomornya`,id)
             var limit = body.split(' ')[1]
             var nomor = body.split('/')[1].split(' ')[0].replace("@","").replace("c.us","")
             if(!isOwner){
@@ -184,6 +295,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'nmap':
+            if (args.length === 1) return client.reply(from,`Ketik\nmap linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             exec(`nmap ${pesan}`, (error, stdout) => {
                 if (error) {
@@ -195,6 +307,7 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'wget':
+            if (args.length === 1) return client.reply(from,`Ketik\nwget https://linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
             exec(`wget ${pesan} \-O media\/file\/${namaFile}`, (error, stdout) => {
@@ -203,7 +316,7 @@ module.exports = msgHandler = async (client, message) => {
                 }
                 else{
                     client.sendFile(from, `./media/file/${namaFile}`, `${namaFile}`, id)
-                    //client.reply(`${stdout}`)
+                    client.reply(`${stdout}`)
                     exec(`rm ./media/file/${namaFile}`)
                 }
             });
@@ -214,7 +327,10 @@ module.exports = msgHandler = async (client, message) => {
                 var memfree = stdout.replace('\n','')
                 exec('cat \/proc\/meminfo \| grep MemTotal',(error,stdout,stderr)=>{
                     var memtotal = stdout.replace('\n','')
-                    client.reply(from, `Hallo aku bot dari cr4r\n*Jangan lupa donasi ya :)*\nBattery HPku tersisa ${battery}\%\nPenggunaan RAM : ${memfree.replace('MemFree\:','').replace(' ','')}\\${memtotal.replace('MemTotal\:','').replace(' ','')}`,id)
+                    var loadedMsg = client.getAmountOfLoadedMessages()
+                    var chatIds = client.getAllChatIds()
+                    var groups = client.getAllGroups()
+                    client.reply(from, `Hallo aku bot dari cr4r\n*Jangan lupa donasi ya :)*\nStatus :\n- *${loadedMsg}*\nLoaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Chat Pribadi\n- *${chatIds.length}* Total Chats\n\nBattery HPku tersisa ${battery}\nPenggunaan RAM:${memfree.replace('MemFree\:','').replace(' ','')}\\${memtotal.replace('MemTotal\:','').replace(' ','')}`,id)
                 });
             });
             break
@@ -231,6 +347,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'nama':
+            if (args.length === 1) return client.reply(from,`Ketik\nnama Namamu`,id)
             var namas = body.slice(5)
             var req = urlencode(namas.replace(/ /g,"+"));
             request.get({
@@ -248,6 +365,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pasangan':
+            if (args.length === 1) return client.reply(from,`Ketik\npasangan Namamu&Pasanganmu`,id)
             var gh = body.split("pasangan ")[1];
             var namamu = gh.split('&')[0]
             var pasangan = gh.split('&')[1]
@@ -483,6 +601,8 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'yt':
+            if (args.length === 1) return client(from,`Contoh Penggunaan:\nyt mp3 https://linkyoutube\nyt mp4 https://linkyoutube`)
+            if (args.length === 2) return client(from,`Contoh Penggunaan:\nyt mp3 https://linkyoutube\nyt mp4 https://linkyoutube`)
             var piliha = body.split(' ')[1]
             var linkk = body.split(' ')[2]
             console.log(linkk)
@@ -623,7 +743,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'play':
-            if (args.length <= 0) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let namaLagu = body.slice(5);
             var keyword = namaLagu;
             function foreach(arr, func){
@@ -729,22 +849,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'creator':
             client.sendContact(from, '6282237416678@c.us')
             break
-        case 'ig':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *!readme*')
-            if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
-            try {
-                client.reply(from, 'Tunggu ya jangan spam!', id)
-                const resp = await get.get('http://api.fdci.se/sosmed/insta.php?url='+ args[1]).json()
-                if (resp.result.includes('.mp4')) {
-                    var ext = '.mp4'
-                } else {
-                    var ext = '.jpg'
-                }
-                await client.sendFileFromUrl(from, resp.result, `igeh${ext}`, '', id)
-            } catch {
-                client.reply(from, mess.error.Ig, id)
-                }
-            break
+        
         case 'nsfw':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
@@ -781,13 +886,34 @@ module.exports = msgHandler = async (client, message) => {
             if (!isNsfw) return
             client.reply(from, '1. randomHentai\n2. randomNsfwNeko', id)
             break
+        case 'ig':
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *!readme*')
+            if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
+            axios.get(`https://arugaz.herokuapp.com/api/ig?url=${body.split(' ')[1]}`).then(resp =>{
+                var pa = resp.data
+                if(pa.status === false) return client.reply(from, resp.data.error,id)
+                if(pa.status === 200){
+                    client.sendFileFromUrl(from, pa.result, '', donasi,id)
+                }
+            })
+            break
         case 'igstalk':
             if (args.length === 1)  return client.reply(from, 'Kirim perintah *igStalk @username*\nConntoh *igStalk @duar_amjay*', id)
-            const stalk = await get.get('https://mhankbarbar.herokuapp.com/api/stalk?username='+ args[1]).json()
-            if (stalk.error) return client.reply(from, stalk.error, id)
-            const { Biodata, Jumlah_Followers, Jumlah_Following, Jumlah_Post, Name, Username, Profile_pic } = stalk
-            const caps = `➸ *Nama* : ${Name}\n➸ *Username* : ${Username}\n➸ *Jumlah Followers* : ${Jumlah_Followers}\n➸ *Jumlah Following* : ${Jumlah_Following}\n➸ *Jumlah Postingan* : ${Jumlah_Post}\n➸ *Biodata* : ${Biodata}`
-            await client.sendFileFromUrl(from, Profile_pic, 'Profile.jpg', caps, id)
+            var usrr = body.split(' ')
+            axios.get(`https://arugaz.herokuapp.com/api/stalk?username=${usrr}`).then(resp =>{
+                if(resp.data.status === false) return client.reply(from, resp.data.error,id)
+                if(resp.data.status === 200){
+                    var biodata = resp.data.biodata
+                    var follower = resp.data.Jumlah_Followers
+                    var following = resp.data.Jumlah_Following
+                    var post = resp.data.Jumlah_Post
+                    var naman = resp.data.name
+                    var usrnm = resp.data.username
+                    var caps = `Nama: ${naman}\nUsername: ${usrnm}\nBio: ${biodata}\nJumlah Post: ${post}\n${follower}\n${following}\n\n${donasi}`
+                    client.sendFileFromUrl(from, resp.data.Profile_pic, 'Profile.jpg', caps, id)
+                }
+            })
+            
             break
         case 'infogempa':
             axios.get(`https://data.bmkg.go.id/autogempa.xml`).then(resp =>{
@@ -1045,13 +1171,12 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes clear all chat!', id)
             break
         case 'add':
-            const orang = args[1]
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (args.length === 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             if (!isBotGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
             try {
-                await client.addParticipant(from,`${orang}@c.us`)
+                await client.addParticipant(from,`${body.split(' ')}@c.us`)
             } catch {
                 client.reply(from, mess.error.Ad, id)
             }
