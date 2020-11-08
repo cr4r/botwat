@@ -1104,7 +1104,7 @@ module.exports = msgHandler = async (client, message) => {
                 console.log(pesan)
                 if(body.split('member ').length==1||body.split('member ')[1]==undefined||body.split('member ')[1]==''){
                     let hehe = `*╭══•›ꪶ ཻུ۪۪ꦽꦼ̷⸙ ━ ━ ━ ━ ꪶ ཻུ۪۪ꦽꦼ̷⸙‹•════\n`
-                    let hehe += `*╠➥   ✪〘 Hay semuanya 〙✪══\n`
+                    hehe += `*╠➥   ✪〘 Hay semuanya 〙✪══\n`
                     for (let i = 0; i < groupMem.length; i++) {
                         hehe += '╠➥'
                         hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
