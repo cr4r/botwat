@@ -617,8 +617,6 @@ module.exports = msgHandler = async (client, message) => {
                 if(piliha === 'mp3'){
                     try{
                         axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${linkk}&page=1`).then(resp =>{
-                            urlala = resp.data.results[0].video.url
-                            console.log(urlala)
                             judual = resp.data.results[0].video.title
                             durationa = resp.data.results[0].video.duration
                             if(durationa.split(':').length>=3){
@@ -626,6 +624,7 @@ module.exports = msgHandler = async (client, message) => {
                             }else{
                                 vie = resp.data.results[0].video.views
                                 idss = resp.data.results[0].video.id
+                                urlala = `https://youtu.be/${idss}`
                                 tumb = resp.data.results[0].video.thumbnail_src
                                 dt = resp.data.results[0].video.upload_date
                                 usernamee = resp.data.results[0].uploader.username
@@ -683,8 +682,6 @@ module.exports = msgHandler = async (client, message) => {
                     }
                     try{
                         axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${linkk}&page=1`).then(resp =>{
-                            urlala = resp.data.results[0].video.url
-                            console.log(urlala)
                             judual = resp.data.results[0].video.title
                             durationa = resp.data.results[0].video.duration
                             if(durationa.split(':').length>=3){
@@ -692,6 +689,7 @@ module.exports = msgHandler = async (client, message) => {
                             }else{
                                 vie = resp.data.results[0].video.views
                                 idss = resp.data.results[0].video.id
+                                urlala = `https://youtu.be/${idss}`
                                 tumb = resp.data.results[0].video.thumbnail_src
                                 dt = resp.data.results[0].video.upload_date
                                 request(options, function (error, response, body) {
@@ -755,8 +753,6 @@ module.exports = msgHandler = async (client, message) => {
                 axios.get(`http://youtube-scrape.herokuapp.com/api/search?q=${keyword}&page=1`).then(resp =>{
                     aaa = resp.data.results[0]
                     if(aaa.video === undefined) return client.reply(from,'Maaf kak video ini bertype radio di youtube, silahkan coba lagi',id)
-                    urlala = aaa.video.url
-                    console.log(urlala)
                     judual = aaa.video.title
                     durationa = aaa.video.duration
                     if(durationa.split(':').length>=3){
@@ -764,6 +760,7 @@ module.exports = msgHandler = async (client, message) => {
                     }else{
                         vie = aaa.video.views
                         idss = aaa.video.id
+                        urlala = `https://youtu.be/${idss}`
                         tumb = aaa.video.thumbnail_src
                         dt = aaa.video.upload_date
                         usernamee = resp.data.results[0].uploader.username
