@@ -104,17 +104,18 @@ module.exports = msgHandler = async (client, message) => {
 
         switch(command) {
         case '#kode':
-            client.reply(from,`ar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
+            client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
+            break
         case 'trans':
-            if (args.length != 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh: translate id halo dunia`, id)
-            if (!quotedMsg) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh translate id`, id)
+            if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh: translate id halo dunia`, id)
             kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi']
-            var lend = body.split(' ')[1]
-            var psnn = body.split(' ')[2]
-            if(kode.indexOf(lend)===-1){
+            var lend = body.split('.')[1]
+            var psnn = body.split('trans ')[1].split('.')[0]
+            console.log(kode.indexOf(lend))
+            if(kode.indexOf(lend)==-1){
                 client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans id Hello word',id)
             }else{
-                translate(psnn,lend).then((result) => client.reply(from,result,id))
+                tranlstae(psnn,lend).then((result) => client.reply(from,result,id))
             }
             break
         case 'des':
