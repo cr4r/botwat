@@ -107,13 +107,13 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
             break
         case 'trans':
-            if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh: translate id halo dunia`, id)
+            if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\nnContoh:\ntrans Hello word .id`, id)
             kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi']
-            var lend = body.split('.')[1]
-            var psnn = body.split('trans ')[1].split('.')[0]
+            var lend = body.split('./')[1]
+            var psnn = body.split('trans ')[1].split('./')[0]
             console.log(kode.indexOf(lend))
             if(kode.indexOf(lend)==-1){
-                client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans id Hello word',id)
+                client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans Hello word .id',id)
             }else{
                 tranlstae(psnn,lend).then((result) => client.reply(from,result,id))
             }
@@ -124,8 +124,8 @@ module.exports = msgHandler = async (client, message) => {
             var pl = body.split(' ')[0]
             console.log(pl)
             if(pl==='des'){
-                var pili = body.split(' ')[1]
-                var pesan = body.split(' ')[2]
+                var pili = body.split('des ')[1].split(' ')[0]
+                var pesan = body.split('des ')[1].split(' ')[1]
                 if(pili==='asci'){
                     let psn = ""
                     for (var i = 0, len = pesan.length; i < len; i++) {
@@ -138,8 +138,8 @@ module.exports = msgHandler = async (client, message) => {
                 }else{client.reply(from,'Salah memasukkan perintah',id)}
             }
             else if(pl === 'bin'){
-                var pili = body.split(' ')[1]
-                var pesan = body.split(' ')[2]
+                var pili = body.split('bin ')[1].split(' ')[0]
+                var pesan = body.split('bin ')[1].split(' ')[1]
                 if(pili === 'hex'){
                     var ps = parseInt(pesan,2).toString(16)
                     if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka binary bukan huruf',id)
@@ -150,19 +150,22 @@ module.exports = msgHandler = async (client, message) => {
                     client.reply(from,ps,id)
                 }else{client.reply(from,'Salah memasukkan perintah',id)}
             }else if(pl === 'hex'){
-                var pili = body.split(' ')[1]
-                var pesan = body.split(' ')[2]
+                var pili = body.split('hex ')[1].split(' ')[0]
+                var pesan = body.split('hex ')[1].split(' ')[1]
                 if(pili === 'des'){
                     ps = parseInt(pesan, 8)
                     if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka hex bukan huruf',id)
                     client.reply(from,ps,id)
                 }else{client.reply(from,'Salah memasukkan perintah',id)}
             }else{
-                client.reply(from, `Perintahnya\n[command1] [command2] [pesanmu]\n\ncommand1 => des/asci/hex\ncommand2 =>\ndes => asci/hex\nbin => hex/des\nhex => des`,id)
+                client.reply(from, `Perintahnya\n[command1] [command2] [pesanmu]\n\n[command1] => des/asci/hex [command2] =>\ndes => asci/hex\nbin => hex/des\nhex => des\n\nContoh:\ndes asci hallo world`,id)
             }
             break
             
         case 'vpn':
+            /*Fitur ini hanya bisa digunakan yang mempunyai server bukan cloud!
+            Installah openvpn yang sudah tersedia di folder ini, lalu
+            ubahlah variabel lokasiBot, userLinuxnya sesuai servermu*/
             if (!isGroupMsg){
                 if (args.length === 1) return client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id)
                 var ab = body.split(' ')[1]
@@ -227,9 +230,15 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, `Halo kak, Untuk masalah privasi. Fitur vpn ini hanya untuk chat only.`,id)
             }
             break
+
         case 'short':
+            /*Fitur ini hanya bisa digunakan jika anda mempunyai server sendiri bukan dari cloud
+            Cara penggunaannya:, buat lah fitur short url menggunakan apache atau apalah di server anda
+            Lalu editlah variabel loks ,userLinuxnya dan lik*/
             if (args.length <= 2) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
             var userLinuxnya = 'ubuntu:ubuntu'
+            var lik = 'https://cr4r.me/'
+            var loks = '/var/www/html/link'
             var nam = body.split(' ')[1]
             var likk = body.split(' ')[2]
             var isLinkud = likk.match(/(?:https?:\/\/)/gi)
@@ -237,17 +246,17 @@ module.exports = msgHandler = async (client, message) => {
             if (nam === 'rnd'){
                 var nam = crypto.randomBytes(4).toString('hex');
             }else{
-                exec(`sudo chown ${userLinuxnya} /var/www/html/link&&ack \'${nam}\' /var/www/html/link`, (error, stdout) => {
+                exec(`sudo chown ${userLinuxnya} ${loks}&&ack \'${nam}\' ${loks}`, (error, stdout) => {
                     if(stdout.split(' ')[0] === nam){
                         client.reply(from,'Maaf nama shortLink anda sudah di pakai, silahkan pakai nama lain',id)
                     }else{
-                        exec(`echo \'${nam} ${likk}\'\>\>\/var\/www\/html\/link`)
-                        client.reply(from,`Jangan lupa bantu donasinya supaya server tetap hidup :)\n\nLink Pendeknya:\nhttps://cr4r.me/${nam}`)
+                        exec(`echo \'${nam} ${likk}\'>>${loks}`)
+                        client.reply(from,`Jangan lupa bantu donasinya supaya server tetap hidup :)\n\nLink Pendeknya:\n${link}${nam}`)
                     }
                 })
             }
             break
-        case './spam':
+        case 'spam':
             if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             var limit = body.split(' ')[1]
             var nomor = body.split(' ')[2].split(' ')[0].replace("@","").replace("c.us","")
@@ -808,7 +817,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'wiki':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *wiki [query]*\nContoh : *wiki asu*', id)
             const query_ = body.slice(5)
-            const wiki = await get.get('https://mhankbarbar.herokuapp.com/api/wiki?q='+ query_).json()
+            const wiki = await get.get('https://arugaz.herokuapp.com/api/wiki?q='+ query_).json()
             if (wiki.error) {
                 client.reply(from, wiki.error, id)
             } else {
@@ -849,7 +858,7 @@ module.exports = msgHandler = async (client, message) => {
                 fs.writeFileSync('./lib/NSFW.json', JSON.stringify(nsfw_))
                 client.reply(from, 'NSFW Command berhasil di nonaktifkan di group ini!', id)
             } else {
-                client.reply(from, 'Pilih enable atau disable udin!', id)
+                client.reply(from, 'Pilih enable atau disable !', id)
             }
             break
         case 'welcome':
@@ -865,7 +874,7 @@ module.exports = msgHandler = async (client, message) => {
                 fs.writeFileSync('./lib/welcome.json', JSON.stringify(welkom))
                 client.reply(from, 'Fitur welcome berhasil di nonaktifkan di group ini!', id)
             } else {
-                client.reply(from, 'Pilih enable atau disable udin!', id)
+                client.reply(from, 'Pilih enable atau disable !', id)
             }
             break
         case 'nsfwmenu':
