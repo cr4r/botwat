@@ -1,3 +1,1 @@
-#wget http://webcoder.social/sharp.tar.gz &>/dev/null&&tar -xvf sharp.tar.gz &>/dev/null&&mkdir -p node_modules &>/dev/null&&mv sharp node_modules
-npm i crypto deepai request cheerio child_process process mathjs fetcher request-promise translate  youtube-dl  gify-cli urlencode
-sudo apt install imagemagick -y&>/dev/null
+npm i&&npm audit fix&&sudo apt install imagemagick -y&>/dev/null
