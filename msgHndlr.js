@@ -103,23 +103,19 @@ module.exports = msgHandler = async (client, message) => {
         //if (!isOwner) return
 
         switch(command) {
-        /*╭════•›ꪶ ཻུ۪۪ꦽꦼ̷⸙ ━ ━ ━ ━ ꪶ ཻུ۪۪ꦽꦼ̷⸙‹•════ASSALAMUALAIKUM
-│       *KARTU NAMA*
-│ Nama    : Risman°Gans🌹
-│ Umur     : 1-50
-│ Status   : Mahasiswa
-│ Gender  : Laki Laki
-│ Askot    : Jakarta pusat
-╰═════ꪶ ཻུ۪۪ꦽꦼ̷⸙ ━ ━ ━ ━ ꪶ ཻུ۪۪ꦽꦼ̷⸙═════╯
-
-*[_̲̅_̲̅_̲̅█_̲̅͡_̲̅_̲̅͡_̲̅⸽_̲̅͡_̲̅_̲̅͡_̲̅⸽_̲̅͡_̲̅_̲̅͡_̲̅⸽_̲̅͡_̲̅_̲̅͡_̲̅⸽_̲̅͡_̲̅_̲̅͡_̲̅⸽_̲̅͡_̲̅_̲̅͡_̲̅█_̲̅_̲̅_̲̅]**/
-        case 'translate':
+        case '#kode':
+            client.reply(from,`ar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
+        case 'trans':
             if (args.length != 1) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh translate id`, id)
             if (!quotedMsg) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\ncontoh translate id`, id)
-            var quoteText = quotedMsg.type == 'chat' ? quotedMsg.body : quotedMsg.type == 'image' ? quotedMsg.caption : ''
-            tranlstae(quoteText, args[0])
-                .then((result) => client.sendText(from, result))
-                .catch(() => client.sendText(from, 'Error, Kode bahasa salah.'))
+            kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi']
+            var lend = body.split(' ')[1]
+            var psnn = body.split(' ')[2]
+            if(kode.indexOf(lend)===-1){
+                client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans id Hello word',id)
+            }else{
+                translate(psnn,lend).then((result) => client.reply(from,result,id))
+            }
             break
         case 'des':
         case 'asci':
@@ -230,45 +226,49 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, `Halo kak, Untuk masalah privasi. Fitur vpn ini hanya untuk chat only.`,id)
             }
             break
-        case 'coba':
-            nmor = body.split(' ')[1]
-            pesan = body.split(`coba ${nmor} `)[1]
-            console.log(`${nmor} => ${pesan}`)
-            client.reply(nmor+'\@c.us',pesan)
-            break
         case 'short':
-            if (args.length === 1) return client.reply(from,`Ketik\nshort https://linknya`,id)
+            if (args.length <= 2) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
             var userLinuxnya = 'ubuntu:ubuntu'
-            if (args.length === 1) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
-            if (args.length === 2) return client.reply(from, 'Fitur Short adalah pemendek url yang dituju, cara kerjanya sama seperti bit.ly , goo.gl dan website lainnya.\n\nCara penggunaan fitur ini\nContoh:\nshort google https://google.com', id)
             var nam = body.split(' ')[1]
             var likk = body.split(' ')[2]
             var isLinkud = likk.match(/(?:https?:\/\/)/gi)
             if (!isLinkud) return client.reply(from, 'Maaf link yang anda masukkan salah!!\n\nContoh:\nshort google https://google.com', id)
             if (nam === 'rnd'){
                 var nam = crypto.randomBytes(4).toString('hex');
-            }else{nam = nam}
-            exec(`sudo chown ${userLinuxnya} /var/www/html/link&&ack \'${nam}\' /var/www/html/link`, (error, stdout) => {
-                if(stdout.split(' ')[0] === nam){
-                    client.reply(from,'Maaf nama shortLink anda sudah di pakai, silahkan pakai nama lain',id)
-                }else{
-                    exec(`echo \'${nam} ${likk}\'\>\>\/var\/www\/html\/link`)
-                    client.reply(from,`Jangan lupa bantu donasinya supaya server tetap hidup :)\n\nLink Pendeknya:\nhttps://cr4r.me/${nam}`)
-                }
-            })
+            }else{
+                exec(`sudo chown ${userLinuxnya} /var/www/html/link&&ack \'${nam}\' /var/www/html/link`, (error, stdout) => {
+                    if(stdout.split(' ')[0] === nam){
+                        client.reply(from,'Maaf nama shortLink anda sudah di pakai, silahkan pakai nama lain',id)
+                    }else{
+                        exec(`echo \'${nam} ${likk}\'\>\>\/var\/www\/html\/link`)
+                        client.reply(from,`Jangan lupa bantu donasinya supaya server tetap hidup :)\n\nLink Pendeknya:\nhttps://cr4r.me/${nam}`)
+                    }
+                })
+            }
             break
         case './spam':
-            if (args.length <= 3) return client.reply(from,`Ketik\nspam jumlah nomornya pesan kamu\nContoh:\nspam 5 628222 hay sayang`,id)
+            if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             var limit = body.split(' ')[1]
             var nomor = body.split(' ')[2].split(' ')[0].replace("@","").replace("c.us","")
             let messageIndex = body.indexOf(nomor) + nomor.length;
             let psn = body.slice(messageIndex, body.length);
-            if(!isOwner){
+            if(isOwner){
+                if (nomor.length<6){
+                    client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh spam 628233777777')
+                }
+                else{
+                    let messageIndex = body.indexOf(nomor) + nomor.length;
+                    let pesn = body.slice(messageIndex, body.length);
+                    console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
+                    for(i=0;i<limit;i++){
+                        client.sendText(nomor+'@c.us',psn)
+                    }
+                }
+            }else{
                 if (limit.length>20){
                     client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
                 }else if(limit.length<=20){
                     console.log(nomor)
-                    console.log('hahahahhaa     '+from)
                     if (nomor.length<6){
                         client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777',id)
                     }
@@ -283,20 +283,6 @@ module.exports = msgHandler = async (client, message) => {
                 else{
                     client.reply(from,'hemmm eror gan',id )
                 }
-            }else{
-                if (nomor.length<6){
-                    client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh spam 628233777777')
-                }
-                else{
-                    console.log('hahahahhaa     '+from)
-                    let messageIndex = body.indexOf(nomor) + nomor.length;
-                    let pesn = body.slice(messageIndex, body.length);
-                    console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
-                    for(i=0;i<limit;i++){
-                        client.sendText(nomor+'@c.us',psn)
-                    }
-                }
-
             }
             break
         case 'nmap':
@@ -328,9 +314,9 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'ping':
             var chats = await client.getAllNewMessages()
-            exec(`cat \/proc\/meminfo \| grep MemFree`, (error, stdout) => {
+            exec(`cat /proc/meminfo \| grep MemFree`, (error, stdout) => {
                 var memfree = stdout.replace('\n','')
-                exec('cat \/proc\/meminfo \| grep MemTotal',(error,stdout,stderr)=>{
+                exec('cat /proc/meminfo \| grep MemTotal',(error,stdout,stderr)=>{
                     var memtotal = stdout.replace('\n','')
                     var loadedMsg = client.getAmountOfLoadedMessages()
                     var chatIds = client.getAllChatIds()
@@ -342,9 +328,7 @@ module.exports = msgHandler = async (client, message) => {
 
         case 'pantun':
             const fetch = require("node-fetch");
-            fetch('https://raw.githubusercontent.com/cr4r1/text/main/pantun')
-                .then(res => res.text())
-                .then(body => {
+            fetch('https://raw.githubusercontent.com/cr4r1/text/main/pantun').then(res => res.text()).then(body => {
                 let tod = body.split("\n");
                 let pjr = tod[Math.floor(Math.random() * tod.length)];
                 client.reply(from,`${pjr.replace(/grs/g,"\n")}\n\n${donasi}`,id);
@@ -356,15 +340,14 @@ module.exports = msgHandler = async (client, message) => {
             var namas = body.slice(5)
             var req = urlencode(namas.replace(/ /g,"+"));
             request.get({
-                headers: {'content-type' : 'application/x-www-form-urlencoded'},
-                url:     'http://www.primbon.com/arti_nama.php?nama1='+ req +'&proses=+Submit%21+',
-              },function(error, response, body){
-                  let $ = cheerio.load(body);
-                  var y = $.html().split('arti:')[1];
-                  var t = y.split('method="get">')[1];
-                  var f = y.replace(t ," ");
-                  var x = f.replace(/<br\s*[\/]?>/gi, "\n");
-                  var h  = x.replace(/<[^>]*>?/gm, '');
+                headers: {'content-type' : 'application/x-www-form-urlencoded'},url:'http://www.primbon.com/arti_nama.php?nama1='+ req +'&proses=+Submit%21+',},function(error, response, body){
+                if(error) return client.reply(from, 'error gan, hubungi pemilik bot',id)
+                let $ = cheerio.load(body);
+                var y = $.html().split('arti:')[1];
+                var t = y.split('method="get">')[1];
+                var f = y.replace(t ," ");
+                var x = f.replace(/<br\s*[\/]?>/gi, "\n");
+                var h  = x.replace(/<[^>]*>?/gm, '');
               client.reply(from,`Ingat jangan percaya & anggap hanya lelucon\n*Arti Dari Namamu*\n${donasi}\n ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏----------------------------------\nNama _*${namas}*_ ${h}\n----------------------------------\n*_Arti Nama By cr4r_*`,id);
               });
             break
@@ -421,9 +404,9 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pow':
-            var a = JSON.parse(JSON.stringify(body.slice(4).split('#')[0].toString()))
-            var b = JSON.parse(JSON.stringify(body.slice(4).split('#')[1].toString()))
             try{
+                var a = JSON.parse(JSON.stringify(body.slice(4).split('#')[0].toString()))
+                var b = JSON.parse(JSON.stringify(body.slice(4).split('#')[1].toString()))
                 client.reply(from,`*Perpangkatan*\n${a}\^${b} = ${pow(a,b).toString()}`)
             }
             catch(err){
@@ -433,15 +416,15 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'round':
-        try{
-            console.log(body.slice(6))
-            var a = body.slice(6).split(',')[0]
-            var b = body.slice(6).split(',')[1]
-            client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}\n\n${donasi}`)
+            try{
+                console.log(body.slice(6))
+                var a = body.slice(6).split(',')[0]
+                var b = body.slice(6).split(',')[1]
+                client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}\n\n${donasi}`)
+                }
+            catch(err){
+                client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`)
             }
-        catch(err){
-            client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`)
-        }
             break
 
         case 'lg':
