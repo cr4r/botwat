@@ -261,7 +261,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'spam':
             if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             var limit = body.split(' ')[1]
-            var nomor = body.split(' ')[2].split(' ')[0].replace("@","").replace("c.us","")
+            var nomor = body.split(' ')[2].replace("@","").replace("c.us","")
             let messageIndex = body.indexOf(nomor) + nomor.length;
             let psn = body.slice(messageIndex, body.length);
             if(isOwner){
@@ -277,10 +277,9 @@ module.exports = msgHandler = async (client, message) => {
                     }
                 }
             }else{
-                if (limit.length>20){
+                if (limit>22){
                     client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
-                }else if(limit.length<=20){
-                    console.log(nomor)
+                }else if(limit.length<21){
                     if (nomor.length<6){
                         client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777',id)
                     }
@@ -668,7 +667,7 @@ module.exports = msgHandler = async (client, message) => {
             if (wiki.error) {
                 client.reply(from, wiki.error, id)
             } else {
-                client.reply(from, `➸ *Query* : ${query_}\n\n➸ *Result* : ${wiki.result}`, id)
+                client.reply(from,`${wiki.result.replace('by: Astri-chan BOT','')}`, id)
             }
             break
         case 'cuaca':
