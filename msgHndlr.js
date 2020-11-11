@@ -115,7 +115,7 @@ module.exports = msgHandler = async (client, message) => {
             var psnn = body.split('trans ')[1].split('./')[0]
             console.log(kode.indexOf(lend))
             if(kode.indexOf(lend)==-1){
-                client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans Hello word .id',id)
+                client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans Hello word ./id',id)
             }else{
                 tranlstae(psnn,lend).then((result) => client.reply(from,result,id))
             }
