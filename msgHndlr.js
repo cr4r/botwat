@@ -261,9 +261,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'spam':
             if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             var limit = body.split(' ')[1]
-            if(Number.isInteger(limit) === false) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             var nomor = body.split(' ')[2].replace("@","").replace("c.us","")
-            if(Number.isInteger(nomor) === false) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             let messageIndex = body.indexOf(nomor) + nomor.length;
             let psn = body.slice(messageIndex, body.length);
             if(isOwner){
