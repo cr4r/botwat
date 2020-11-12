@@ -1,3 +1,4 @@
+var unirest = require("unirest");
 const xml2js = require('xml2json');
 const cheerio = require("cheerio");
 const crypto = require('crypto');
@@ -339,7 +340,7 @@ module.exports = msgHandler = async (client, message) => {
 
         case 'pantun':
             const fetch = require("node-fetch");
-            fetch('https://raw.githubusercontent.com/cr4r1/text/main/pantun').then(res => res.text()).then(body => {
+            fetch('https://raw.githubusercontent.com/cr4r/text/main/pantun').then(res => res.text()).then(body => {
                 let tod = body.split("\n");
                 let pjr = tod[Math.floor(Math.random() * tod.length)];
                 client.reply(from,`${pjr.replace(/grs/g,"\n")}\n\n${donasi}`,id);
@@ -387,7 +388,7 @@ module.exports = msgHandler = async (client, message) => {
             var cewe = items[Math.floor(Math.random() * items.length)];
             var apalo = "http://api.fdci.se/rep.php?gambar=" + cewe;
             axios.get(apalo).then((result) => {
-                var b = JSON.parse(JSON.stringify(result.data));
+                var b = result.data
                 var cewek =  b[Math.floor(Math.random() * b.length)];
                 client.sendFileFromUrl(from, cewek, 'cewe.jpg', 'Aku cantik gak\n\n${donasi}', id)
             });
@@ -732,9 +733,9 @@ module.exports = msgHandler = async (client, message) => {
             if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
             axios.get(`https://arugaz.herokuapp.com/api/ig?url=${body.split(' ')[1]}`).then(resp =>{
                 var pa = resp.data
-                if(pa.status === false) return client.reply(from, resp.data.error,id)
+                if(pa.status === false) return client.reply(from, 'Foto/Video tidak ada',id)
                 if(pa.status === 200){
-                    client.sendFileFromUrl(from, pa.result, '', donasi,id)
+                    client.sendFileFromUrl(from, pa.result,'ig.jpg',donasi,id)
                 }
             })
             break
@@ -742,7 +743,7 @@ module.exports = msgHandler = async (client, message) => {
             if (args.length === 1)  return client.reply(from, 'Kirim perintah *igStalk @username*\nConntoh *igStalk @duar_amjay*', id)
             var usrr = body.split(' ')
             axios.get(`https://arugaz.herokuapp.com/api/stalk?username=${usrr}`).then(resp =>{
-                if(resp.data.status === false) return client.reply(from, resp.data.error,id)
+                if(resp.data.status === false) return client.reply(from, 'Foto/Video tidak ada',id)
                 if(resp.data.status === 200){
                     var biodata = resp.data.biodata
                     var follower = resp.data.Jumlah_Followers
@@ -766,11 +767,21 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'anime':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *anime [query]*\nContoh : *anime darling in the franxx*', id)
-            const animek = await get.get('https://mhankbarbar.herokuapp.com/api/dewabatch?q=' + body.slice(6)).json()
-            if (animek.error) return client.reply(from, animek.error, id)
-            const res_animek = `${animek.result}\n\n${animek.sinopsis}`
-            client.sendFileFromUrl(from, animek.thumb, 'dewabatch.jpg', res_animek+`\n${donasi}`, id)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *anime [query]*\nContoh : *anime Naruto*', id)
+            var psna = body.slice(6)
+            axios.get(`https://api.jikan.moe/v3/search/anime?q=${psna}&page=1`).then(resp =>{
+                if(resp.status === 404) return clien.reply(from,'data tidak ditemukan kak, harap mengetik yang benar',id)
+                if(resp.status === 200) {
+                    dat = resp.data.results[0]
+                    chap = `\nChapter: ${dat.chapters}`
+                    if(dat.chapters===undefined){
+                        chap = ''
+                    }
+                    tranlstae(dat.synopsis,'id').then((result) => {
+                        client.sendFileFromUrl(from, dat.image_url, dat.title, `Judul: ${dat.title}\nType: ${dat.type}\nScore: ${dat.score}${chap}\n\n${result}\n\n${donasi}`, id)
+                    })
+                }
+            })
             break
         case 'nh':
             if (!isOwner) return
@@ -1160,7 +1171,7 @@ module.exports = msgHandler = async (client, message) => {
                 }
             }catch(error){return client.reply(from, 'Waifu adalah algoritma yang meningkatkan gambar sekaligus mengurangi noise di dalam gambar. Itu mendapatkan namanya dari seni bergaya anime yang dikenal sebagai \'waifu\' yang sebagian besar dilatihnya. Meskipun waifus merupakan sebagian besar data pelatihan, api waifu2x ini masih berfungsi dengan baik pada foto dan jenis citra lainnya. Anda dapat menggunakan Waifu2x untuk menggandakan ukuran gambar Anda sekaligus mengurangi noise.\n\nCara Penggunaan waifu\nContoh\:\nKirimlah foto beserta pesan berisi waifu\natau\nwaifu https:\/\/www.animenewsnetwork.com\/images\/encyc\/A6248\-3.jpg',id)}
             var deepai = require('deepai');
-            deepai.setApiKey('quickstart-QUdJIGlzIGNvbWluZy4uLi4K');
+            deepai.setApiKey('d22373bd-b3d1-41a6-97a0-78450f64915c');
             try{
                 (async function() {
                     var resp = await deepai.callStandardApi("waifu2x", {
