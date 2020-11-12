@@ -1,4 +1,4 @@
-var unirest = require("unirest");
+const inst = require('./lib/instagram')
 const xml2js = require('xml2json');
 const cheerio = require("cheerio");
 const crypto = require('crypto');
@@ -731,12 +731,15 @@ module.exports = msgHandler = async (client, message) => {
         case 'ig':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *!readme*')
             if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
-            axios.get(`https://arugaz.herokuapp.com/api/ig?url=${body.split(' ')[1]}`).then(resp =>{
-                var pa = resp.data
-                if(pa.status === false) return client.reply(from, 'Foto/Video tidak ada',id)
-                if(pa.status === 200){
-                    client.sendFileFromUrl(from, pa.result,'ig.jpg',donasi,id)
-                }
+            // var splitted_URL=body.split(' ')[1].split("/");    ///returns an array
+            // var array_length=splitted_URL.length;
+            // var insta_photo_id=splitted_URL[array_length-2]
+            console.log(body.split(' ')[1])
+            inst(body.split(' ')[1]).then((aa)=>{
+                console.log(aa.status)
+                if(aa.status===404) return client.reply(from, 'Maaf link yang anda kirimkan mungkin bukan type gambar/video, jadi saya tidak mau :)',id)
+                if(aa.status===200) return client.sendFile(from,res.file,res.nama,donasi,id)
+                exec(`rm ./media/instagram/*`)
             })
             break
         case 'igstalk':
@@ -745,7 +748,7 @@ module.exports = msgHandler = async (client, message) => {
             axios.get(`https://arugaz.herokuapp.com/api/stalk?username=${usrr}`).then(resp =>{
                 if(resp.data.status === false) return client.reply(from, 'Foto/Video tidak ada',id)
                 if(resp.data.status === 200){
-                    var biodata = resp.data.biodata
+                    var biodata = resp.data.biodata.replace('ArugaZ','cr4r')
                     var follower = resp.data.Jumlah_Followers
                     var following = resp.data.Jumlah_Following
                     var post = resp.data.Jumlah_Post
@@ -856,7 +859,7 @@ module.exports = msgHandler = async (client, message) => {
                 }
                 const fetch = require('node-fetch')
                 const imgBS4 = `data:${mimetype};base64,${mediaData.toString('base64')}`
-                client.reply(from, 'Searching....', id)
+                client.reply(from, 'Sedang mencari....', id)
                 fetch('https://trace.moe/api/search', {
                     method: 'POST',
                     body: JSON.stringify({ image: imgBS4 }),
