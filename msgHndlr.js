@@ -729,18 +729,19 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, '1. randomHentai\n2. randomNsfwNeko', id)
             break
         case 'ig':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *!readme*')
-            if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
-            // var splitted_URL=body.split(' ')[1].split("/");    ///returns an array
-            // var array_length=splitted_URL.length;
-            // var insta_photo_id=splitted_URL[array_length-2]
-            console.log(body.split(' ')[1])
-            inst(body.split(' ')[1]).then((aa)=>{
-                console.log(aa.status)
-                if(aa.status===404) return client.reply(from, 'Maaf link yang anda kirimkan mungkin bukan type gambar/video, jadi saya tidak mau :)',id)
-                if(aa.status===200) return client.sendFile(from,res.file,res.nama,donasi,id)
-                exec(`rm ./media/instagram/*`)
-            })
+            client.reply(from, 'Maaf fitur ini sedang perbaikan',id)
+            // if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *readme*')
+            // if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
+            // // var splitted_URL=body.split(' ')[1].split("/");    ///returns an array
+            // // var array_length=splitted_URL.length;
+            // // var insta_photo_id=splitted_URL[array_length-2]
+            // console.log(body.split(' ')[1])
+            // inst(body.split(' ')[1]).then((aa)=>{
+            //     console.log(aa.status)
+            //     if(aa.status===404) return client.reply(from, 'Maaf link yang anda kirimkan mungkin bukan type gambar/video, jadi saya tidak mau :)',id)
+            //     if(aa.status===200) return client.sendFile(from,res.file,res.nama,donasi,id)
+            //     exec(`rm ./media/instagram/*`)
+            // })
             break
         case 'igstalk':
             if (args.length === 1)  return client.reply(from, 'Kirim perintah *igStalk @username*\nConntoh *igStalk @duar_amjay*', id)
@@ -824,7 +825,7 @@ module.exports = msgHandler = async (client, message) => {
                     client.reply(from, '[❗] Kode nuClear Salah!')
                 }
             } else {
-                client.reply(from, '[ WRONG ] Kirim perintah *nh [nuClear]* untuk contoh kirim perintah *!readme*')
+                client.reply(from, '[ WRONG ] Kirim perintah *nh [nuClear]* untuk contoh kirim perintah *readme*')
             }
         	break
         case 'brainly':

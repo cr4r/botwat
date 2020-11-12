@@ -1,1 +1,4 @@
-npm i&&npm audit fix&&sudo apt install imagemagick -y&>/dev/null
+npm i&&npm audit fix
+[[ dpkg --get-selections|grep -w "imagemagick"|head -1) ]] || sudo apt install imagemagick -y&>/dev/null
+[[ dpkg --get-selections|grep -w "google-chrome"|head -1) ]] || ./installChrome&>/dev/null
+echo "Cek versi node (node -v), jika versi node di bawah 11, maka lakukan install nodejs versi terbaru dengan cara ./installNode"
