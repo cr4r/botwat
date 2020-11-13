@@ -1,4 +1,5 @@
 const inst = require('./lib/instagram')
+const gmal = require('./lib/gmailGen.js')
 const xml2js = require('xml2json');
 const cheerio = require("cheerio");
 const crypto = require('crypto');
@@ -23,9 +24,8 @@ const { pow,round, log , evaluate, parse, derivative } = require('mathjs')
 const request = require('request');
 const urlencode = require("urlencode");
 const url3 = require('url');
-const { duration } = require('moment-timezone');
-const { isFunction } = require('util');
 const ytmp4 = require('./lib/ytmp4.js');
+const processTime = (timestamp, now) => {return moment.duration(now - moment(timestamp * 1000)).asSeconds()}
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 
 module.exports = msgHandler = async (client, message) => {
@@ -78,7 +78,7 @@ module.exports = msgHandler = async (client, message) => {
             }
         }
         function aca(lsls){return lsls[Math.floor(Math.random() * lsls.length)]}
-        var donasi = 'Donasinya (ovo/gopay/dana/pulsa)\n082237416678\natau\nhttps://saweria.co/cr4r/\nMakasih donasinya :)'
+        var donasi = 'Jangan lupa Donasinya (ovo/gopay/dana)\n082237416678\natau\nhttps://saweria.co/cr4r/\nMakasih donasinya :)\njika mau donasi pulsa kirim ke nomor bot ini aja ya'
         var pagi = ['pagi', 'jg', 'pgi jga','pgi','pagi']
         var sapa = ['hai','hello','hai kak','siapa?','ada apa','ya?','ada apa ya?','y','ya','ada apa kak','ya ada apa','ada yang bisa saya bantu?','hmm','oh yes','oh no','kenapa bang','ada apa bang','muehehehe']
         var syg = ['ngp sayang', 'apa sayang','apa bebeb','apa beb','opo','apo','ngp','apaan','apoh syang','ap beb','ngp beb', 'yo sayang']
@@ -101,11 +101,20 @@ module.exports = msgHandler = async (client, message) => {
         if (isGroupMsg && command.startsWith('!')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
         if (!isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname))
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
-        //if (body.length===1) client.reply(from, pp, id)
         if (isBlocked) return
         //if (!isOwner) return
 
         switch(command) {
+        case 'gmail':
+            if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id)
+            gmal(body.split(' ')[1]).then((aaa)=>{
+                if(aaa.status==='ok'){
+                    client.reply(from,`${donasi}\n\nSpeed: ${processTime(t, moment())} _Detik_\n\n${aaa.mail}`,id)
+                }else{
+                    client.reply(from, `Gagal Gan, silahkan coba lagi dalam beberapa detik`,id)
+                }
+            })
+            break
         case '#kode':
             client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
             break
@@ -333,7 +342,7 @@ module.exports = msgHandler = async (client, message) => {
                     var loadedMsg = client.getAmountOfLoadedMessages()
                     var chatIds = client.getAllChatIds()
                     var groups = client.getAllGroups()
-                    client.reply(from, `Hallo aku bot dari cr4r\n*Jangan lupa donasi ya :)*\nStatus :\n- *${loadedMsg}*\nLoaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Chat Pribadi\n- *${chatIds.length}* Total Chats\n\nBattery HPku tersisa ${battery}\nPenggunaan RAM:${memfree.replace('MemFree\:','').replace(' ','')}\\${memtotal.replace('MemTotal\:','').replace(' ','')}`,id)
+                    client.reply(from, `${donasi}\n\nSpeed: ${processTime(t, moment())} _Second_\nStatus :\n- *${loadedMsg}*\nLoaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Chat Pribadi\n- *${chatIds.length}* Total Chats\n\nBattery HPku tersisa ${battery}\nPenggunaan RAM:${memfree.replace('MemFree\:','').replace(' ','')}\\${memtotal.replace('MemTotal\:','').replace(' ','')}`,id)
                 });
             });
             break
