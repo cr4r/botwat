@@ -103,8 +103,56 @@ module.exports = msgHandler = async (client, message) => {
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
         if (isBlocked) return
         //if (!isOwner) return
-
+        function decodeBase64Image(dataString) {
+            var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+              response = {};
+          
+            if (matches.length !== 3) {
+              return new Error('Invalid input string');
+            }
+          
+            response.type = matches[1];
+            response.data = new Buffer.alloc(matches[2], 'base64');
+          
+            return response;
+          }
+          
         switch(command) {
+        case "scan":
+            var outn = `./media/file/output`
+            var outj = `./media/file/output.jpg`
+            if (isMedia && type === 'image') {
+                const mediaData = await decryptMedia(message, uaOverride)
+                fs.writeFile(outj,mediaData,(err)=>{if(err) return client.reply(from,`Error gan\n\n${err}`,id)})
+                exec(`tesseract ${outj} ${outn} --dpi 150`, (error, stdout) => {
+                    if (error) return client.reply(`ERROR => ${error}`);
+                    client.sendFile(from, outn+'.txt','output.txt','',id)
+                    client.reply(from,`${donasi}`,id)
+                    exec(`rm ${outn}.txt'`)
+                })
+            } else if (quotedMsg && quotedMsg.type == 'image') {
+                const mediaData = await decryptMedia(quotedMsg, uaOverride)
+                fs.writeFile(outj,mediaData,(err)=>{if(err) return client.reply(from,`Error gan\n\n${err}`,id)})
+                exec(`tesseract ${outj} ${outn} --dpi 150`, (error, stdout) => {
+                    if (error) return client.reply(`ERROR => ${error}`);
+                    client.sendFile(from, outn+'.txt','output.txt','',id)
+                    client.reply(from,`${donasi}`,id)
+                    exec(`rm ${outn}.txt'`)
+                })
+            }else if(args.length === 2&&body.split(' ')[2].match(isUrl)){
+                var lnk = body.split(' ')[2]
+                exec(`wget -O ${outj} ${lnk}&&tesseract ${outj} ${outn} --dpi 150`, (error, stdout) => {
+                    if (error) {
+                        client.reply(from,`ERROR => ${error.message}`,id);
+                    }
+                    client.sendFile(from, `${outn}.txt`,'output.txt','',id)
+                    client.reply(from,`${donasi}`,id)
+                    exec(`rm ${outn}.txt'`)
+                })
+            }else{
+                client.reply(from,'Halo kak, silahkan Baca Ya!\nScan adalah  sebuah fitur yang bisa mengenali character, huruf atau angka dalam sebuah  dokumen photo dan juga bisa menjadi fungsi scaner untuk sebuah objek yang terdapat tulisan sehingga menjadi output berupa teks di perangkat smartphone maupun pc.\n\nAda 3 Cara Penggunaannya:\n1. kirim lah sebuah gambar yang berisikan teks dan sebuah pesan scan\n2.Tag lah sebuah foto yang berisikan teks dengan pesan/caption scan\n3.ketiklah \nscan urlGambarnya')
+            }
+            break
         case 'gmail':
             if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id)
             gmal(body.split(' ')[1]).then((aaa)=>{
@@ -283,7 +331,7 @@ module.exports = msgHandler = async (client, message) => {
                     let pesn = body.slice(messageIndex, body.length);
                     console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
                     for(i=0;i<limit;i++){
-                        client.sendText(nomor+'@c.us',psn)
+                        client.sendText(nomor+'@c.us',psn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
                     }
                 }
             }else{
@@ -297,7 +345,7 @@ module.exports = msgHandler = async (client, message) => {
                         
                         console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
                         for(i=0;i<limit;i++){
-                            client.sendText(nomor+'@c.us',psn)
+                            client.sendText(nomor+'@c.us',psn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
                         }
                     }
                 }
@@ -327,8 +375,8 @@ module.exports = msgHandler = async (client, message) => {
                     client.reply(`ERROR => ${error.message}`);
                 }
                 else{
-                    client.sendFile(from, `./media/file/${namaFile}`, `${namaFile}`, id)
-                    client.reply(`${stdout}`)
+                    client.sendFile(from, `./media/file/${namaFile}`, `${namaFile}`,'', id)
+                    // client.reply(`${stdout}`)
                     exec(`rm ./media/file/${namaFile}`)
                 }
             });
@@ -962,7 +1010,7 @@ module.exports = msgHandler = async (client, message) => {
                 if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
                 if (!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
                 const groupMem = await client.getGroupMembers(groupId)
-		console.log(!isOwner)
+		    console.log(!isOwner)
                 var pesan = body.slice(7)
                 console.log(pesan)
                 if(body.split('member ').length==1||body.split('member ')[1]==undefined||body.split('member ')[1]==''){

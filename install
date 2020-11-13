@@ -1,4 +1,28 @@
-npm i&&npm audit fix
+msg () {
+BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
+AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCOR='\e[0m'
+ case $1 in
+  -ne)cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
+  -ama)cor="${AMARELO}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -verm)cor="${AMARELO}${NEGRITO}[!] ${VERMELHO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -azu)cor="${MAG}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -verd)cor="${VERDE}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -bra)cor="${BRAN}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
+  -bar2)cor="${AZUL}${NEGRITO}======================================================" && echo -e "${cor}${SEMCOR}";;
+  -bar)cor="${AZUL}${NEGRITO}========================================" && echo -e "${cor}${SEMCOR}";;
+ esac
+}
+
+msg -bar2
+msg -ama "Sedang Menginstall Module JS, mohon tunggu sebentar"
+npm i&&npm audit fix&>/dev/null
+msg -bar2
+msg -ne "Jika Error, Silahkan update NODEJS mu!"
+msg -bar2
+msg -ama "Sedang mencari dan menginstall tool pendukung"
 [[ $(dpkg --get-selections | grep -w "imagemagick"|head -1) ]] || sudo apt install imagemagick -y&>/dev/null
+[[ $(dpkg --get-selections | grep -w "wget"|head -1) ]] || sudo apt-get install wget -y&>/dev/null
+[[ $(dpkg --get-selections | grep -w "nmap"|head -1) ]] || sudo apt-get install nmap -y&>/dev/null
 [[ $(dpkg --get-selections | grep -w "google-chrome"|head -1) ]] || ./installChrome&>/dev/null
-echo "Cek versi node (node -v), jika versi node di bawah 11, maka lakukan install nodejs versi terbaru dengan cara ./installNode"
+msg -bar2
+msg -ama "Cek versi node (node -v), jika versi node di bawah 11, maka lakukan install nodejs versi terbaru dengan cara ./installNode"
