@@ -10,10 +10,13 @@ Sudah di test melalui OS Ubuntu 18.04 Bionic dan Debian 10 Buster
 git clone https://github.com/cr4r1/botwat
 ```
 ## Tata cara penginstalan
-Jika belum ada google-chrome maka silahkan install dengan cara './installChrome'<br>
+Jika belum ada google-chrome maka silahkan install dengan cara<br>
+```bash
+./installChrome
+```
 Jika belum ada nodeJS maka silahkan install dengan cara 
 ```bash
-./installNode
+sudo ./installNode
 ```
 Jika sudah tersedia semua silahkan ketik perintah
 ```bash
@@ -134,8 +137,6 @@ node index.js
 
 ## Special Thanks to
 * [`open-wa/wa-automate-nodejs`](https://github.com/open-wa/wa-automate-nodejs)
-* [`YogaSakti/imageToSticker`](https://github.com/YogaSakti/imageToSticker)
-* [`MhankBarBar/msghndlr`](https://github.com/MhankBarBar/whatsapp-bot)
 
 ### Donate
 * [`Saweria`](https://saweria.co/donate/cr4r)

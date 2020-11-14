@@ -5,6 +5,7 @@ const cheerio = require("cheerio");
 const crypto = require('crypto');
 const yts = require("./lib/cmd.js");
 const ytmp3 = require("./lib/ytmp3.js");
+const ytmp4 = require('./lib/ytmp4.js');
 const { decryptMedia } = require('@open-wa/wa-decrypt')
 const fs = require('fs-extra')
 const axios = require('axios')
@@ -17,14 +18,12 @@ const nhentai = require('nhentai-js')
 const { API } = require('nhentai-api')
 const { liriklagu, quotemaker, randomNimek, fb, sleep, jadwalTv, ss } = require('./lib/functions')
 const { help, snk, info, donate, readme, listChannel } = require('./lib/help')
-const { stdout } = require('process')
 const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'))
 const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
 const { pow,round, log , evaluate, parse, derivative } = require('mathjs')
 const request = require('request');
 const urlencode = require("urlencode");
 const url3 = require('url');
-const ytmp4 = require('./lib/ytmp4.js');
 const processTime = (timestamp, now) => {return moment.duration(now - moment(timestamp * 1000)).asSeconds()}
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 
@@ -38,7 +37,7 @@ module.exports = msgHandler = async (client, message) => {
         const commands = caption || body || ''
         const command = commands.toLowerCase().split(' ')[0] || ''
         const args =  commands.split(' ')
-
+        
         const msgs = (message) => {
             if (command.startsWith('!')) {
                 if (message.length >= 10){
@@ -102,20 +101,21 @@ module.exports = msgHandler = async (client, message) => {
         if (!isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname))
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
         if (isBlocked) return
+        
         //if (!isOwner) return
-        function decodeBase64Image(dataString) {
-            var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-              response = {};
+        // function decodeBase64Image(dataString) {
+        //     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        //       response = {};
           
-            if (matches.length !== 3) {
-              return new Error('Invalid input string');
-            }
+        //     if (matches.length !== 3) {
+        //       return new Error('Invalid input string');
+        //     }
           
-            response.type = matches[1];
-            response.data = new Buffer.alloc(matches[2], 'base64');
+        //     response.type = matches[1];
+        //     response.data = new Buffer.alloc(matches[2], 'base64');
           
-            return response;
-          }
+        //     return response;
+        //   }
           
         switch(command) {
         case "scan":
@@ -318,39 +318,49 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'spam':
             if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
-            var limit = body.split(' ')[1]
-            var nomor = body.split(' ')[2].replace("@","").replace("c.us","")
-            let messageIndex = body.indexOf(nomor) + nomor.length;
-            let psn = body.slice(messageIndex, body.length);
-            if(isOwner){
-                if (nomor.length<6){
-                    client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh spam 628233777777')
-                }
-                else{
-                    let messageIndex = body.indexOf(nomor) + nomor.length;
-                    let pesn = body.slice(messageIndex, body.length);
-                    console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
-                    for(i=0;i<limit;i++){
-                        client.sendText(nomor+'@c.us',psn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
-                    }
+            if(body.split(' ')[1]==='grub'){
+                if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
+                if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
+                var psnn = body.slice(10).split('./')[0]
+                limit = body.split('./')[1]
+                for(i=0;i<limit;i++){
+                    client.reply(from,psnn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
                 }
             }else{
-                if (limit>22){
-                    client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
-                }else if(limit.length<21){
+                var limit = body.split(' ')[1]
+                var nomor = body.split(' ')[2].replace("@","").replace("c.us","")
+                let messageIndex = body.indexOf(nomor) + nomor.length;
+                let psn = body.slice(messageIndex, body.length);
+                if(isOwner){
                     if (nomor.length<6){
-                        client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777',id)
+                        client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh spam 628233777777')
                     }
                     else{
-                        
+                        let messageIndex = body.indexOf(nomor) + nomor.length;
+                        let pesn = body.slice(messageIndex, body.length);
                         console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
                         for(i=0;i<limit;i++){
-                            client.sendText(nomor+'@c.us',psn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
+                            client.sendText(nomor+`@c.us`,psn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
                         }
                     }
-                }
-                else{
-                    client.reply(from,'hemmm eror gan',id )
+                }else{
+                    if (limit>22){
+                        client.reply(from, 'Gak ada akhlak\nBatasan spam hanya 20 pesan',id)
+                    }else if(limit.length<21){
+                        if (nomor.length<6){
+                            client.reply(from, 'Maaf nomor yang anda masukkan salah\nHarap masukkan kode negara+nomor\nContoh 628233777777',id)
+                        }
+                        else{
+                            
+                            console.log(`Pesan :${psn}\nNomor: ${nomor+'@c.us'}`)
+                            for(i=0;i<limit;i++){
+                                client.sendText(nomor+`@c.us`,psn+`\n\nPesan dari https://wa.me/${sender.id}`.replace(`@c.us`,''))
+                            }
+                        }
+                    }
+                    else{
+                        client.reply(from,'hemmm eror gan',id )
+                    }
                 }
             }
             break
@@ -382,15 +392,18 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'ping':
-            var chats = await client.getAllNewMessages()
-            exec(`cat /proc/meminfo \| grep MemFree`, (error, stdout) => {
-                var memfree = stdout.replace('\n','')
+            console.log(sender.id)
+            exec(`cat /proc/meminfo | grep MemFree`, (error, stdout) => {
+                var memfree = round(evaluate(stdout.replace('\n','').replace('MemFree\:','').replace('kB','').trim()/1024).toString(),2)+' mb'
                 exec('cat /proc/meminfo \| grep MemTotal',(error,stdout,stderr)=>{
-                    var memtotal = stdout.replace('\n','')
-                    var loadedMsg = client.getAmountOfLoadedMessages()
-                    var chatIds = client.getAllChatIds()
-                    var groups = client.getAllGroups()
-                    client.reply(from, `${donasi}\n\nSpeed: ${processTime(t, moment())} _Second_\nStatus :\n- *${loadedMsg}*\nLoaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Chat Pribadi\n- *${chatIds.length}* Total Chats\n\nBattery HPku tersisa ${battery}\nPenggunaan RAM:${memfree.replace('MemFree\:','').replace(' ','')}\\${memtotal.replace('MemTotal\:','').replace(' ','')}`,id)
+                    (async () => {
+                    var memtotal = evaluate(stdout.replace('\n','').replace('MemTotal:','').replace('kB','').trim()).toString()+' mb'
+                    console.log(memtotal)
+                    var loadedMsg = await client.getAmountOfLoadedMessages()
+                    var chatIds = await client.getAllChatIds()
+                    var groups = await client.getAllGroups()
+                    client.reply(from, `${donasi}\n\nSpeed: ${processTime(t, moment())} _Second_\nStatus : *${loadedMsg}* Pesan\nPesan belum dibaca:\n- *${groups.length}* Pesan Grub\n- *${chatIds.length - groups.length}* Chat Pribadi\n- *${chatIds.length}* Total Chats\n\nBattery HP tersisa ${battery} \%\nPenggunaan RAM: ${memfree}\\${memtotal}`,id)
+                    })();
                 });
             });
             break
@@ -639,21 +652,13 @@ module.exports = msgHandler = async (client, message) => {
             //huruf 54 baris baru 700
             spawn('convert', [
                 './media/img/before.jpg',
-                '-font',
-                'Indie-Flower',
-                '-size',
-                '50x960',
-                '-pointsize',
-                '22',
-                '-interline-spacing',
-                '17',
-                '-annotate',
-                '+170+222',
-                fixHeight,
-                './media/img/after.jpg'
-            ])
-            .on('error', () => client.reply(from, `Error gan`, id))
-            .on('exit', () => {
+                '-font','Indie-Flower',
+                '-size','50x960',
+                '-pointsize','22',
+                '-interline-spacing','17',
+                '-annotate','+170+222',
+                fixHeight,'./media/img/after.jpg'
+            ]).on('error', () => client.reply(from, `Error gan`, id)).on('exit', () => {
                 client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', `Nih kak\n\n${donasi}\nDitulis oleh bot CR4R`, id)
             })
             break
@@ -748,7 +753,6 @@ module.exports = msgHandler = async (client, message) => {
         case 'creator':
             client.sendContact(from, '6282237416678@c.us')
             break
-        
         case 'nsfw':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
@@ -1006,11 +1010,11 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'member':
+            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            if (!isGroupAdmins&&!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             try{
-                if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-                if (!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
                 const groupMem = await client.getGroupMembers(groupId)
-		    console.log(!isOwner)
+		        console.log(!isOwner)
                 var pesan = body.slice(7)
                 console.log(pesan)
                 if(body.split('member ').length==1||body.split('member ')[1]==undefined||body.split('member ')[1]==''){
@@ -1244,20 +1248,13 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from,`Hmmmm error gan\n\n${error}`)
             }
             break
-        case 'husbu':
-            const diti = fs.readFileSync('./lib/husbu.json')
-            const ditiJsin = JSON.parse(diti)
-            const rindIndix = Math.floor(Math.random() * ditiJsin.length)
-            const rindKiy = ditiJsin[rindIndix]
-            client.sendFileFromUrl(from, rindKiy.image, 'Husbu.jpg', rindKiy.teks, id)
-            break
         case 'random':
             prm = body.split(' ')[1]
             var urk = 'https://api.computerfreaker.cf/v1/'
-            if(prm==='hentai'){
-                axios.get(`${urk}hentai`).then(resp =>{client.sendFileFromUrl(from, resp.data.url, `Hentai.png`, 'Hentai Anime', id)})
-            }else if(prm==='nsfwneko'){
+            if(prm==='nsfwneko'){
                 axios.get(`${urk}nsfwneko`).then(resp =>{client.sendFileFromUrl(from, resp.data.url, `NSFWNeko Anime.png`, 'NSFWNeko Anime', id)})
+            }else if(prm==='hentai'){
+                axios.get(`${urk}hentai`).then(resp =>{client.sendFileFromUrl(from, resp.data.url, `Hentai.png`, 'Hentai Anime', id)})
             }else if(prm==='hug'){
                 axios.get(`${urk}hug`).then(resp =>{client.sendFileFromUrl(from, resp.data.url, `hug.png`, 'hug', id)})
             }else if(prm==='nekonime'){
