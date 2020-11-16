@@ -92,7 +92,7 @@ module.exports = msgHandler = async (client, message) => {
         const isBotGroupAdmins = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false
         const ownerNumber = '6282237416678@c.us'
         const isOwner = sender.id === ownerNumber
-        const isBlocked = blockNumber.includes(sender.id)
+        const isBlocked = blockNumber.indexOf(sender.id)===-1
         const isNsfw = isGroupMsg ? nsfw_.includes(chat.id) : false
         const uaOverride = 'WhatsApp/2.2029.4 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
         const isUrl = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi)
@@ -100,7 +100,7 @@ module.exports = msgHandler = async (client, message) => {
         if (isGroupMsg && command.startsWith('!')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
         if (!isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname))
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
-        if (isBlocked) return
+        // if (isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
         
         //if (!isOwner) return
         // function decodeBase64Image(dataString) {
@@ -118,7 +118,20 @@ module.exports = msgHandler = async (client, message) => {
         //   }
           
         switch(command) {
-        case "scan":
+        case 'sudo':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
+            if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
+            if (args.length === 1) return client.reply(from,`Ketik\nsudo commandnya`,id)
+            exec(`${body}`, (error, stdout) => {
+                if (error) {
+                    client.reply(`ERROR => ${error.message}`);
+                }
+                else{
+                    client.reply(from, `${stdout}`, id)
+                }
+            });
+            break
+        case 'scan':
             var outn = `./media/file/output`
             var outj = `./media/file/output.jpg`
             if (isMedia && type === 'image') {
@@ -154,6 +167,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'gmail':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id)
             gmal(body.split(' ')[1]).then((aaa)=>{
                 if(aaa.status==='ok'){
@@ -164,9 +178,11 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case '#kode':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
             break
         case 'trans':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\nnContoh:\ntrans Hello word .id`, id)
             kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi']
             var lend = body.split('./')[1]
@@ -181,6 +197,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'des':
         case 'asci':
         case 'hex':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var pl = body.split(' ')[0]
             console.log(pl)
             if(pl==='des'){
@@ -223,6 +240,7 @@ module.exports = msgHandler = async (client, message) => {
             break
             
         case 'vpn':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             /*Fitur ini hanya bisa digunakan yang mempunyai server bukan cloud!
             Installah openvpn yang sudah tersedia di folder ini, lalu
             ubahlah variabel lokasiBot, userLinuxnya sesuai servermu*/
@@ -292,6 +310,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'short':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             /*Fitur ini hanya bisa digunakan jika anda mempunyai server sendiri bukan dari cloud
             Cara penggunaannya:, buat lah fitur short url menggunakan apache atau apalah di server anda
             Lalu editlah variabel loks ,userLinuxnya dan lik*/
@@ -317,6 +336,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'spam':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             if(body.split(' ')[1]==='grub'){
                 if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
@@ -365,6 +385,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'nmap':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\nmap linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             exec(`nmap ${pesan}`, (error, stdout) => {
@@ -377,6 +398,7 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'wget':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\nwget https://linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
@@ -392,6 +414,7 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'ping':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             console.log(sender.id)
             exec(`cat /proc/meminfo | grep MemFree`, (error, stdout) => {
                 var memfree = round(evaluate(stdout.replace('\n','').replace('MemFree\:','').replace('kB','').trim()/1024).toString(),2)+' mb'
@@ -409,6 +432,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pantun':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const fetch = require("node-fetch");
             fetch('https://raw.githubusercontent.com/cr4r/text/main/pantun').then(res => res.text()).then(body => {
                 let tod = body.split("\n");
@@ -418,6 +442,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'nama':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\nnama Namamu`,id)
             var namas = body.slice(5)
             var req = urlencode(namas.replace(/ /g,"+"));
@@ -435,6 +460,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pasangan':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\npasangan Namamu&Pasanganmu`,id)
             var gh = body.split("pasangan ")[1];
             var namamu = gh.split('&')[0]
@@ -453,6 +479,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case '.cewe':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var items = ["ullzang girl", "cewe cantik", "cewe hijab", "hijaber", "hijab cantik", "korean girl"];
             // var a = url.match(/(?:https?:\\\/{2})?i.pinimg.com\/originals\/([^\s&]+)/)
             var cewe = items[Math.floor(Math.random() * items.length)];
@@ -465,6 +492,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case '.cowo':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var items = ["ullzang boy", "cowo ganteng", "cogan", "korean boy", "jepang boy", "cowo korea"];
             // var a = url.match(/(?:https?:\\\/{2})?i.pinimg.com\/originals\/([^\s&]+)/)
             var cewe = items[Math.floor(Math.random() * items.length)];
@@ -477,6 +505,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'hitung':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 client.reply(from,`*Kalkulator*\n${body.slice(7)} = ${evaluate(body.slice(7)).toString()}\n\n${donasi}`)
             }
@@ -486,6 +515,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pow':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 var a = JSON.parse(JSON.stringify(body.slice(4).split('#')[0].toString()))
                 var b = JSON.parse(JSON.stringify(body.slice(4).split('#')[1].toString()))
@@ -498,6 +528,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'round':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 console.log(body.slice(6))
                 var a = body.slice(6).split(',')[0]
@@ -557,6 +588,7 @@ module.exports = msgHandler = async (client, message) => {
 
         case 'sticker':
         case 'stiker':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (isMedia && type === 'image') {
                 const mediaData = await decryptMedia(message, uaOverride)
                 const imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
@@ -584,6 +616,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'stickergif':
         case 'stikergif':
         case 'sgif':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (isMedia) {
                 console.log(mimetype)
                 try{
@@ -610,6 +643,7 @@ module.exports = msgHandler = async (client, message) => {
             client.sendLinkWithAutoPreview(from, '', donate)
             break
         case 'tts':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *tts [id, en, jp, ar] [teks]*, contoh *tts [id] halo semua*')
             const ttsId = require('node-gtts')('id')
             const ttsEn = require('node-gtts')('en')
@@ -641,6 +675,7 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'tulis':
         case 'nulis':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *nulis [teks]*', id)
             let text = body.slice(6)
             let bb = []
@@ -663,6 +698,7 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'yt':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client(from,`Contoh Penggunaan:\nyt mp3 https://linkyoutube\nyt mp4 https://linkyoutube`)
             if (args.length === 2) return client(from,`Contoh Penggunaan:\nyt mp3 https://linkyoutube\nyt mp4 https://linkyoutube`)
             var piliha = body.split(' ')[1]
@@ -708,6 +744,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'play':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let keyword = body.slice(5);
             try{
@@ -724,6 +761,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'wiki':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *wiki [query]*\nContoh : *wiki asu*', id)
             const query_ = body.slice(5)
             const wiki = await get.get('https://arugaz.herokuapp.com/api/wiki?q='+ query_).json()
@@ -744,6 +782,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'fb':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *fb [linkFb]* untuk contoh silahkan kirim perintah *readme*', id)
             if (!args[1].includes('facebook.com')) return client.reply(from, mess.error.Iv, id)
             client.reply(from, mess.wait, id)
@@ -751,9 +791,12 @@ module.exports = msgHandler = async (client, message) => {
             client.sendFileFromUrl(from, epbe.url, `Cuih${epbe.exts}`, epbe.capt, id)
             break
         case 'creator':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.sendContact(from, '6282237416678@c.us')
             break
         case 'nsfw':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
             if (args.length === 1) return client.reply(from, 'Pilih enable atau disable!', id)
@@ -770,6 +813,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'welcome':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
             if (args.length === 1) return client.reply(from, 'Pilih enable atau disable!', id)
@@ -786,10 +830,11 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'nsfwmenu':
-            if (!isNsfw) return
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, '1. randomHentai\n2. randomNsfwNeko', id)
             break
         case 'ig':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, 'Maaf fitur ini sedang perbaikan',id)
             // if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *readme*')
             // if (!args[1].match(isUrl) && !args[1].includes('instagram.com')) return client.reply(from, mess.error.Iv, id)
@@ -805,6 +850,8 @@ module.exports = msgHandler = async (client, message) => {
             // })
             break
         case 'igstalk':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1)  return client.reply(from, 'Kirim perintah *igStalk @username*\nConntoh *igStalk @duar_amjay*', id)
             var usrr = body.split(' ')
             axios.get(`https://arugaz.herokuapp.com/api/stalk?username=${usrr}`).then(resp =>{
@@ -823,6 +870,7 @@ module.exports = msgHandler = async (client, message) => {
             
             break
         case 'infogempa':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             axios.get(`https://data.bmkg.go.id/autogempa.xml`).then(resp =>{
                 jsonn = JSON.parse(xml2js.toJson(resp.data)).Infogempa.gempa
                 urlla = `https://www.google.com/maps/search/${jsonn.Lintang.split(' ')[0]},${jsonn.Bujur.split(' ')[0]}`
@@ -832,6 +880,7 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'anime':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *anime [query]*\nContoh : *anime Naruto*', id)
             var psna = body.slice(6)
             axios.get(`https://api.jikan.moe/v3/search/anime?q=${psna}&page=1`).then(resp =>{
@@ -849,6 +898,7 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'nh':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return
             //if (isGroupMsg) return client.reply(from, 'Sorry this command for private chat only!', id)
             if (args.length === 2) {
@@ -890,6 +940,7 @@ module.exports = msgHandler = async (client, message) => {
             }
         	break
         case 'brainly':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length >= 2){
                 const BrainlySearch = require('./lib/brainly')
                 let tanya = body.slice(8)
@@ -913,6 +964,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'cari':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (isMedia && type === 'image' || quotedMsg && quotedMsg.type === 'image') {
                 if (isMedia) {
                     var mediaData = await decryptMedia(message, uaOverride)
@@ -957,6 +1009,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'buatquote':
         case 'quotesmaker':
         case 'quotemaker':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             arg = body.split('|')
             if (arg.length >= 4) {
                 client.reply(from, mess.wait, id)
@@ -973,6 +1026,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'linkgroup':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isBotGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
             if (isGroupMsg) {
                 const inviteLink = await client.getGroupInviteLink(groupId);
@@ -982,6 +1036,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'bc':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot!', id)
             let msg = body.slice(3)
             const chatz = await client.getAllChatIds()
@@ -992,6 +1047,7 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Broadcast Success!', id)
             break
         case 'adminlist':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             let mimin = ''
             for (let admon of groupAdmins) {
@@ -1004,12 +1060,14 @@ module.exports = msgHandler = async (client, message) => {
         case 'ownergroub':
         case 'ownergrub':
         case 'ownergroup':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const Owner_ = chat.groupMetadata.owner
             await client.sendTextWithMentions(from, `Owner Group : @${Owner_}`)
             break
 
         case 'member':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins&&!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             try{
@@ -1056,6 +1114,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'kickall':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const isGroupOwner = sender.id === chat.groupMetadata.owner
             if (!isGroupOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Owner group', id)
@@ -1071,6 +1130,7 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes kick all member', id)
             break
         case 'leaveall':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
             const allChats = await client.getAllChatIds()
             const allGroups = await client.getAllGroups()
@@ -1081,6 +1141,7 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes leave all group!', id)
             break
         case 'clearall':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
             const allChatz = await client.getAllChats()
             for (let dchat of allChatz) {
@@ -1089,6 +1150,7 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes clear all chat!', id)
             break
         case 'add':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (args.length === 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
@@ -1100,6 +1162,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'kick':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             if (!isBotGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
@@ -1111,11 +1174,13 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case '.keluar':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             await client.sendText(from,'Sayonara').then(() => client.leaveGroup(groupId))
             break
         case 'admin':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
             if (!isBotGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan ketika bot menjadi admin', id)
@@ -1126,6 +1191,7 @@ module.exports = msgHandler = async (client, message) => {
             await client.sendTextWithMentions(from, `Perintah diterima, menambahkan @${mentionedJidList[0]} sebagai admin.`)
             break
         case 'unadmin':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
             if (!isBotGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan ketika bot menjadi admin', id)
@@ -1136,6 +1202,7 @@ module.exports = msgHandler = async (client, message) => {
             await client.sendTextWithMentions(from, `Perintah diterima, menghapus jabatan @${mentionedJidList[0]}.`)
             break
         case 'join':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *join* linkgroup\n\nEx:\njoin https://chat.whatsapp.com/blablablablablabla', id)
             const link = body.split(' ')[1]
             console.log(link)
@@ -1159,6 +1226,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'hapus':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
             if (!quotedMsg) return client.reply(from, 'Salah!!, kirim perintah *!delete [tagpesanbot]*', id)
@@ -1166,20 +1234,24 @@ module.exports = msgHandler = async (client, message) => {
             client.deleteMessage(quotedMsgObj.chatId, quotedMsgObj.id, false)
             break
         case 'getses':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const sesPic = await client.getSnapshot()
             client.sendFile(from, sesPic, 'session.png', `${donasi}`, id)
             break
         case 'lirik':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length == 1) return client.reply(from, 'Kirim perintah *lirik [optional]*, contoh *lirik aku bukan boneka*', id)
             const lagu = body.slice(6)
             const lirik = await liriklagu(lagu)
             client.reply(from, lirik, id)
             break
         case 'listdaerah':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const listDaerah = await get('https://mhankbarbar.herokuapp.com/daerah').json()
             client.reply(from, listDaerah, id)
             break
         case 'listblock':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             let hih = `list blok nomor\nTotal : ${blockNumber.length}\n`
             for (let i of blockNumber) {
                 hih += `➸ @${i.replace(/@c.us/g,'')}\n`
@@ -1189,6 +1261,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'jadwalsolat':
         case 'jadwalsholat':
         case 'jadwalshalat':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, '[❗] Kirim perintah *jadwalShalat [daerah]*\ncontoh : *jadwalShalat Tangerang*\nUntuk list daerah kirim perintah *!listDaerah*')
             const daerah = body.slice(13)
             const jadwalShalat = await get.get(`https://mhankbarbar.herokuapp.com/api/jadwalshalat?daerah=${daerah}`).json()
@@ -1202,23 +1275,28 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, resultJadwal, id)
             break
         case 'listchannel':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, listChannel, id)
             break
         case 'jadwaltv':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *jadwalTv [channel]*', id)
             const query = body.slice(9).toLowerCase()
             const jadwal = await jadwalTv(query)
             client.reply(from, jadwal, id)
             break
         case 'jadwaltvnow':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const jadwalNow = await get.get('https://api.haipbis.xyz/jadwaltvnow').json()
             client.reply(from, `Jam : ${jadwalNow.jam}\n\nJadwalTV : ${jadwalNow.jadwalTV}`, id)
             break
         case 'loli':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const loli = await get.get('https://mhankbarbar.herokuapp.com/api/randomloli').json()
             client.sendFileFromUrl(from, loli.result, 'loli.jpeg', `${donasi}`, id)
             break
         case 'waifu':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 if (isMedia && type === 'image' || quotedMsg && quotedMsg.type === 'image') {
                     if (isMedia) {
@@ -1249,6 +1327,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'random':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             prm = body.split(' ')[1]
             var urk = 'https://api.computerfreaker.cf/v1/'
             if(prm==='nsfwneko'){
@@ -1266,15 +1345,18 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'neko':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             q2 = Math.floor(Math.random() * 900) + 300;
             q3 = Math.floor(Math.random() * 900) + 300;
             client.sendFileFromUrl(from, 'http://placekitten.com/'+q3+'/'+q2, 'neko.png','Neko ')
             break
         case 'pokemon':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             q7 = Math.floor(Math.random() * 890) + 1;
             client.sendFileFromUrl(from, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/'+q7+'.png','Pokemon.png',)
             break
         case 'ss':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const _query = body.slice(3)
             //#const _query = body.slice(43)
             if (!_query.match(isUrl)) return client.reply(from, mess.error.Iv, id)
@@ -1287,6 +1369,7 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'quote':
         case 'quotes':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var urll = 'https://jagokata.com/kata-bijak/acak.html'
             axios.get(urll).then((result) => {
                 let $ = cheerio.load(result.data);
@@ -1297,6 +1380,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'katacinta':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var urll = 'https://jagokata.com/kata-bijak/kata-cinta.html'
             axios.get(urll).then((result) => {
                 let $ = cheerio.load(result.data);
@@ -1307,17 +1391,20 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'quoteanime':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const skya = await get.get('https://mhankbarbar.herokuapp.com/api/quotesnime/random').json()
             skya_ = skya.data
             client.reply(from, `➸ *Quotes* : ${skya_.quote}\n➸ *Character* : ${skya_.character}\n➸ *Anime* : ${skya_.anime}`, id)
             break
         case 'meme':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
             const { postlink, title, subreddit, url, nsfw, spoiler } = response.data
             client.sendFileFromUrl(from, `${url}`, 'meme.jpg', `${title}\n\n${donasi}`)
             break
         case 'menu':
         case 'help':
+            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, help, id)
             break
         case 'readme':
