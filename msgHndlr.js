@@ -1,4 +1,5 @@
 const inst = require('./lib/instagram')
+const cuaca = require('./lib/cuaca')
 const gmal = require('./lib/gmailGen.js')
 const xml2js = require('xml2json');
 const cheerio = require("cheerio");
@@ -772,17 +773,27 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'cuaca':
-            // if (args.length === 1) return client.reply(from, 'Kirim perintah *cuaca [tempat]*\nContoh : *cuaca tangerang', id)
-            // const tempat = body.slice(6)
-            // var key = '&appid=459d9e04c30f301451da1b16999bfc5b'
-            // axios.get(`http://bmkg-scrap.herokuapp.com/api/cuaca`).then(resp =>{
-            //     console.log(resp.data.daftar_cuaca
-            // })
-
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *cuaca [provinsi] [tempat]*\nContoh : *cuaca 0 Aceh Barat*', id)
+            if (args.length === 2) {
+                let blabla = ''
+                for(var i = 0, len = propin.length; i<len; i++){
+                    blabla += `${i}. ${propin[i]}\n`
+                }
+                client.reply(from,`Maaf Provinsi yang ada pilih salah!! Berikut Nama Provinsi\n${blabla}\nContoh:\n*cuaca 0 Aceh Barat`,id)
+            }
+            var psn = body.split('cuaca ')[1];
+            var pron = psn.split(' ')[0];
+            if (pron.length >2) return client.reply(from,'Masukkan perintah\ncuaca [provinsi] [daerah kamu]\n\ncontoh:\n*cuaca 0 Aceh Barat*')
+            var daerahh = psn.split(`${pron} `)[1];
+            cuaca(daerahh,pron).then((hsl)=> {
+                if(hsl.status==='no') return client.reply(from, `sepertinya daerah kakak salah ketik deh, coba periksa nama daerah d bawah ini (Bukan angka ya!)\n\n${hsl.result}\n\nContoh:\n*cuaca 0 Aceh Barat*`)
+                if(hsl.status==='ok'){
+                    client.reply(from,`*Keakuratan data berasal dari bmkg.go.id!\n${hsl.result}`,id)
+                }
+            })
             break
 
         case 'fb':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *fb [linkFb]* untuk contoh silahkan kirim perintah *readme*', id)
             if (!args[1].includes('facebook.com')) return client.reply(from, mess.error.Iv, id)
@@ -795,7 +806,6 @@ module.exports = msgHandler = async (client, message) => {
             client.sendContact(from, '6282237416678@c.us')
             break
         case 'nsfw':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
