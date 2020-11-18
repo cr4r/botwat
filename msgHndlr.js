@@ -123,8 +123,8 @@ module.exports = msgHandler = async (client, message) => {
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
             if (args.length === 1) return client.reply(from,`Ketik\nsh commandnya`,id)
-            p
-            exec(`${body.split('sh ')}`, (error, stdout) => {
+            psn = body.split('sh ')
+            exec(`${psn}`, (error, stdout) => {
                 if (error) {
                     client.reply(`ERROR => ${error.message}`);
                 }
