@@ -1302,11 +1302,6 @@ module.exports = msgHandler = async (client, message) => {
             const jadwalNow = await get.get('https://api.haipbis.xyz/jadwaltvnow').json()
             client.reply(from, `Jam : ${jadwalNow.jam}\n\nJadwalTV : ${jadwalNow.jadwalTV}`, id)
             break
-        case 'loli':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            const loli = await get.get('https://mhankbarbar.herokuapp.com/api/randomloli').json()
-            client.sendFileFromUrl(from, loli.result, 'loli.jpeg', `${donasi}`, id)
-            break
         case 'waifu':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
@@ -1423,7 +1418,7 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, readme, id)
             break
         case 'info':
-            client.sendLinkWithAutoPreview(from, 'https://github.com/cr4r1/botwat', info)
+            client.sendLinkWithAutoPreview(from, 'Informasi Bot', info)
             break
         case 'snk':
             client.reply(from, snk, id)
