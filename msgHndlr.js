@@ -119,10 +119,10 @@ module.exports = msgHandler = async (client, message) => {
         //   }
           
         switch(command) {
-        case 'sudo':
+        case 'sh':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
-            if (args.length === 1) return client.reply(from,`Ketik\nsudo commandnya`,id)
+            if (args.length === 1) return client.reply(from,`Ketik\nsh commandnya`,id)
             exec(`${body}`, (error, stdout) => {
                 if (error) {
                     client.reply(`ERROR => ${error.message}`);
