@@ -124,6 +124,7 @@ module.exports = msgHandler = async (client, message) => {
             if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
             if (args.length === 1) return client.reply(from,`Ketik\nsh commandnya`,id)
             psn = body.split('sh ')
+            console.log(psn)
             exec(`${psn}`, (error, stdout) => {
                 if (error) {
                     client.reply(`ERROR => ${error.message}`);
