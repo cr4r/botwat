@@ -9,6 +9,7 @@ const ytmp3 = require("./lib/ytmp3.js");
 const ytmp4 = require('./lib/ytmp4.js');
 const { decryptMedia } = require('@open-wa/wa-decrypt')
 const fs = require('fs-extra')
+const solat = require('./lib/jadwalsolat')
 const axios = require('axios')
 const moment = require('moment-timezone')
 const get = require('got')
@@ -119,6 +120,17 @@ module.exports = msgHandler = async (client, message) => {
         //   }
           
         switch(command) {
+        case 'solat':
+            if (args.length === 1) {
+                solat(317).then((hsl)=> {
+                    client.reply(from,hsl,id)
+                })
+            }
+            var brp = body.split(' ')[1]
+            solat(brp).then((hsl)=> {
+                client.reply(from,hsl,id)
+            })
+            break
         case 'sh':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
@@ -172,7 +184,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'gmail':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id)
-            gmal(body.split(' ')[1]).then((aaa)=>{
+            var usern = body.split(' ')[1].replace('@gmail.com','')
+            gmal(usrn).then((aaa)=>{
                 if(aaa.status==='ok'){
                     client.reply(from,`${donasi}\n\nSpeed: ${processTime(t, moment())} _Detik_\n\n${aaa.mail}`,id)
                 }else{
@@ -1257,11 +1270,7 @@ module.exports = msgHandler = async (client, message) => {
             const lirik = await liriklagu(lagu)
             client.reply(from, lirik, id)
             break
-        case 'listdaerah':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            const listDaerah = await get('https://mhankbarbar.herokuapp.com/daerah').json()
-            client.reply(from, listDaerah, id)
-            break
+
         case 'listblock':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             let hih = `list blok nomor\nTotal : ${blockNumber.length}\n`
@@ -1270,22 +1279,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             client.sendTextWithMentions(from, hih, id)
             break
-        case 'jadwalsolat':
-        case 'jadwalsholat':
-        case 'jadwalshalat':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            if (args.length === 1) return client.reply(from, '[❗] Kirim perintah *jadwalShalat [daerah]*\ncontoh : *jadwalShalat Tangerang*\nUntuk list daerah kirim perintah *!listDaerah*')
-            const daerah = body.slice(13)
-            const jadwalShalat = await get.get(`https://mhankbarbar.herokuapp.com/api/jadwalshalat?daerah=${daerah}`).json()
-            if (jadwalShalat.error) return client.reply(from, jadwalShalat.error, id)
-            const { Imsyak, Subuh, Dhuha, Dzuhur, Ashar, Maghrib, Isya } = await jadwalShalat
-            arrbulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-            tgl = new Date().getDate()
-            bln = new Date().getMonth()
-            thn = new Date().getFullYear()
-            const resultJadwal = `Jadwal shalat di ${daerah}, ${tgl}-${arrbulan[bln]}-${thn}\n\nImsyak : ${Imsyak}\nSubuh : ${Subuh}\nDhuha : ${Dhuha}\nDzuhur : ${Dzuhur}\nAshar : ${Ashar}\nMaghrib : ${Maghrib}\nIsya : ${Isya}`
-            client.reply(from, resultJadwal, id)
-            break
+        
         case 'listchannel':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, listChannel, id)
