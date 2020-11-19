@@ -1,4 +1,3 @@
-const nodeHtmlToImage = require('node-html-to-image')
 const inst = require('./lib/instagram')
 const cuaca = require('./lib/cuaca')
 const gmal = require('./lib/gmailGen.js')
@@ -1365,18 +1364,11 @@ module.exports = msgHandler = async (client, message) => {
             //#const _query = body.slice(43)
             if (!_query.match(isUrl)) return client.reply(from, mess.error.Iv, id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!ss [web]*\nContoh *ss https://google.com*', id)
-            axios.get(_query).then(resp => {
-                nodeHtmlToImage({
-                    output: 'log/ss.jpg',
-                    html: resp,
-                    content: {name : 'cr4r'}
-                }).then(() => client.sendFile(from,'log/ss.jpg','hasil.jpg',donasi,id))
+            await ss(_query).then((result) => {
+                client.sendFile(from, './media/img/screenshot.jpeg', 'ss.jpeg', `${donasi}`, id)
+                exec('rm \.\/media\/img\/screenshot\.jpeg')
             })
-            // await ss(_query).then((result) => {
-            //     client.sendFile(from, './media/img/screenshot.jpeg', 'ss.jpeg', `${donasi}`, id)
-            //     exec('rm \.\/media\/img\/screenshot\.jpeg')
-            // })
-            // .catch(() => client.reply(from, `Error tidak dapat mengambil screenshot website ${_query}`, id))
+            .catch(() => client.reply(from, `Error tidak dapat mengambil screenshot website ${_query}`, id))
             break
         case 'quote':
         case 'quotes':
