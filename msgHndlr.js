@@ -1,3 +1,4 @@
+const nodeHtmlToImage = require('node-html-to-image')
 const inst = require('./lib/instagram')
 const cuaca = require('./lib/cuaca')
 const gmal = require('./lib/gmailGen.js')
@@ -1360,15 +1361,22 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'ss':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            const _query = body.slice(3)
+            var _query = body.slice(3)
             //#const _query = body.slice(43)
             if (!_query.match(isUrl)) return client.reply(from, mess.error.Iv, id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!ss [web]*\nContoh *ss https://google.com*', id)
-            await ss(_query).then((result) => {
-                client.sendFile(from, './media/img/screenshot.jpeg', 'ss.jpeg', `${donasi}`, id)
-                exec('rm \.\/media\/img\/screenshot\.jpeg')
+            axios.get(_query).then(resp => {
+                nodeHtmlToImage({
+                    output: 'log/ss.jpg',
+                    html: resp,
+                    content: {name : 'cr4r'}
+                }).then(() => client.sendFile(from,'log/ss.jpg','hasil.jpg',donasi,id))
             })
-            .catch(() => client.reply(from, `Error tidak dapat mengambil screenshot website ${_query}`, id))
+            // await ss(_query).then((result) => {
+            //     client.sendFile(from, './media/img/screenshot.jpeg', 'ss.jpeg', `${donasi}`, id)
+            //     exec('rm \.\/media\/img\/screenshot\.jpeg')
+            // })
+            // .catch(() => client.reply(from, `Error tidak dapat mengambil screenshot website ${_query}`, id))
             break
         case 'quote':
         case 'quotes':
@@ -1379,7 +1387,7 @@ module.exports = msgHandler = async (client, message) => {
                 var author = $('a[class="auteurfbnaam"]').contents().first().text();
                 var kata = $('q[class="fbquote"]').contents().first().text();
                 client.reply(from, `➸ *Quotes* : _${kata}_\n➸ *Author* : ${author}\n\n${donasi}`, id)
-            });
+            })
             break
 
         case 'katacinta':
@@ -1403,7 +1411,7 @@ module.exports = msgHandler = async (client, message) => {
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
             const { postlink, title, subreddit, url, nsfw, spoiler } = response.data
-            client.sendFileFromUrl(from, `${url}`, 'meme.jpg', `${title}\n\n${donasi}`)
+            client.sendFileFromUrl(from, `${url}`, 'meme.jpg', `${title}\n\n${donasi}`,id)
             break
         case 'menu':
         case 'help':
