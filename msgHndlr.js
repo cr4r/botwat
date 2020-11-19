@@ -125,12 +125,13 @@ module.exports = msgHandler = async (client, message) => {
                 solat(317).then((hsl)=> {
                     client.reply(from,hsl,id)
                 })
+            }else{
+                var brp = body.split(' ')[1]
+                if (isNaN(brp)) return client.reply(from,'Masukkan Angka bukan Huruf!',id)
+                solat(brp).then((hsl)=> {
+                    client.reply(from,hsl,id)
+                })
             }
-            var brp = body.split(' ')[1]
-            if (isNaN(brp)) return client.reply(from,'Masukkan Angka bukan Huruf!',id)
-            solat(brp).then((hsl)=> {
-                client.reply(from,hsl,id)
-            })
             break
         case 'sh':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
