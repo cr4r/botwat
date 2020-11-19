@@ -127,6 +127,7 @@ module.exports = msgHandler = async (client, message) => {
                 })
             }
             var brp = body.split(' ')[1]
+            if (isNaN(brp)) return client.reply(from,'Masukkan Angka bukan Huruf!',id)
             solat(brp).then((hsl)=> {
                 client.reply(from,hsl,id)
             })
