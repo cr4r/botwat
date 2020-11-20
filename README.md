@@ -1,3 +1,19 @@
+<p align="center">
+<img src="https://media.giphy.com/media/4dM1U76aAQ3dbE6bc3/giphy.gif" alt="GIF" width="128" height="128"/>
+</p>
+<p align="center">
+<a href="#"><img title="BOT CR4R" src="https://img.shields.io/badge/cr4r BOT-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"></a>
+</p>
+<p align="center">
+<a href="https://github.com/cr4r"><img title="Author" src="https://img.shields.io/badge/Author-CR4R-blue.svg?style=for-the-badge&logo=github"></a>
+</p>
+<p align="center">
+<a href="https://github.com/cr4r/followers"><img title="Followers" src="https://img.shields.io/github/followers/cr4r?color=blue&style=flat-circle"></a>
+<a href="https://github.com/cr4r/"><img title="Stars" src="https://img.shields.io/github/stars/cr4r/botwat?color=red&style=flat-square"></a>
+<a href="https://github.com/cr4r/botwat/network/members"><img title="Forks" src="https://img.shields.io/github/forks/cr4r/botwat?color=blue&style=flat-circle"></a>
+<a href="https://github.com/cr4r/botwat/watchers"><img title="Watching" src="https://img.shields.io/github/watchers/cr4r/botwat?label=Watchers&color=blue&style=flat-square"></a>
+</p>
+
 # Bot Whatsapp
 script untuk menjalankan bot pada whatsapp sesuai dengan perintah di script tersebut <br><br>
 "Makin aku banyak membaca, makin aku banyak berpikir<br>
