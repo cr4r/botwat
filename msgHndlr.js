@@ -120,6 +120,61 @@ module.exports = msgHandler = async (client, message) => {
         //   }
           
         switch(command) {
+        case 'qrcode':
+            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *qrcode [query]*\nContoh : *qrcode cr4r bot*', id)
+            var qrcodes = body.slice(7)
+            client.sendFileFromUrl(from, `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qrcodes}`, 'gambar.png', donasi,id)
+            break
+        case 'kbbi':
+            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            if (args.length === 1) return client.reply(from, 'Kirim perintah *kbbi [query]*\nContoh : *kbbi asu*', id)
+            const kbbl = body.slice(5)
+            const kbbl2 = await axios.get(`https://mnazria.herokuapp.com/api/kbbi?search=${kbbl}`)
+            if (kbbl2.data.error) {
+                client.reply(from, kbbl2.data.error, id)
+            } else {
+                client.sendText(from, `➸ *KBBI* : ${kbbl}\n\n➸ *Hasil* : ${kbbl2.data.result}`, id)
+            }
+            break
+        case 'cari':
+            if (args.length === 1) return client.reply(from,`Masukkan gambar apa yang mau dicari\n\nContoh:\ncari boruto`,id)
+            var cr = body.slice(5);
+            var urlny = "https://api.fdci.se/rep.php?gambar=" + cr;
+            axios.get(urlny).then((result) => {
+                var jsnn = JSON.parse(JSON.stringify(result.data));
+                if(jsnn[1]===null) return client.reply(from,'Maaf gambar yang anda cari tidak ada',id)
+                var dapt =  jsnn[Math.floor(Math.random() * jsnn.length)];
+                client.sendFileFromUrl(from,dapt, 'cari.jpg',`Mantap gak?\n\n${donasi}`)
+            })
+            break
+        case 'loli':
+            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            var loli = await axios.get('https://mhankbarbar.herokuapp.com/api/randomloli')
+            client.sendFileFromUrl(from, loli.data.result, 'loli.jpeg', `*LOLI*\n\n${donasi}`, id)
+            break
+        case 'dadu':
+            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            const dice = Math.floor(Math.random() * 6) + 1
+            client.sendStickerfromUrl(from, 'https://www.random.org/dice/dice' + dice + '.png', { method: 'get' },id)
+            break
+        case 'koin':
+            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            const side = Math.floor(Math.random() * 2) + 1
+            if (side == 1) {
+                client.sendStickerfromUrl(from, 'https://i.ibb.co/YTWZrZV/2003-indonesia-500-rupiah-copy.png', { method: 'get' },id)
+            } else {
+                client.sendStickerfromUrl(from, 'https://i.ibb.co/bLsRM2P/2003-indonesia-500-rupiah-copy-1.png', { method: 'get' },id)
+            }
+            break
+        case 'img':
+        if (quotedMsg && quotedMsg.type == 'sticker') {
+            const mediaData = await decryptMedia(quotedMsg)
+            const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
+            reply.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
+        } else if (!quotedMsg) return client.reply(from, 'tag sticker yang ingin dijadikan gambar!', id)
+        break
+
         case 'solat':
             if (args.length === 1) {
                 solat(317).then((hsl)=> {
@@ -149,8 +204,8 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'scan':
-            var outn = `./media/file/output`
-            var outj = `./media/file/output.jpg`
+            var outn = `./log/output`
+            var outj = `./log/output.jpg`
             if (isMedia && type === 'image') {
                 const mediaData = await decryptMedia(message, uaOverride)
                 fs.writeFile(outj,mediaData,(err)=>{if(err) return client.reply(from,`Error gan\n\n${err}`,id)})
@@ -425,9 +480,9 @@ module.exports = msgHandler = async (client, message) => {
                     client.reply(`ERROR => ${error.message}`);
                 }
                 else{
-                    client.sendFile(from, `./media/file/${namaFile}`, `${namaFile}`,'', id)
+                    client.sendFile(from, `./log/${namaFile}`, `${namaFile}`,'', id)
                     // client.reply(`${stdout}`)
-                    exec(`rm ./media/file/${namaFile}`)
+                    exec(`rm ./log/${namaFile}`)
                 }
             });
             break
@@ -710,9 +765,10 @@ module.exports = msgHandler = async (client, message) => {
                 '-pointsize','22',
                 '-interline-spacing','17',
                 '-annotate','+170+222',
-                fixHeight,'./media/img/after.jpg'
+                fixHeight,'./log/after.jpg'
             ]).on('error', () => client.reply(from, `Error gan`, id)).on('exit', () => {
-                client.sendImage(from, './media/img/after.jpg', 'nulis.jpg', `Nih kak\n\n${donasi}\nDitulis oleh bot CR4R`, id)
+                client.sendImage(from, './log/after.jpg', 'nulis.jpg', `Nih kak\n\n${donasi}\nDitulis oleh bot CR4R`, id)
+                exec(`rm ./log/after.jpg`)
             })
             break
         case 'yt':
@@ -924,48 +980,6 @@ module.exports = msgHandler = async (client, message) => {
                 }
             })
             break
-        case 'nh':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            if (!isOwner) return
-            //if (isGroupMsg) return client.reply(from, 'Sorry this command for private chat only!', id)
-            if (args.length === 2) {
-                const nuklir = body.split(' ')[1]
-                client.reply(from, mess.wait, id)
-                const cek = await nhentai.exists(nuklir)
-                if (cek === true)  {
-                    try {
-                        const api = new API()
-                        const pic = await api.getBook(nuklir).then(book => {
-                            return api.getImageURL(book.cover)
-                        })
-                        const dojin = await nhentai.getDoujin(nuklir)
-                        const { title, details, link } = dojin
-                        const { parodies, tags, artists, groups, languages, categories } = await details
-                        var teks = `*Title* : ${title}\n\n*Parodies* : ${parodies}\n\n*Tags* : ${tags.join(', ')}\n\n*Artists* : ${artists.join(', ')}\n\n*Groups* : ${groups.join(', ')}\n\n*Languages* : ${languages.join(', ')}\n\n*Categories* : ${categories}\n\n*Link* : ${link}`
-                        exec('nhentai --id=' + nuklir + ` -P mantap.pdf -o ./hentong/${nuklir}.pdf --format `+ `${nuklir}.pdf`, (error, stdout, stderr) => {
-                            client.sendFileFromUrl(from, pic, 'hentod.jpg', teks, id).then(() =>
-                            client.sendFile(from, `./hentong/${nuklir}.pdf/${nuklir}.pdf.pdf`, `${title}.pdf`, '', id)).catch(() =>
-                            client.sendFile(from, `./hentong/${nuklir}.pdf/${nuklir}.pdf.pdf`, `${title}.pdf`, '', id))
-                            /*if (error) {
-                                console.log('error : '+ error.message)
-                                return
-                            }
-                            if (stderr) {
-                                console.log('stderr : '+ stderr)
-                                return
-                            }
-                            console.log('stdout : '+ stdout)*/
-                            })
-                    } catch (err) {
-                        client.reply(from, '[❗] Terjadi kesalahan, mungkin kode nuklir salah', id)
-                    }
-                } else {
-                    client.reply(from, '[❗] Kode nuClear Salah!')
-                }
-            } else {
-                client.reply(from, '[ WRONG ] Kirim perintah *nh [nuClear]* untuk contoh kirim perintah *readme*')
-            }
-        	break
         case 'brainly':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length >= 2){
@@ -990,49 +1004,6 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, 'Usage :\nbrainly [pertanyaan] [.jumlah]\n\nEx : \nbrainly NKRI .2', id)
             }
             break
-        case 'cari':
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            if (isMedia && type === 'image' || quotedMsg && quotedMsg.type === 'image') {
-                if (isMedia) {
-                    var mediaData = await decryptMedia(message, uaOverride)
-                } else {
-                    var mediaData = await decryptMedia(quotedMsg, uaOverride)
-                }
-                const fetch = require('node-fetch')
-                const imgBS4 = `data:${mimetype};base64,${mediaData.toString('base64')}`
-                client.reply(from, 'Sedang mencari....', id)
-                fetch('https://trace.moe/api/search', {
-                    method: 'POST',
-                    body: JSON.stringify({ image: imgBS4 }),
-                    headers: { "Content-Type": "application/json" }
-                })
-                .then(respon => respon.json())
-                .then(resolt => {
-                	if (resolt.docs && resolt.docs.length <= 0) {
-                		client.reply(from, 'Maaf, saya tidak tau ini anime apa', id)
-                	}
-                    const { is_adult, title, title_chinese, title_romaji, title_english, episode, similarity, filename, at, tokenthumb, anilist_id } = resolt.docs[0]
-                    teks = ''
-                    if (similarity < 0.92) {
-                    	teks = '*Saya memiliki keyakinan rendah dalam hal ini* :\n\n'
-                    }
-                    teks += `➸ *Title Japanese* : ${title}\n➸ *Title chinese* : ${title_chinese}\n➸ *Title Romaji* : ${title_romaji}\n➸ *Title English* : ${title_english}\n`
-                    teks += `➸ *Ecchi* : ${is_adult}\n`
-                    teks += `➸ *Eps* : ${episode.toString()}\n`
-                    teks += `➸ *Kesamaan* : ${(similarity * 100).toFixed(1)}%\n`
-                    var video = `https://media.trace.moe/video/${anilist_id}/${encodeURIComponent(filename)}?t=${at}&token=${tokenthumb}`;
-                    client.sendFileFromUrl(from, video, 'nimek.mp4', teks, id).catch(() => {
-                        client.reply(from, teks, id)
-                    })
-                })
-                .catch(() => {
-                    client.reply(from, 'Error !', id)
-                })
-            } else {
-                client.sendFile(from, './media/img/tutod.jpg', 'Tutor.jpg', 'Neh contoh mhank!', id)
-            }
-            break
-
         case 'buatquote':
         case 'quotesmaker':
         case 'quotemaker':
@@ -1365,8 +1336,8 @@ module.exports = msgHandler = async (client, message) => {
             if (!_query.match(isUrl)) return client.reply(from, mess.error.Iv, id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!ss [web]*\nContoh *ss https://google.com*', id)
             await ss(_query).then((result) => {
-                client.sendFile(from, './media/img/screenshot.jpeg', 'ss.jpeg', `${donasi}`, id)
-                exec('rm \.\/media\/img\/screenshot\.jpeg')
+                client.sendFile(from, `./log/screenshot.jpeg`, 'ss.jpeg', `${donasi}`, id)
+                exec(`rm ./log/screenshot.jpeg`)
             })
             .catch(() => client.reply(from, `Error tidak dapat mengambil screenshot website ${_query}`, id))
             break
@@ -1381,7 +1352,6 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, `➸ *Quotes* : _${kata}_\n➸ *Author* : ${author}\n\n${donasi}`, id)
             })
             break
-
         case 'katacinta':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var urll = 'https://jagokata.com/kata-bijak/kata-cinta.html'
@@ -1392,7 +1362,6 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, `      _${kata}_\n\n    ~ ${author}\n\n${donasi}`, id)
             });
             break
-
         case 'quoteanime':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const skya = await get.get('https://mhankbarbar.herokuapp.com/api/quotesnime/random').json()
