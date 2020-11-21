@@ -119,45 +119,6 @@ node index.js
 |       ✅        |   clear all message                 |
 |       ✅        |   Broadcast                      |
 
-
-## Alur Direktori botwat
-├── functions.js <br>
-├── index.js <br>
-├── install <br>
-├── installChrome <br>
-├── installNode <br>
-├── lib <br>
-│   ├── brainly.js <br>
-│   ├── cmd.js <br>
-│   ├── color.js <br>
-│   ├── fetcher.js <br>
-│   ├── functions.js <br>
-│   ├── help.js <br>
-│   ├── husbu.json <br>
-│   ├── msgFilter.js <br>
-│   ├── NSFW.json <br>
-│   ├── welcome.js <br>
-│   └── welcome.json <br>
-├── media <br>
-│   ├── img <br>
-│   │   ├── after.jpg <br>
-│   │   ├── before.jpg <br>
-│   │   ├── Kaguya.png <br>
-│   │   ├── nimek.jpg <br>
-│   │   ├── screenshot.jpeg <br>
-│   │   └── tutod.jpg <br>
-│   ├── mp4 <br>
-│   └── tts <br>
-├── msgHndlr.js <br>
-├── node_modules <br>
-│   ├── abbrev <br>
-│   ├── accepts <br>
-│   ├── after <br>
-│   ├── adm-zip <br>
-│   ├── dan folder lainnya.... <br>
-├── options.js <br>
-└── README.md <br>
-
 ## Special Thanks to
 * [`open-wa/wa-automate-nodejs`](https://github.com/open-wa/wa-automate-nodejs)
 
