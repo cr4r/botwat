@@ -151,7 +151,11 @@ module.exports = msgHandler = async (client, message) => {
             dns.lookup(psnny,  function onLookup(err, address, family) { 
                 let datan = `address:\t ${address}`
                 dns.reverse(address, function (err, hostnames) { 
-                    datan += `reverse dari  ${address} :\n${JSON.stringify(hostnames)}`; 
+                    datan += `reverse dari  ${address} :\n`; 
+                    hostnya = JSON.stringify(hostnames)
+                    for (i=0,len = hostnya.length;i++){
+                        datan += `${hostnya[i]}\n`
+                    }
                     client.reply(from,datan,id)
                 });   
             }); 
