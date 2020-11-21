@@ -147,7 +147,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'dns':
             if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
-            var psnny = body.split('dns ')
+            var psnny = body.split('dns ')[1]
             dns.lookup(psnny,  function onLookup(err, address, family) { 
                 let datan = `address:\t ${address}`
                 dns.reverse(address, function (err, hostnames) { 
