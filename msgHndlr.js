@@ -126,7 +126,7 @@ module.exports = msgHandler = async (client, message) => {
                 if(a.indexOf(b[i]) >= 0) return 'ok'
             }
         }
-        var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari. tetapi jika anda mau donasi. hubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :) mau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
+        var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.\ntetapi jika anda mau donasi.\nhubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :)\n\nmau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
         var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
 
         switch(command) {
