@@ -131,7 +131,7 @@ module.exports = msgHandler = async (client, message) => {
 
         switch(command) {
         case 'sibuk':
-            if(args.length ==== 1) return client.reply(from,'sibuk on/off',id)
+            if(args.length === 1) return client.reply(from,`sibuk on/off`,id)
             if(!isOwner) return client.reply(from,'Fitur hanya owner yang bisa :p',id)
             var onof = body.split(' ')[1]
             if(onof === 'on'){
