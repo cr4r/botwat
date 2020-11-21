@@ -1202,6 +1202,7 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'join':
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
+            if (!isOwner) return client.reply(from, 'Hay kalo mau masukin bot ke grub, hubungi ownernya ya\nwa.me/6282237416678\n\n*TIDAK GRATIS*',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *join* linkgroup\n\nEx:\njoin https://chat.whatsapp.com/blablablablablabla', id)
             const link = body.split(' ')[1]
             console.log(link)
@@ -1210,9 +1211,7 @@ module.exports = msgHandler = async (client, message) => {
             const maxMem = 255
             const isLink = link.match(/(https:\/\/chat.whatsapp.com)/gi)
             const check = await client.inviteInfo(link)
-            if (!isLink) return client.reply(from, 'Ini link? 👊🤬', id)
-            if (tGr.length > maxMem) return client.reply(from, 'Maaf jumlah group sudah maksimal!', id)
-            if (check.size < minMem) return client.reply(from, 'Member group tidak melebihi 5, bot tidak bisa masuk', id)
+            if (!isLink) return client.reply(from, 'Ini bukan link grub wa', id)
             const inviteCode = body.split(' ')[1].replace('https://chat.whatsapp.com/', '')
             if(body.split(' ')[1].match(/(https:)/gi)) {
                 try {
