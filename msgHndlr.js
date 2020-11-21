@@ -116,7 +116,7 @@ module.exports = msgHandler = async (client, message) => {
         }
         function kotor(ktanya){
             a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir']
-            console.log(ktnya)
+            console.log(ktanya)
             try{
                 b = ktanya.split(' ')
             }catch(err){
