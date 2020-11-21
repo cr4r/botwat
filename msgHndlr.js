@@ -155,7 +155,7 @@ module.exports = msgHandler = async (client, message) => {
                     hostnya = JSON.stringify(hostnames)
                     console.log(hostnya)
                     console.log(hostnya.length)
-                    for (i=0,len = hostnya.length;i++){
+                    for (i=0,len = hostnya.length; i<len;i++){
                         datan += `${hostnya[i]}\n`
                     }
                     client.reply(from,datan,id)
