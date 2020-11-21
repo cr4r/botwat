@@ -135,11 +135,16 @@ module.exports = msgHandler = async (client, message) => {
             if(!isOwner) return client.reply(from,'Fitur hanya owner yang bisa :p',id)
             var onof = body.split(' ')[1]
             if(onof === 'on'){
-                fs.writeFile('lib/maintance','hidup',(err)=>{if(err) return console.log(err)})
+                fs.writeFile('lib/maintance','hidup',(err)=>{
+                    if(err) return console.log(err)
+                    client.reply(from,'Maintence Hidup',id)
+                    })
             }else{
-                fs.writeFile('lib/maintance','mati',(err)=>{if(err) return console.log(err)})
+                fs.writeFile('lib/maintance','mati',(err)=>{
+                    if(err) return console.log(err)
+                    client.reply(from,'Maintence Mati',id)
+                })
             }
-
             break
         case '.gabut':
             client.reply(from,gabutKom,id)
