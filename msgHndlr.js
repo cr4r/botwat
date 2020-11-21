@@ -152,16 +152,15 @@ module.exports = msgHandler = async (client, message) => {
                 let datan = `address:\t ${address}`
                 dns.reverse(address, function (err, hostnames) { 
                     datan += `reverse dari  ${address} :\n`; 
-                    hostnya = JSON.stringify(hostnames)
-                    console.log(hostnya)
-                    console.log(hostnya.length)
+                    hostnya = JSON.parse(JSON.stringify(hostnames))
                     for (i=0,len = hostnya.length; i<len;i++){
-                        datan += `${hostnya[i]}\n`
+                        datan += `${i} ${hostnya[i]}\n`
                     }
                     client.reply(from,datan,id)
                 });   
             }); 
             break
+
         case 'qrcode':
             if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
