@@ -153,6 +153,8 @@ module.exports = msgHandler = async (client, message) => {
                 dns.reverse(address, function (err, hostnames) { 
                     datan += `reverse dari  ${address} :\n`; 
                     hostnya = JSON.stringify(hostnames)
+                    console.log(hostnya)
+                    console.log(hostnya.length)
                     for (i=0,len = hostnya.length;i++){
                         datan += `${hostnya[i]}\n`
                     }
