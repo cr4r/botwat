@@ -1,3 +1,4 @@
+var dns = require('dns'); 
 var deepai = require('deepai');
 const inst = require('./lib/instagram')
 const cuaca = require('./lib/cuaca')
@@ -20,7 +21,7 @@ const { spawn, exec } = require('child_process')
 const nhentai = require('nhentai-js')
 const { API } = require('nhentai-api')
 const { liriklagu, quotemaker, randomNimek, fb, sleep, jadwalTv, ss } = require('./lib/functions')
-const { help, snk, info, donate, readme, listChannel } = require('./lib/help')
+const { help,grubKom,gabutKom,cryptoKom,downKom,otherKom, snk, info, donate, readme, listChannel } = require('./lib/help')
 const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'))
 const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
 const { pow,round, log , evaluate, parse, derivative } = require('mathjs')
@@ -105,29 +106,64 @@ module.exports = msgHandler = async (client, message) => {
         if (isGroupMsg && !command.startsWith('!')) console.log('\x1b[1;33m~\x1b[1;37m>', '[\x1b[1;31mMSG\x1b[1;37m]', time, color(body), 'from', color(pushname), 'in', color(formattedTitle))
         // if (isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
         
-        //if (!isOwner) return
-        // function decodeBase64Image(dataString) {
-        //     var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-        //       response = {};
-          
-        //     if (matches.length !== 3) {
-        //       return new Error('Invalid input string');
-        //     }
-          
-        //     response.type = matches[1];
-        //     response.data = new Buffer.alloc(matches[2], 'base64');
-          
-        //     return response;
-        //   }
-          
+        function cek(){
+            var maint = fs.readFileSync('lib/maintance','utf-8')
+            if (maint==='hidup'){
+                return 'ok'
+            }else{
+                return 'off'
+            }
+        }
+        function kotor(ktanya){
+            a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir']
+            b = ktanya.split(' ')
+            for(i=0,len=b.length; i<len; i++){
+                if(!(a.indexOf(b[i]) === 0)) return 'ok'
+            }
+        }
+        var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari. tetapi jika anda mau donasi. hubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :) mau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
+        var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
+
         switch(command) {
+        case '.gabut':
+            client.reply(from,gabutKom,id)
+            break
+        case '.other':
+            client.reply(from,otherKom,id)
+            break
+        case '.website':
+            client.reply(from,webKom,id)
+            break
+        case '.crypto':
+            client.reply(from,cryptoKom,id)
+            break
+        case '.grub':
+            client.reply(from,grubKom,id)
+            break
+        case 'dns':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
+            var psnny = body.split('dns ')
+            dns.lookup(psnny,  function onLookup(err, address, family) { 
+                let datan = `address:\t ${address}`
+                dns.reverse(address, function (err, hostnames) { 
+                    datany += 'reverse dari ' + address + ':\n' + JSON.stringify(hostnames)); 
+                    client.reply(from,datany,id)
+                });   
+            }); 
+            break
         case 'qrcode':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *qrcode [query]*\nContoh : *qrcode cr4r bot*', id)
             var qrcodes = body.slice(7)
             client.sendFileFromUrl(from, `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qrcodes}`, 'gambar.png', donasi,id)
+            // fs.close(file_descriptor, (err) => { if (err) return console.error("Failed to close file", err) }
             break
         case 'kbbi':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *kbbi [query]*\nContoh : *kbbi asu*', id)
             const kbbl = body.slice(5)
@@ -139,6 +175,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'cari':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (args.length === 1) return client.reply(from,`Masukkan gambar apa yang mau dicari\n\nContoh:\ncari boruto`,id)
             var cr = body.slice(5);
             var urlny = "https://api.fdci.se/rep.php?gambar=" + cr;
@@ -150,16 +188,22 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'loli':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             var loli = await axios.get('https://mhankbarbar.herokuapp.com/api/randomloli')
             client.sendFileFromUrl(from, loli.data.result, 'loli.jpeg', `*LOLI*\n\n${donasi}`, id)
             break
         case 'dadu':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const dice = Math.floor(Math.random() * 6) + 1
             client.sendStickerfromUrl(from, 'https://www.random.org/dice/dice' + dice + '.png', { method: 'get' },id)
             break
         case 'koin':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const side = Math.floor(Math.random() * 2) + 1
             if (side == 1) {
@@ -169,14 +213,17 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'img':
-        if (quotedMsg && quotedMsg.type == 'sticker') {
-            const mediaData = await decryptMedia(quotedMsg)
-            const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
-            client.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
-        } else if (!quotedMsg) return client.reply(from, 'tag sticker yang ingin dijadikan gambar!', id)
-        break
-
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
+            if (quotedMsg && quotedMsg.type == 'sticker') {
+                const mediaData = await decryptMedia(quotedMsg)
+                const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
+                client.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
+            } else if (!quotedMsg) return client.reply(from, 'tag sticker yang ingin dijadikan gambar!', id)
+            break
         case 'solat':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (args.length === 1) {
                 solat(317).then((hsl)=> {
                     client.reply(from,hsl,id)
@@ -190,6 +237,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'sh':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
             if (args.length === 1) return client.reply(from,`Ketik\nsh commandnya`,id)
@@ -205,6 +254,8 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'scan':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             var outn = `./log/output`
             var outj = `./log/output.jpg`
             if (isMedia && type === 'image') {
@@ -240,6 +291,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'gmail':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id)
             var usern = body.split(' ')[1].replace('@gmail.com','')
@@ -252,10 +305,14 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case '#kode':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
             break
         case 'trans':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\nnContoh:\ntrans Hello word .id`, id)
             kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi']
@@ -271,6 +328,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'des':
         case 'asci':
         case 'hex':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var pl = body.split(' ')[0]
             console.log(pl)
@@ -314,6 +373,8 @@ module.exports = msgHandler = async (client, message) => {
             break
             
         case 'vpn':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             /*Fitur ini hanya bisa digunakan yang mempunyai server bukan cloud!
             Installah openvpn yang sudah tersedia di folder ini, lalu
@@ -384,6 +445,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'short':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             /*Fitur ini hanya bisa digunakan jika anda mempunyai server sendiri bukan dari cloud
             Cara penggunaannya:, buat lah fitur short url menggunakan apache atau apalah di server anda
@@ -410,6 +473,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'spam':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length <= 3) return client.reply(from,`Ketik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`,id)
             if(body.split(' ')[1]==='grub'){
@@ -459,6 +524,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'nmap':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\nmap linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
@@ -472,6 +539,8 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'wget':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\nwget https://linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
@@ -488,6 +557,8 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'ping':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             console.log(sender.id)
             exec(`cat /proc/meminfo | grep MemFree`, (error, stdout) => {
@@ -506,6 +577,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pantun':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const fetch = require("node-fetch");
             fetch('https://raw.githubusercontent.com/cr4r/text/main/pantun').then(res => res.text()).then(body => {
@@ -516,6 +589,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'nama':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\nnama Namamu`,id)
             var namas = body.slice(5)
@@ -534,6 +609,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pasangan':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from,`Ketik\npasangan Namamu&Pasanganmu`,id)
             var gh = body.split("pasangan ")[1];
@@ -553,6 +630,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case '.cewe':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var items = ["ullzang girl", "cewe cantik", "cewe hijab", "hijaber", "hijab cantik", "korean girl"];
             // var a = url.match(/(?:https?:\\\/{2})?i.pinimg.com\/originals\/([^\s&]+)/)
@@ -566,6 +645,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case '.cowo':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var items = ["ullzang boy", "cowo ganteng", "cogan", "korean boy", "jepang boy", "cowo korea"];
             // var a = url.match(/(?:https?:\\\/{2})?i.pinimg.com\/originals\/([^\s&]+)/)
@@ -579,6 +660,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'hitung':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 client.reply(from,`*Kalkulator*\n${body.slice(7)} = ${evaluate(body.slice(7)).toString()}\n\n${donasi}`)
@@ -589,6 +672,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'pow':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 var a = JSON.parse(JSON.stringify(body.slice(4).split('#')[0].toString()))
@@ -602,6 +687,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'round':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             try{
                 console.log(body.slice(6))
@@ -662,6 +749,8 @@ module.exports = msgHandler = async (client, message) => {
 
         case 'sticker':
         case 'stiker':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (isMedia && type === 'image') {
                 const mediaData = await decryptMedia(message, uaOverride)
@@ -690,6 +779,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'stickergif':
         case 'stikergif':
         case 'sgif':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (isMedia) {
                 console.log(mimetype)
@@ -717,6 +808,8 @@ module.exports = msgHandler = async (client, message) => {
             client.sendLinkWithAutoPreview(from, '', donate)
             break
         case 'tts':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *tts [id, en, jp, ar] [teks]*, contoh *tts [id] halo semua*')
             const ttsId = require('node-gtts')('id')
@@ -749,6 +842,8 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'tulis':
         case 'nulis':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *nulis [teks]*', id)
             let text = body.slice(6)
@@ -773,6 +868,8 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'yt':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client(from,`Contoh Penggunaan:\nyt mp3 https://linkyoutube\nyt mp4 https://linkyoutube`)
             if (args.length === 2) return client(from,`Contoh Penggunaan:\nyt mp3 https://linkyoutube\nyt mp4 https://linkyoutube`)
@@ -819,6 +916,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'play':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*')
             let keyword = body.slice(5);
@@ -836,6 +935,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'wiki':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *wiki [query]*\nContoh : *wiki asu*', id)
             const query_ = body.slice(5)
@@ -847,6 +948,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'cuaca':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *cuaca [provinsi] [tempat]*\nContoh : *cuaca 0 Aceh Barat*', id)
             if (args.length === 2) {
                 let blabla = ''
@@ -868,6 +971,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'fb':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *fb [linkFb]* untuk contoh silahkan kirim perintah *readme*', id)
             if (!args[1].includes('facebook.com')) return client.reply(from, mess.error.Iv, id)
@@ -876,10 +981,14 @@ module.exports = msgHandler = async (client, message) => {
             client.sendFileFromUrl(from, epbe.url, `Cuih${epbe.exts}`, epbe.capt, id)
             break
         case 'creator':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.sendContact(from, '6282237416678@c.us')
             break
         case 'nsfw':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
@@ -897,6 +1006,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'welcome':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
@@ -914,10 +1025,14 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'nsfwmenu':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, '1. randomHentai\n2. randomNsfwNeko', id)
             break
         case 'ig':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, 'Maaf fitur ini sedang perbaikan',id)
             // if (args.length === 1) return client.reply(from, 'Kirim perintah *ig [linkIg]* untuk contoh silahkan kirim perintah *readme*')
@@ -934,6 +1049,8 @@ module.exports = msgHandler = async (client, message) => {
             // })
             break
         case 'igstalk':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1)  return client.reply(from, 'Kirim perintah *igStalk @username*\nConntoh *igStalk @duar_amjay*', id)
@@ -954,6 +1071,8 @@ module.exports = msgHandler = async (client, message) => {
             
             break
         case 'infogempa':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             axios.get(`https://data.bmkg.go.id/autogempa.xml`).then(resp =>{
                 jsonn = JSON.parse(xml2js.toJson(resp.data)).Infogempa.gempa
@@ -964,6 +1083,8 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'anime':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *anime [query]*\nContoh : *anime Naruto*', id)
             var psna = body.slice(6)
@@ -982,6 +1103,8 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'brainly':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length >= 2){
                 const BrainlySearch = require('./lib/brainly')
@@ -1008,6 +1131,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'buatquote':
         case 'quotesmaker':
         case 'quotemaker':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             arg = body.split('|')
             if (arg.length >= 4) {
@@ -1025,6 +1150,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'linkgroup':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isBotGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
             if (isGroupMsg) {
@@ -1035,6 +1162,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'bc':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot!', id)
             let msg = body.slice(3)
@@ -1046,6 +1175,8 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Broadcast Success!', id)
             break
         case 'adminlist':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             let mimin = ''
@@ -1059,6 +1190,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'ownergroub':
         case 'ownergrub':
         case 'ownergroup':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const Owner_ = chat.groupMetadata.owner
@@ -1066,6 +1199,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'member':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins&&!isOwner) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
@@ -1113,6 +1248,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'kickall':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             const isGroupOwner = sender.id === chat.groupMetadata.owner
@@ -1129,6 +1266,8 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes kick all member', id)
             break
         case 'leaveall':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
             const allChats = await client.getAllChatIds()
@@ -1140,6 +1279,8 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes leave all group!', id)
             break
         case 'clearall':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
             const allChatz = await client.getAllChats()
@@ -1149,6 +1290,8 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, 'Succes clear all chat!', id)
             break
         case 'add':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (args.length === 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *add* 628xxxxx', id)
@@ -1161,6 +1304,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'kick':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
@@ -1173,12 +1318,16 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case '.keluar':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             await client.sendText(from,'Sayonara').then(() => client.leaveGroup(groupId))
             break
         case 'admin':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
@@ -1190,6 +1339,8 @@ module.exports = msgHandler = async (client, message) => {
             await client.sendTextWithMentions(from, `Perintah diterima, menambahkan @${mentionedJidList[0]} sebagai admin.`)
             break
         case 'unadmin':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
@@ -1201,6 +1352,8 @@ module.exports = msgHandler = async (client, message) => {
             await client.sendTextWithMentions(from, `Perintah diterima, menghapus jabatan @${mentionedJidList[0]}.`)
             break
         case 'join':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isOwner) return client.reply(from, 'Hay kalo mau masukin bot ke grub, hubungi ownernya ya\nwa.me/6282237416678\n\n*TIDAK GRATIS*',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *join* linkgroup\n\nEx:\njoin https://chat.whatsapp.com/blablablablablabla', id)
@@ -1224,6 +1377,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'hapus':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (!isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isGroupAdmins) return client.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
@@ -1232,11 +1387,15 @@ module.exports = msgHandler = async (client, message) => {
             client.deleteMessage(quotedMsgObj.chatId, quotedMsgObj.id, false)
             break
         case 'getses':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const sesPic = await client.getSnapshot()
             client.sendFile(from, sesPic, 'session.png', `${donasi}`, id)
             break
         case 'lirik':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length == 1) return client.reply(from, 'Kirim perintah *lirik [optional]*, contoh *lirik aku bukan boneka*', id)
             const lagu = body.slice(6)
@@ -1245,6 +1404,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'listblock':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             let hih = `list blok nomor\nTotal : ${blockNumber.length}\n`
             for (let i of blockNumber) {
@@ -1254,10 +1415,14 @@ module.exports = msgHandler = async (client, message) => {
             break
         
         case 'listchannel':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, listChannel, id)
             break
         case 'jadwaltv':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             if (args.length === 1) return client.reply(from, 'Kirim perintah *jadwalTv [channel]*', id)
             const query = body.slice(9).toLowerCase()
@@ -1265,11 +1430,15 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, jadwal, id)
             break
         case 'jadwaltvnow':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const jadwalNow = await get.get('https://api.haipbis.xyz/jadwaltvnow').json()
             client.reply(from, `Jam : ${jadwalNow.jam}\n\nJadwalTV : ${jadwalNow.jadwalTV}`, id)
             break
         case 'waifu':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var outj = `./log/waifu.jpg`
             try{
@@ -1305,6 +1474,8 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'random':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             prm = body.split(' ')[1]
             var urk = 'https://api.computerfreaker.cf/v1/'
@@ -1323,17 +1494,23 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'neko':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             q2 = Math.floor(Math.random() * 900) + 300;
             q3 = Math.floor(Math.random() * 900) + 300;
             client.sendFileFromUrl(from, 'http://placekitten.com/'+q3+'/'+q2, 'neko.png','Neko ')
             break
         case 'pokemon':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             q7 = Math.floor(Math.random() * 890) + 1;
             client.sendFileFromUrl(from, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/'+q7+'.png','Pokemon.png',)
             break
         case 'ss':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var _query = body.slice(3)
             //#const _query = body.slice(43)
@@ -1347,6 +1524,8 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'quote':
         case 'quotes':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var urll = 'https://jagokata.com/kata-bijak/acak.html'
             axios.get(urll).then((result) => {
@@ -1357,6 +1536,8 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'katacinta':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var urll = 'https://jagokata.com/kata-bijak/kata-cinta.html'
             axios.get(urll).then((result) => {
@@ -1367,12 +1548,16 @@ module.exports = msgHandler = async (client, message) => {
             });
             break
         case 'quoteanime':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const skya = await get.get('https://mhankbarbar.herokuapp.com/api/quotesnime/random').json()
             skya_ = skya.data
             client.reply(from, `➸ *Quotes* : ${skya_.quote}\n➸ *Character* : ${skya_.character}\n➸ *Anime* : ${skya_.anime}`, id)
             break
         case 'meme':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
             const { postlink, title, subreddit, url, nsfw, spoiler } = response.data
@@ -1380,16 +1565,23 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'menu':
         case 'help':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             client.reply(from, help, id)
             break
         case 'readme':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             client.reply(from, readme, id)
             break
         case 'info':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
+            if(cek()==='ok') return client.reply(from,maintan,id)
             client.sendLinkWithAutoPreview(from, 'Informasi Bot', info)
             break
         case 'snk':
+            if(kotor(body.toLowerCase) === 'ok') return client.reply(from,jagaOmongan,id)
             client.reply(from, snk, id)
             break
         }
