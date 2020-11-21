@@ -171,7 +171,7 @@ module.exports = msgHandler = async (client, message) => {
         if (quotedMsg && quotedMsg.type == 'sticker') {
             const mediaData = await decryptMedia(quotedMsg)
             const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
-            reply.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
+            client.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
         } else if (!quotedMsg) return client.reply(from, 'tag sticker yang ingin dijadikan gambar!', id)
         break
 

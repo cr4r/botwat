@@ -16,7 +16,8 @@
 <p align="center">
 <a href="https://open-wa.github.io/wa-automate-nodejs/"><img src="https://img.shields.io/badge/wa--automate-V.3.0.16-green?style=flat&logo=npm" alt="shield.png"></a>
 <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badges/">
-<img src="http://hits.dwyl.com/cr4r/botwat.svg"/><a href="https://github.com/cr4r"><img src="https://img.shields.io/badge/license-GNU%20GPL%20v3-green?style=flat-square" alt="shield.png"></a>
+<img src="http://hits.dwyl.com/cr4r/botwat.svg"/>
+<a href="https://github.com/cr4r"><img src="https://img.shields.io/badge/license-GNU%20GPL%20v3-green?style=flat-square" alt="shield.png"></a>
 </p>
 
 
