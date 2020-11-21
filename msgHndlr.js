@@ -130,6 +130,17 @@ module.exports = msgHandler = async (client, message) => {
         var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
 
         switch(command) {
+        case 'sibuk':
+            if(args.length ==== 1) return client.reply(from,'sibuk on/off',id)
+            if(!isOwner) return client.reply(from,'Fitur hanya owner yang bisa :p',id)
+            var onof = body.split(' ')[1]
+            if(onof === 'on'){
+                fs.writeFile('lib/maintance','hidup',(err)=>{if(err) return console.log(err)})
+            }else{
+                fs.writeFile('lib/maintance','mati',(err)=>{if(err) return console.log(err)})
+            }
+
+            break
         case '.gabut':
             client.reply(from,gabutKom,id)
             break
