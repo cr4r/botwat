@@ -41,8 +41,6 @@ module.exports = doing = (linkn,formatn) => new Promise((resolve, reject) => {
         formatt = 19
     }else if(formatn === 18) {
         formatt = 20
-    }else {
-        resolve({'status':'no','result':formatn})
     }
 
     var headers = {
