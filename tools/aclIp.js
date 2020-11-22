@@ -5,24 +5,24 @@ var fs = require('fs-extra')
 
 module.exports = doing = (linkn,format) => new Promise((resolve, reject) => {
     if(format === 1){ formatt = 3 }
-    else if(format === 2){ formatt = 4 }
-    else if(format === 3){ formatt = 1 }
-    else if(format === 4){ formatt = 8 }
-    else if(format === 5){ formatt = 14 }
-    else if(format === 6){ formatt = 6 }
-    else if(format === 7){ formatt = 5 }
-    else if(format === 8){ formatt = 16 }
-    else if(format === 9){ formatt = 15 }
-    else if(format === 10){ formatt = 18 }
-    else if(format === 11){ formatt = 17 }
-    else if(format === 12){ formatt = 2 }
-    else if(format === 13){ formatt = 13 }
-    else if(format === 14){ formatt = 9 }
-    else if(format === 15){ formatt = 11 }
-    else if(format === 16){ formatt = 12 }
-    else if(format === 17){ formatt = 19 }
-    else if(format === 18){ formatt = 20 }
-    else { resolve('no') }
+    else if(format === 2)  { formatt = 4 }
+    else if(format === 3)  { formatt = 1 }
+    else if(format === 4)  { formatt = 8 }
+    else if(format === 5)  { formatt = 14 }
+    else if(format === 6)  { formatt = 6 }
+    else if(format === 7)  { formatt = 5 }
+    else if(format === 8)  { formatt = 16 }
+    else if(format === 9)  { formatt = 15 }
+    else if(format === 10) { formatt = 18 }
+    else if(format === 11) { formatt = 17 }
+    else if(format === 12) { formatt = 2 }
+    else if(format === 13) { formatt = 13 }
+    else if(format === 14) { formatt = 9 }
+    else if(format === 15) { formatt = 11 }
+    else if(format === 16) { formatt = 12 }
+    else if(format === 17) { formatt = 19 }
+    else if(format === 18) { formatt = 20 }
+    else { resolve({'status':'no','result':format}) }
 
     var headers = {
         'User-Agent':       'Super Agent/0.0.1',
