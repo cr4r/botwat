@@ -135,7 +135,7 @@ module.exports = msgHandler = async (client, message) => {
             if(args.length === 1) return client.reply(from,`acl help/..`,id)
             var kdNegara = body.split(' ')[1]
             
-            if(kdNegara.toLowerCase()==='help') return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt',id)
+            if(kdNegara.toLowerCase()==='help') return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt','',id)
             formt = `Format:\n1. Apache .htaccess Deny\n2. Apache .htaccess Allow\n3. CIDR\n4. Cisco ACL\n5. Cisco bit bucket\n6. Decimal/CIDR\n7. IP Range\n8. Inverse Netmask\n9. Juniper Junos\n10. Linux iptables\n11. MicroTik\n12. Netmask\n13. Network-Object\n14. Peerguardian2\n15. web.config Deny\n16. web.config allow\n17. Custom CIDR\n18. Custom Netmask`
             
             if(args.length === 2) return client.reply(from,`acl [format] [kode Negara]\nContoh:\nacl CN 3\n\n${formt}`,id)
@@ -148,11 +148,11 @@ module.exports = msgHandler = async (client, message) => {
             }else{
                 aclip(kdNegara, formtny).then((hsl)=> {
                     if(hsl.status==='ok'){
-                        client.sendFile(from,'log/hasilIp.txt','hasilIp.txt',from)
+                        client.sendFile(from,'log/hasilIp.txt','hasilIp.txt','',id)
                         exec(`rm log/hasilIp.txt`)
                     }else{
                         client.reply(from,hsl.result,id)
-                        return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt',id)
+                        return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt','',id)
                     }
                 })
             }
@@ -467,7 +467,7 @@ module.exports = msgHandler = async (client, message) => {
                                     exec(`sed -ne \'/BEGIN OpenVPN Static key/,\$ p\' /etc/openvpn/server/tc.key>>${lokasin}&&echo \"</tls-crypt>\">>${lokasin}`,(error)=>{
                                         if(error) return client.reply(from, `error gan\n\n${error}`,id)
                                         client.reply(from,`Halo kak, vpn sudah dibuat\nSilahkan ketik vpn help\nuntuk Tutorial cara menggunakannya\nUntuk melihat Syarat \& dan ketentuan berlaku silahkan ketik\nvpn snk`,id)
-                                        client.sendFile(from,lokasin,`${abc}.ovpn`,id)
+                                        client.sendFile(from,lokasin,`${abc}.ovpn`,'',id)
                                     })
                                 })
                             })
@@ -600,7 +600,7 @@ module.exports = msgHandler = async (client, message) => {
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
             exec(`wget ${pesan} \-O media\/file\/${namaFile}`, (error, stdout) => {
                 if (error) {
-                    client.reply(`ERROR => ${error.message}`);
+                    client.reply(from, `ERROR => ${error}`,id);
                 }
                 else{
                     client.sendFile(from, `./log/${namaFile}`, `${namaFile}`,'', id)
