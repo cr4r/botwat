@@ -1494,34 +1494,31 @@ module.exports = msgHandler = async (client, message) => {
             if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var outj = `log/waifu.jpg`
-            try{
-                if (isMedia && type === 'image' || quotedMsg && quotedMsg.type === 'image') {
-                    if (isMedia) {
-                        var imag = await decryptMedia(message, uaOverride)
-                    } else {
-                        var imag = await decryptMedia(quotedMsg, uaOverride)
-                    }
-                    fs.writeFile(outj,mediaData,(err) => {
-                        if(err) return client.reply(from,`Error gan\n\n${err}`,id)
-                        console.log(`file sudah d download di ${outj}`)
-                    })
+            if (isMedia && type === 'image' || quotedMsg && quotedMsg.type === 'image') {
+                if (isMedia) {
+                    var imag = await decryptMedia(message, uaOverride)
+                } else {
+                    var imag = await decryptMedia(quotedMsg, uaOverride)
                 }
-                else if(body.split(' ')[1].match(isUrl)){
+            }
+            if(args.length>1){
+                if(body.split(' ')[1].match(isUrl)){
                     imag = body.split(' ')[1]
+                }else{
+                    client.reply(from, `Waifu adalah algoritma yang meningkatkan gambar sekaligus mengurangi noise di dalam gambar. Itu mendapatkan namanya dari seni bergaya anime yang dikenal sebagai \'waifu\' yang sebagian besar dilatihnya. Meskipun waifus merupakan sebagian besar data pelatihan, api waifu2x ini masih berfungsi dengan baik pada foto dan jenis citra lainnya. Anda dapat menggunakan Waifu2x untuk menggandakan ukuran gambar Anda sekaligus mengurangi noise.\n\nCara Penggunaan waifu\nContoh\:\nKirimlah foto beserta pesan berisi waifu\natau\nwaifu https://www.animenewsnetwork.com/images/encyc/A6248-3.jpg\n\n${error}`,id)
                 }
-            }catch(error){
-                client.reply(from, 'Waifu adalah algoritma yang meningkatkan gambar sekaligus mengurangi noise di dalam gambar. Itu mendapatkan namanya dari seni bergaya anime yang dikenal sebagai \'waifu\' yang sebagian besar dilatihnya. Meskipun waifus merupakan sebagian besar data pelatihan, api waifu2x ini masih berfungsi dengan baik pada foto dan jenis citra lainnya. Anda dapat menggunakan Waifu2x untuk menggandakan ukuran gambar Anda sekaligus mengurangi noise.\n\nCara Penggunaan waifu\nContoh\:\nKirimlah foto beserta pesan berisi waifu\natau\nwaifu https://www.animenewsnetwork.com/images/encyc/A6248-3.jpg',id)
             }
             deepai.setApiKey('d22373bd-b3d1-41a6-97a0-78450f64915c');
             try{
                 (async function() {
-                    var resp = await deepai.callStandardApi("waifu2x", {
-                            image: imag,
-                    });
-                    client.sendFileFromUrl(from, resp.output_url, 'Waifu.jpg', `Semoga Sesuai expetasi :)\n${donasi}`, id)
-                    exec(`rm ${outj}`,(error)=>{
-                        if (error) return client.reply(`ERROR => Kesalahan saat menghapus log waifu`)
-                    })
+                    var satu = await deepai.callStandardApi("waifu2x", { image: imag })
+                    var dua = await deepai.callStandardApi("waifu2x", { image: satu.output_url })
+                    var tiga = await deepai.callStandardApi("waifu2x", { image: dua.output_url })
+                    var empat = await deepai.callStandardApi("waifu2x", { image: tiga.output_url })
+                    var lima = await deepai.callStandardApi("waifu2x", { image: empat.output_url })
+                    var enam = await deepai.callStandardApi("waifu2x", { image: lima.output_url })
+                    var tujuh = await deepai.callStandardApi("waifu2x", { image: enam.output_url })
+                    client.sendFileFromUrl(from, tujuh.output_url, 'Waifu.jpg', `Semoga Sesuai expetasi :)\n${donasi}`, id)
                 })()
             }catch(error){
                 client.reply(from,`Hmmmm error gan\n\n${error}`)
