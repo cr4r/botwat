@@ -149,7 +149,7 @@ module.exports = msgHandler = async (client, message) => {
                 aclip(kdNegara, formtny).then((hsl)=> {
                     if(hsl.status==='ok'){
                         client.sendFile(from,'log/hasilIp.txt','hasilIp.txt',from)
-                        exec(`log/hasilIp.txt`)
+                        exec(`rm log/hasilIp.txt`)
                     }else{
                         client.reply(from,hsl.result,id)
                         return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt',id)

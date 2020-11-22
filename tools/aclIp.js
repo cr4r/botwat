@@ -58,10 +58,9 @@ module.exports = doing = (linkn,formatn) => new Promise((resolve, reject) => {
             // Print out the response body
             let $ = cheerio.load(body);
             lstIp = $('div[class="col1"]').text().split('Copy ACL to Clipboard')[0].trim().split('ACL Results')[1]
-            resolve(lstIp)
             fs.writeFile('log/hasilIp.txt',lstIp,(err)=>{
-                if(err) return resolve('no')
-                resolve('ok')
+                if(err) return resolve({'status':'no','result':err})
+                resolve({'status':'ok','result':'log/hasilIp.txt'})
             })
         }
     })
