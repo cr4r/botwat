@@ -520,7 +520,7 @@ module.exports = msgHandler = async (client, message) => {
                         client.reply(from,'Maaf nama shortLink anda sudah di pakai, silahkan pakai nama lain',id)
                     }else{
                         exec(`echo \'${nam} ${likk}\'>>${loks}`)
-                        client.reply(from,`Jangan lupa bantu donasinya supaya server tetap hidup :)\n\nLink Pendeknya:\n${link}${nam}`)
+                        client.reply(from,`Jangan lupa bantu donasinya supaya server tetap hidup :)\n\nLink Pendeknya:\n${lik}${nam}`)
                     }
                 })
             }
@@ -1518,6 +1518,7 @@ module.exports = msgHandler = async (client, message) => {
                     var lima = await deepai.callStandardApi("waifu2x", { image: empat.output_url })
                     var enam = await deepai.callStandardApi("waifu2x", { image: lima.output_url })
                     var tujuh = await deepai.callStandardApi("waifu2x", { image: enam.output_url })
+                    console.log(tujuh.output_url)
                     client.sendFileFromUrl(from, tujuh.output_url, 'Waifu.jpg', `Semoga Sesuai expetasi :)\n${donasi}`, id)
                 })()
             }catch(error){
