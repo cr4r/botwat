@@ -3,7 +3,7 @@ var request = require('request')
 var cheerio = require('cheerio');
 var fs = require('fs-extra')
 
-module.exports = doing = (linkn,formatt) => new Promise((resolve, reject) => {
+module.exports = doing = (linkn,format) => new Promise((resolve, reject) => {
     if(format === 1){ formatt = 3 }
     else if(format === 2){ formatt = 4 }
     else if(format === 3){ formatt = 1 }
