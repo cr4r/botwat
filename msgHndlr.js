@@ -142,7 +142,7 @@ module.exports = msgHandler = async (client, message) => {
             var formtny = body.split(' ')[2]
 
             if(formtny > 18) return client.reply(from, formt,id)
-            var kode = fs.readFileSync('tools/kodeNegara.txt','utf-8').trim()
+            var kode = fs.readFileSync('tools/kodeNegara.txt','utf-8').trim().split(' ')
             if(kode.indexOf(lend)==-1){
                 client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
             }else{
