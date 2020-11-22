@@ -1,6 +1,6 @@
 Silahkan pilih kode negaranya :)
 tulis perintah
-acl 3 CN
+acl CN 3
 
 AF
 AX
