@@ -1,3 +1,4 @@
+const aclip = require('./tools/aclIp')
 var dns = require('dns'); 
 var deepai = require('deepai');
 const inst = require('./lib/instagram')
@@ -130,6 +131,31 @@ module.exports = msgHandler = async (client, message) => {
         var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
 
         switch(command) {
+        case 'acl':
+            if(args.length === 1) return client.reply(from,`acl help/..`,id)
+            var kdNegara = body.split(' ')[1]
+            
+            if(psny.toLowerCase()==='help') return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt',id)
+            formt = `Format:\n1. Apache .htaccess Deny\n2. Apache .htaccess Allow\n3. CIDR\n4. Cisco ACL\n5. Cisco bit bucket\n6. Decimal/CIDR\n7. IP Range\n8. Inverse Netmask\n9. Juniper Junos\n10. Linux iptables\n11. MicroTik\n12. Netmask\n13. Network-Object\n14. Peerguardian2\n15. web.config Deny\n16. web.config allow\n17. Custom CIDR\n18. Custom Netmask`
+            
+            if(args.length === 2) return client.reply(from,`acl [format] [kode Negara]\nContoh:\nacl 3 CN\n\n${formt}`,id)
+            var formtny = body.split(' ')[2]
+
+            if(formtny > 18) return client.reply(from, formt,id)
+            var kode = fs.readFileSync('tools/kodeNegara.txt','utf-8').trim()
+            if(kode.indexOf(lend)==-1){
+                client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
+            }else{
+                aclip(formtny, kdNegara.toUpperCase()).then((hsl)=> {
+                    if(hsl==='ok'){
+                        client.sendFile(from,'log/hasilIp.txt','hasilIp.txt',from)
+                        exec(`log/hasilIp.txt`)
+                    }else{
+                        return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt',id)
+                    }
+                })
+            }
+            break
         case 'sibuk':
             if(args.length === 1) return client.reply(from,`sibuk on/off`,id)
             if(!isOwner) return client.reply(from,'Fitur hanya owner yang bisa :p',id)
