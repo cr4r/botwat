@@ -139,7 +139,7 @@ module.exports = msgHandler = async (client, message) => {
             formt = `Format:\n1. Apache .htaccess Deny\n2. Apache .htaccess Allow\n3. CIDR\n4. Cisco ACL\n5. Cisco bit bucket\n6. Decimal/CIDR\n7. IP Range\n8. Inverse Netmask\n9. Juniper Junos\n10. Linux iptables\n11. MicroTik\n12. Netmask\n13. Network-Object\n14. Peerguardian2\n15. web.config Deny\n16. web.config allow\n17. Custom CIDR\n18. Custom Netmask`
             
             if(args.length === 2) return client.reply(from,`acl [format] [kode Negara]\nContoh:\nacl CN 3\n\n${formt}`,id)
-            var formtny = body.split(' ')[2]
+            var formtny = body.split(' ')[2].trim()
 
             if(formtny > 18) return client.reply(from, formt,id)
             var kode = fs.readFileSync('tools/kodeNegara.txt','utf-8').trim().split('\n')
