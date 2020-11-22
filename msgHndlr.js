@@ -144,7 +144,7 @@ module.exports = msgHandler = async (client, message) => {
             if(formtny > 18) return client.reply(from, formt,id)
             var kode = fs.readFileSync('tools/kodeNegara.txt','utf-8').trim().split('\n')
             console.log('Pengecekan ok',kode)
-            if(kode.indexOf(formtny)==-1){
+            if(kode.indexOf(kdNegara)==-1){
                 console.log(formtny)
                 console.log('kode negara salah')
                 client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
