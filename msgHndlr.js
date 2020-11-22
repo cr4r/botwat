@@ -143,7 +143,7 @@ module.exports = msgHandler = async (client, message) => {
 
             if(formtny > 18) return client.reply(from, formt,id)
             var kode = fs.readFileSync('tools/kodeNegara.txt','utf-8').trim().split(' ')
-            if(kode.indexOf(lend)==-1){
+            if(kode.indexOf(formtny)==-1){
                 client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
             }else{
                 aclip(formtny, kdNegara.toUpperCase()).then((hsl)=> {
