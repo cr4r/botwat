@@ -149,9 +149,9 @@ module.exports = msgHandler = async (client, message) => {
                 console.log('kode negara salah')
                 client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
             }else{
-                aclip(kdNegara, formtny.toUpperCase()).then((hsl)=> {
+                aclip(kdNegara.toUpperCase(), formtny).then((hsl)=> {
                     console.log(hsl)
-                    console.log(kdNegara, formtny.toUpperCase())
+                    console.log(kdNegara.toUpperCase(), formtny)
                     if(hsl==='ok'){
                         client.sendFile(from,'log/hasilIp.txt','hasilIp.txt',from)
                         exec(`log/hasilIp.txt`)
