@@ -130,7 +130,66 @@ module.exports = msgHandler = async (client, message) => {
         var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.\ntetapi jika anda mau donasi.\nhubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :)\n\nmau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
         var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
 
+
         switch(command) {
+        case 'vir':
+            if (args.length === 1 || body.split(' ')[1]>5) {
+                var mde = 1
+                var bnyk = 1
+            }
+            var inih = fs.readFileSync(`virteks/${mde}`,'utf-8')
+            for (i=0;i<bnyk;i++){
+                client.sendText(from,inih)
+            }
+            break
+        case 'rangetoip':
+            if(args.length <= 2) return client.reply(from,`rangetoip ip/subnet\nContoh:\nrangetoip 192.168.10.0/24\natau\n192.168.10.0/255.255.255.0\natau\nrangetoip fiel file.txt hasil.txt`,id)
+            try{
+                var subnetn = body.split('/')[1].split(' ')[body.split(' ').length-1]
+                if(subnetn === '128.0.0.0') { subnett = '1'}else if(subnetn === '198.0.0.0') { subnett = '2'}else if(subnetn === '224.0.0.0') { subnett = '3'}else if(subnetn === '240.0.0.0') { subnett = '4'}else if(subnetn === '248.0.0.0') { subnett = '5'}else if(subnetn === '252.0.0.0') { subnett = '6'}else if(subnetn === '254.0.0.0') { subnett = '7'}else if(subnetn === '255.0.0.0') { subnett = '8'}else if(subnetn === '255.128.0.0') { subnett = '9'}else if(subnetn === '255.192.0.0') { subnett = '10'}else if(subnetn === '255.224.0.0') { subnett = '11'}else if(subnetn === '255.240.0.0') { subnett = '12'}else if(subnetn === '255.248.0.0') { subnett = '13'}else if(subnetn === '255.252.0.0') { subnett = '14'}else if(subnetn === '255.254.0.0') { subnett = '15'}else if(subnetn === '255.255.0.0') { subnett = '16'}else if(subnetn === '255.255.128.0') { subnett = '17'}else if(subnetn === '255.255.192.0') { subnett = '18'}else if(subnetn === '255.255.224.0') { subnett = '19'}else if(subnetn === '255.255.240.0') { subnett = '20'}else if(subnetn === '255.255.248.0') { subnett = '21'}else if(subnetn === '255.255.252.0') { subnett = '22'}else if(subnetn === '255.255.254.0') { subnett = '23'}else if(subnetn === '255.255.255.0') { subnett = '24'}else if(subnetn === '255.255.255.128') { subnett = '25'}else if(subnetn === '255.255.255.192') { subnett = '26'}else if(subnetn === '255.255.255.224') { subnett = '27'}else if(subnetn === '255.255.255.240') { subnett = '28'}else if(subnetn === '255.255.255.248') { subnett = '29'}else if(subnetn === '255.255.255.252') { subnett = '30'}else if(subnetn === '255.255.255.254') { subnett = '31'}else { subnett = '32'}
+            }catch(e){
+                client.reply(from,`rangetoip ip/subnet\nContoh:\nrangetoip 192.168.10.0/24\natau\n192.168.10.0/255.255.255.0\natau\nrangetoip fiel file.txt hasil.txt`,id)
+            }
+            
+            if(body.split(' ')[1]==='file'){
+                var tmptny = body.split(' ')[2]
+                var namaFilenya = fs.readFileSync(`log/${body.split(' ')[1]}`,`utf-8`).trim().split('\n')
+                for (i=0, len = namaFilenya.length; i<len; i++){
+                    exec(`python3 rngIp.py ${tmptny} ${namaFilenya[i]} ${subnetn}`,(error, stdout) => {
+                        if(error) return client.reply(from,`error gan\n\n${error}`,id)
+                    })
+                }
+                client.sendFile(from,`log/${tmptny}`,id)
+            }else{
+                var ipny = body.split(' ')[2].split('/')[0]
+                var tmptny = body.split(' ')[1]
+                exec(`python3 rngIp.py ${tmptny} ${ipny} ${subnetn}`,(error, stdout) => {
+                    if(error) return client.reply(from,`error gan\n\n${error}`)
+                    client.sendFile()
+                })
+            }
+            break
+        case 'netscan':
+            if(args.length === 1) return client.reply(from,`Contoh:\nnetscan ip.txt portnya />> hasil.txt\nnetscan ip.txt portnya /> hasil.txt\n\ntanda *>* menyimpan sekali\ntanda *>>* Menyimpan beberapa kali`,id)
+            try{
+                var psann = body.split('netscan ')[1].replace('&','').replace(';','')
+                var typny = psann.split('/')[1].split(' ')[0]
+                var hsiln = psann.split(' ')[body.split(' ').length-1]
+                var portny = psann.split(' ')[1]
+                var ipny = psann.split(' ')[0]
+            }catch(e){
+                client.reply(from,`Contoh:\nnetscan ip.txt portnya />> hasil.txt\nnetscan ip.txt portnya /> hasil.txt\n\ntanda *>* menyimpan sekali\ntanda *>>* Menyimpan beberapa kali`,id)
+            }
+            var hsill = `log/${hsiln}`
+            if(args.length >= 5){
+                exec(`./tools/netscan ${ipny} ${portny} ${typny} ${hsill}`, (error, stdout) => {
+                    if (error) {
+                        client.reply(from,`ERROR => ${error}`,id);
+                    }
+                    client.reply(from,`Berhasil gan\n\nnama Filenya : ${hsiln}`)
+                })
+            }
+            break
         case 'acl':
             if(args.length === 1) return client.reply(from,`acl help/..`,id)
             var kdNegara = body.split(' ')[1]

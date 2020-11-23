@@ -12,7 +12,11 @@ AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCO
   -bar)cor="${AZUL}${NEGRITO}========================================" && echo -e "${cor}${SEMCOR}";;
  esac
 }
-
+msg -bar2
+msg -ama "PERHATIAN !!!"
+msg -ama "Script Bot Whatsapp ini"
+msg -ama "Recomended Distro"
+msg -ama "Ubuntu / Debian"
 msg -bar2
 msg -ama "Sedang Menginstall Module JS, mohon tunggu sebentar"
 npm i&&npm audit fix&>/dev/null
@@ -23,6 +27,9 @@ msg -ama "Sedang mencari dan menginstall tool pendukung"
 [[ $(dpkg --get-selections | grep -w "imagemagick"|head -1) ]] || sudo apt install imagemagick -y&>/dev/null
 [[ $(dpkg --get-selections | grep -w "wget"|head -1) ]] || sudo apt-get install wget -y&>/dev/null
 [[ $(dpkg --get-selections | grep -w "nmap"|head -1) ]] || sudo apt-get install nmap -y&>/dev/null
+[[ $(dpkg --get-selections | grep -w "python3"|head -1) ]] || sudo apt install python3&>/dev/null
+[[ $(dpkg --get-selections | grep -w "python3-pip"|head -1) ]] || sudo apt install python3-pip&>/dev/null
 [[ $(dpkg --get-selections | grep -w "google-chrome"|head -1) ]] || ./installChrome&>/dev/null
+[[ $(dpkg --get-selections | grep -w "sudo"|head -1) ]] || pip3 install ipaddress&>/dev/null
 msg -bar2
 msg -ama "Cek versi node (node -v), jika versi node di bawah 11, maka lakukan install nodejs versi terbaru dengan cara ./installNode"
