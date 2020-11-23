@@ -180,7 +180,7 @@ module.exports = msgHandler = async (client, message) => {
                     var ipny = isin.split('/')[0].split(' ')[namaFilenya[i].split('/')[0].split(' ').length-1]
                     var subnetn = isin.split('/')[1]
                     exec(`python3 tools/rngIp.py log/${tmptny} ${ipny} ${subnetn}`,(error, stdout) => {
-                        if(error) return client.reply(from,`error gan\n\n${error}`,id)
+                        // if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     })
                 }
                 function hay() { console.log('ok') }
