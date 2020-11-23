@@ -183,8 +183,9 @@ module.exports = msgHandler = async (client, message) => {
                         if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     })
                 }
+                setInterval('berhasil',1000); 
                 console.log('namaFilenya: '+tmptny)
-                client.sendFile(from,`log/${tmptny}`, tmptny,'',id)
+                client.sendFile(from,'log/'+tmptny, tmptny,'',id)
             }else{
                 var tmptny = body.split(' ')[1]
                 console.log(`python3 tools/rngIp.py log/${tmptny} ${ipny}/${subnetn}`)
@@ -211,7 +212,8 @@ module.exports = msgHandler = async (client, message) => {
                     if (error) {
                         client.reply(from,`ERROR => ${error}`,id);
                     }
-                    client.reply(from,`Berhasil gan\n\nnama Filenya : ${hsiln}`)
+                    client.reply(from,` ${processTime(t, moment())} _Second_ \n\nBerhasil gan\n\nnama Filenya : ${hsiln}`)
+                    client.sendFile(from,hasill,hasiln,'',id)
                 })
             }
             break
@@ -238,6 +240,7 @@ module.exports = msgHandler = async (client, message) => {
                     console.log(hsl.result)
                     console.log(`aclip(${kdNegara}, ${formtny})`)
                     if(hsl.status === 'ok'){
+                        client.reply(from,` ${processTime(t, moment())} _Second_ `,id)
                         client.sendFile(from,'log/hasilIp.txt','hasilIp.txt','',id)
                     }else{
                         client.reply(from,hsl.result,id)
