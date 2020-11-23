@@ -160,7 +160,12 @@ module.exports = msgHandler = async (client, message) => {
                 }catch(err){
                     client.reply(from,'rangetoip [namaFileSave] [namaFileIpnya]\n\nContoh: rangetoip cibel.txt hasilIp.txt')
                 }
-                for (i=1, len = namaFilenya.length; i<len; i++){
+                if(namaFilenya.length > 100){
+                    var len = 100
+                }else{
+                    var len = namaFilenya.length
+                }
+                for (i=1; i<len; i++){
                     var isin = namaFilenya[i].trim()
                     var ipny = isin.split('/')[0].split(' ')[namaFilenya[i].split('/')[0].split(' ').length-1]
                     var subnetn = isin.split('/')[1]
