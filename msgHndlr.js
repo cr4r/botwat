@@ -199,7 +199,7 @@ module.exports = msgHandler = async (client, message) => {
             if(kdNegara.toLowerCase()==='help') return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt','',id)
             formt = `Format:\n1. Apache .htaccess Deny\n2. Apache .htaccess Allow\n3. CIDR\n4. Cisco ACL\n5. Cisco bit bucket\n6. Decimal/CIDR\n7. IP Range\n8. Inverse Netmask\n9. Juniper Junos\n10. Linux iptables\n11. MicroTik\n12. Netmask\n13. Network-Object\n14. Peerguardian2\n15. web.config Deny\n16. web.config allow\n17. Custom CIDR\n18. Custom Netmask`
             
-            if(args.length === 2) return client.reply(from,`acl [format] [kode Negara]\nContoh:\nacl CN 3\n\n${formt}`,id)
+            if(args.length === 2) return client.reply(from,`acl [kode Negara] [format]\nContoh:\nacl CN 3\n\n${formt}`,id)
             var formtny = body.split(' ')[2].trim()
 
             if(formtny > 18) return client.reply(from, formt,id)
@@ -208,6 +208,7 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
             }else{
                 aclip(kdNegara, formtny).then((hsl)=> {
+                    console.log(hsl.status)
                     if(hsl.status==='ok'){
                         client.sendFile(from,'log/hasilIp.txt','hasilIp.txt','',id)
                         exec(`rm log/hasilIp.txt`)
@@ -447,7 +448,6 @@ module.exports = msgHandler = async (client, message) => {
             if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var pl = body.split(' ')[0].toLowerCase()
-            console.log(pl)
             if(pl==='des'){
                 var pili = body.split('des ')[1].split(' ')[0]
                 var pesan = body.split('des ')[1].slice(pili.length+1)
@@ -663,7 +663,7 @@ module.exports = msgHandler = async (client, message) => {
             if (args.length === 1) return client.reply(from,`Ketik\nwget https://linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
-            exec(`wget ${pesan} \-O media\/file\/${namaFile}`, (error, stdout) => {
+            exec(`wget ${pesan} -O log/${namaFile}`, (error, stdout) => {
                 if (error) {
                     client.reply(from, `ERROR => ${error}`,id);
                 }
