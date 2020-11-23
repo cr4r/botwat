@@ -450,7 +450,7 @@ module.exports = msgHandler = async (client, message) => {
             console.log(pl)
             if(pl==='des'){
                 var pili = body.split('des ')[1].split(' ')[0]
-                var pesan = body.split('des ')[1].split(' ')[1]
+                var pesan = body.split('des ')[1].slice(pili.length+1)
                 if(pili==='asci'){
                     let psn = ""
                     for (var i = 0, len = pesan.length; i < len; i++) {
@@ -464,7 +464,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             else if(pl === 'bin'){
                 var pili = body.split('bin ')[1].split(' ')[0]
-                var pesan = body.split('bin ')[1].split(' ')[1]
+                var pesan = body.split('bin ')[1].slice(pili.length+1)
                 if(pili === 'hex'){
                     var ps = parseInt(pesan,2).toString(16)
                     if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka binary bukan huruf',id)
@@ -476,7 +476,7 @@ module.exports = msgHandler = async (client, message) => {
                 }else{client.reply(from,'Salah memasukkan perintah',id)}
             }else if(pl === 'hex'){
                 var pili = body.split('hex ')[1].split(' ')[0]
-                var pesan = body.split('hex ')[1].split(' ')[1]
+                var pesan = body.split('hex ')[1].slice(pili.length+1)
                 if(pili === 'des'){
                     ps = parseInt(pesan, 8)
                     if(ps === 'NaN') return client.reply(from, 'Seharusnya anda memasukkan angka hex bukan huruf',id)
