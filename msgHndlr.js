@@ -153,11 +153,12 @@ module.exports = msgHandler = async (client, message) => {
             }
             
             if(body.split(' ')[1]==='file'){
-                var namaFilenya = fs.readFileSync(`log/${body.split(' ')[1]}`,`utf-8`).trim().split('\n')
-                var tmptny = body.split(' ')[2]
+                var namaFilenya = fs.readFileSync(`log/${body.split(' ')[2]}`,`utf-8`).trim().split('\n')
+                var tmptny = body.split(' ')[3]
+                var subnetn = nama.split('/')[1]
                 console.log(`python3 tools/rngIp.py log/${tmptny} ${ipny} ${subnetn}`)
                 for (i=0, len = namaFilenya.length; i<len; i++){
-                    exec(`python3 tools/rngIp.py log/${tmptny} ${namaFilenya[i]} ${ipny} ${subnetn}`,(error, stdout) => {
+                    exec(`python3 tools/rngIp.py log/${tmptny} ${namaFilenya[i].split('/')[0].split(' ')[namaFilenya[i].split('/').split(' ').length-1]} ${namaFilenya[i].split('/')[1]}`,(error, stdout) => {
                         if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     })
                 }
