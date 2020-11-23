@@ -145,7 +145,8 @@ module.exports = msgHandler = async (client, message) => {
         case 'rangetoip':
             if(args.length <= 2) return client.reply(from,`rangetoip ip/subnet\nContoh:\nrangetoip 192.168.10.0/24\natau\n192.168.10.0/255.255.255.0\natau\nrangetoip fiel file.txt hasil.txt`,id)
             try{
-                var subnetn = body.split('/')[1].split(' ')[body.split(' ').length-1]
+                var subnetn = body.split('/')[1]
+                var ipny = body.split('/')[0].split(' ')[body.split('/').length-1]
                 if(subnetn === '128.0.0.0') { subnett = '1'}else if(subnetn === '198.0.0.0') { subnett = '2'}else if(subnetn === '224.0.0.0') { subnett = '3'}else if(subnetn === '240.0.0.0') { subnett = '4'}else if(subnetn === '248.0.0.0') { subnett = '5'}else if(subnetn === '252.0.0.0') { subnett = '6'}else if(subnetn === '254.0.0.0') { subnett = '7'}else if(subnetn === '255.0.0.0') { subnett = '8'}else if(subnetn === '255.128.0.0') { subnett = '9'}else if(subnetn === '255.192.0.0') { subnett = '10'}else if(subnetn === '255.224.0.0') { subnett = '11'}else if(subnetn === '255.240.0.0') { subnett = '12'}else if(subnetn === '255.248.0.0') { subnett = '13'}else if(subnetn === '255.252.0.0') { subnett = '14'}else if(subnetn === '255.254.0.0') { subnett = '15'}else if(subnetn === '255.255.0.0') { subnett = '16'}else if(subnetn === '255.255.128.0') { subnett = '17'}else if(subnetn === '255.255.192.0') { subnett = '18'}else if(subnetn === '255.255.224.0') { subnett = '19'}else if(subnetn === '255.255.240.0') { subnett = '20'}else if(subnetn === '255.255.248.0') { subnett = '21'}else if(subnetn === '255.255.252.0') { subnett = '22'}else if(subnetn === '255.255.254.0') { subnett = '23'}else if(subnetn === '255.255.255.0') { subnett = '24'}else if(subnetn === '255.255.255.128') { subnett = '25'}else if(subnetn === '255.255.255.192') { subnett = '26'}else if(subnetn === '255.255.255.224') { subnett = '27'}else if(subnetn === '255.255.255.240') { subnett = '28'}else if(subnetn === '255.255.255.248') { subnett = '29'}else if(subnetn === '255.255.255.252') { subnett = '30'}else if(subnetn === '255.255.255.254') { subnett = '31'}else { subnett = '32'}
             }catch(e){
                 client.reply(from,`rangetoip ip/subnet\nContoh:\nrangetoip 192.168.10.0/24\natau\n192.168.10.0/255.255.255.0\natau\nrangetoip fiel file.txt hasil.txt`,id)
@@ -161,7 +162,6 @@ module.exports = msgHandler = async (client, message) => {
                 }
                 client.sendFile(from,`log/${tmptny}`,id)
             }else{
-                var ipny = body.split(' ')[2].split('/')[0]
                 var tmptny = body.split(' ')[1]
                 exec(`python3 rngIp.py ${tmptny} ${ipny} ${subnetn}`,(error, stdout) => {
                     if(error) return client.reply(from,`error gan\n\n${error}`)
