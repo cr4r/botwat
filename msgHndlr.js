@@ -445,7 +445,7 @@ module.exports = msgHandler = async (client, message) => {
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            var pl = body.split(' ')[0]
+            var pl = body.split(' ')[0].toLowerCase()
             console.log(pl)
             if(pl==='des'){
                 var pili = body.split('des ')[1].split(' ')[0]
