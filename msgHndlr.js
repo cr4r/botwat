@@ -183,7 +183,8 @@ module.exports = msgHandler = async (client, message) => {
                         if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     })
                 }
-                setInterval('berhasil',1000); 
+                var adsj = setInterval('berhasil',1000); 
+                clearInterval(adsj);  
                 console.log('namaFilenya: '+tmptny)
                 client.sendFile(from,'log/'+tmptny, tmptny,'',id)
             }else{
