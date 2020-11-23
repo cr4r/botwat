@@ -212,7 +212,7 @@ module.exports = msgHandler = async (client, message) => {
                 console.log('cek kode negara')
                 aclip(kdNegara, formtny).then((hsl)=> {
                     console.log(hsl.status)
-                    if(hsl.status==='ok'){
+                    if(hsl.status === 'ok'){
                         client.sendFile(from,'log/hasilIp.txt','hasilIp.txt','',id)
                         exec(`rm log/hasilIp.txt`)
                     }else{
