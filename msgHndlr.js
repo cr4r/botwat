@@ -163,7 +163,7 @@ module.exports = msgHandler = async (client, message) => {
                 client.sendFile(from,`log/${tmptny}`,id)
             }else{
                 var tmptny = body.split(' ')[1]
-                exec(`python3 rngIp.py ${tmptny} ${ipny} ${subnetn}`,(error, stdout) => {
+                exec(`python3 tools/rngIp.py ${tmptny} ${ipny} ${subnetn}`,(error, stdout) => {
                     if(error) return client.reply(from,`error gan\n\n${error}`)
                     client.sendFile()
                 })
