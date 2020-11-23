@@ -53,6 +53,9 @@ module.exports = doing = (linkn,formatn) => new Promise((resolve, reject) => {
         form: {'countries[]':linkn , 'format1' : formatt, 'get_acl' : 'Create+ACL'}
     }
     request(options, function (error, response, body) {
+        if(error){
+            resolve({'status':'no','result':`${error}\n\n${response.statusCode}`})
+        }
         if (!error && response.statusCode == 200) {
             // Print out the response body
             let $ = cheerio.load(body);
