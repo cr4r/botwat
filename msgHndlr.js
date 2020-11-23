@@ -95,7 +95,7 @@ module.exports = msgHandler = async (client, message) => {
         const groupAdmins = isGroupMsg ? await client.getGroupAdmins(groupId) : ''
         const isGroupAdmins = isGroupMsg ? groupAdmins.includes(sender.id) : false
         const isBotGroupAdmins = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false
-        const isAdmin = kode.indexOf(lend)==-1
+        // const isAdmin = kode.indexOf(lend)==-1
         const ownerNumber = '6282237416678@c.us'
         const isOwner = sender.id === ownerNumber
         const isBlocked = blockNumber.indexOf(sender.id)===-1
