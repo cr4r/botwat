@@ -221,7 +221,6 @@ module.exports = msgHandler = async (client, message) => {
                     console.log(`aclip(${kdNegara}, ${formtny})`)
                     if(hsl.status === 'ok'){
                         client.sendFile(from,'log/hasilIp.txt','hasilIp.txt','',id)
-                        exec(`rm log/hasilIp.txt`)
                     }else{
                         client.reply(from,hsl.result,id)
                         return client.sendFile(from,'tools/kodeNegara.txt','kodeNegara.txt','',id)
