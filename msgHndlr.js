@@ -210,7 +210,7 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from,'Maaf kode negara yang anda pilih tidak ada',id)
             }else{
                 console.log('cek kode negara')
-                consoel.log(`aclip(${kdNegara}, ${formtny})`)
+                console.log(`aclip(${kdNegara}, ${formtny})`)
                 aclip(kdNegara, formtny).then((hsl)=> {
                     console.log(hsl.result)
                     console.log(`aclip(${kdNegara}, ${formtny})`)

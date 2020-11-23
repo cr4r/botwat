@@ -50,7 +50,7 @@ module.exports = doing = (linkn,formatn) => new Promise((resolve, reject) => {
         url: 'https://countryipblocks.net/acl.php',
         method: 'POST',
         headers: headers,
-        rejectUnauthorized: true,
+        strictSSL: false,
         form: {'countries[]':linkn , 'format1' : formatt, 'get_acl' : 'Create+ACL'}
     }
     request(options, function (error, response, body) {
