@@ -134,9 +134,9 @@ module.exports = msgHandler = async (client, message) => {
         case 'vir':
             if (args.length <= 2 || body.split(' ')[3]>5) return client.reply(from,'Halo kak fitur bisa digunakan jika si penerima/pengirim pesan sudah membuka chat (Sudah pernah chatingan sebelumnya), jika belom pernah maka fitur ini tidak akan work.\n\nvir [nomor] [virus 1-5] [limit]\n\nContoh:\nvir 6282237416678 3 10\nvir 6282237416678 5 10\nvir 6282237416678 rnd 10');var nmrny = body.split(' ')[1]+`@c.us`
             if(body.split(' ')[2]==='rnd'){ var limitt = body.split(' ')[3]; if (isOwner) {limitt = limitt} else if(limitt >10){return client.reply(from,'demi kenyamanan pengguna lain untuk menggunakan bot, fitur ini hanya maksimal 10',id)}
-                for (i=0; i<limitt;i++){ client.sendText(nmrny,fs.readFileSync(`virteks/${rndm(5)}`,'utf-8')) }
+                for (i=0; i<limitt;i++){ a = fs.readFileSync(`virteks/${rndm(5)}`,'utf-8'); client.sendText(nmrny,a) }
             }else{
-                for (i=0;i<limitt;i++){ client.sendText(nmrny,fs.readFileSync(`virteks/${body.split(' ')[2]}`,'utf-8')) }
+                for (i=0;i<limitt;i++){ a = fs.readFileSync(`virteks/${rndm(5)}`,'utf-8');client.sendText(nmrny,a) }
             }
             break
         
