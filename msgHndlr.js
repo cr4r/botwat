@@ -440,6 +440,7 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'des':
+        case 'bin':
         case 'asci':
         case 'hex':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
