@@ -157,7 +157,7 @@ module.exports = msgHandler = async (client, message) => {
                 var tmptny = body.split(' ')[2]
                 console.log(`python3 tools/rngIp.py log/${tmptny} ${ipny} ${subnetn}`)
                 for (i=0, len = namaFilenya.length; i<len; i++){
-                    exec(`python3 tools/rngIp.py log/${tmptny} ${namaFilenya[i]} ${subnetn}`,(error, stdout) => {
+                    exec(`python3 tools/rngIp.py log/${tmptny} ${namaFilenya[i]} ${ipny} ${subnetn}`,(error, stdout) => {
                         if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     })
                 }
