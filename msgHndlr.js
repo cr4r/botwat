@@ -160,7 +160,7 @@ module.exports = msgHandler = async (client, message) => {
                 }catch(err){
                     client.reply(from,'rangetoip [namaFileSave] [namaFileIpnya]\n\nContoh: rangetoip cibel.txt hasilIp.txt')
                 }
-                for (i=0, len = namaFilenya.length; i<len; i++){
+                for (i=1, len = namaFilenya.length; i<len; i++){
                     var subnetn = namaFilenya[i].split('/')[1]
                     console.log(`python3 tools/rngIp.py log/${tmptny} ${namaFilenya[i].split('/')[0].split(' ')[namaFilenya[i].split('/').split(' ').length-1]} ${namaFilenya[i].split('/')[1]}`)
                     exec(`python3 tools/rngIp.py log/${tmptny} ${namaFilenya[i].split('/')[0].split(' ')[namaFilenya[i].split('/').split(' ').length-1]} ${namaFilenya[i].split('/')[1]}`,(error, stdout) => {
