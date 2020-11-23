@@ -109,25 +109,9 @@ module.exports = msgHandler = async (client, message) => {
         // if (isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
         
         function rndm(isi){ return Math.floor(Math.random() * isi) + 1 }
-        function cek(){
-            var maint = fs.readFileSync('lib/maintance','utf-8')
-            if (maint==='hidup'){
-                return 'ok'
-            }else{
-                return 'off'
-            }
-        }
-        function kotor(ktanya){
-            a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir']
-            console.log(ktanya)
-            try{
-                b = ktanya.split(' ')
-            }catch(err){
-                b = ktanya
-            }
-            for(i=0,len=b.length; i<len; i++){
-                if(a.indexOf(b[i]) >= 0) return 'ok'
-            }
+        function cek(){var maint = fs.readFileSync('lib/maintance','utf-8');if (maint==='hidup'){return 'ok'}else{return 'off'}}
+        function kotor(ktanya){a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir'];
+            try{b = ktanya.split(' ')}catch(err){b = ktanya};for(i=0,len=b.length; i<len; i++){if(a.indexOf(b[i]) >= 0) return 'ok'}
         }
         var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.\ntetapi jika anda mau donasi.\nhubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :)\n\nmau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
         var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
@@ -148,17 +132,11 @@ module.exports = msgHandler = async (client, message) => {
             })
             break
         case 'vir':
-            if (args.length <= 2 || body.split(' ')[3]>5) return client.reply(from,'Halo kak fitur bisa digunakan jika si penerima/pengirim pesan sudah membuka chat (Sudah pernah chatingan sebelumnya), jika belom pernah maka fitur ini tidak akan work.\n\nvir [nomor] [virus 1-5] [limit]\n\nContoh:\nvir 6282237416678 3 10\nvir 6282237416678 5 10\nvir 6282237416678 rnd 10')
-            var inih = fs.readFileSync(`virteks/${mde}`,'utf-8')
-            var nmrny = body.split(' ')[1]+`@c.us`
-            if(body.split(' ')[2]==='rnd'){
-                var limitt = body.split(' ')[3]
-                if (isOwner) {limitt = limitt} else if(limitt >10){return client.reply(from,'demi kenyamanan pengguna lain untuk menggunakan bot, fitur ini hanya maksimal 10',id)}
-                for (i=0; i<limitt;i++){ client.sendText(nmrny,inih) }
+            if (args.length <= 2 || body.split(' ')[3]>5) return client.reply(from,'Halo kak fitur bisa digunakan jika si penerima/pengirim pesan sudah membuka chat (Sudah pernah chatingan sebelumnya), jika belom pernah maka fitur ini tidak akan work.\n\nvir [nomor] [virus 1-5] [limit]\n\nContoh:\nvir 6282237416678 3 10\nvir 6282237416678 5 10\nvir 6282237416678 rnd 10');var nmrny = body.split(' ')[1]+`@c.us`
+            if(body.split(' ')[2]==='rnd'){ var limitt = body.split(' ')[3]; if (isOwner) {limitt = limitt} else if(limitt >10){return client.reply(from,'demi kenyamanan pengguna lain untuk menggunakan bot, fitur ini hanya maksimal 10',id)}
+                for (i=0; i<limitt;i++){ client.sendText(nmrny,fs.readFileSync(`virteks/${rndm(5)}`,'utf-8')) }
             }else{
-                for (i=0;i<limitt;i++){
-                    client.sendText(nmrny,inih)
-                }
+                for (i=0;i<limitt;i++){ client.sendText(nmrny,fs.readFileSync(`virteks/${rndm(5)}`,'utf-8')) }
             }
             break
         
