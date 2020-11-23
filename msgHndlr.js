@@ -168,7 +168,6 @@ module.exports = msgHandler = async (client, message) => {
                 exec(`python3 tools/rngIp.py log/${tmptny} ${ipny} ${subnetn}`,(error, stdout) => {
                     if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     client.sendFile(from,`log/${tmptny}`, `Hasil.txt`,'',id)
-                    client.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
                 })
             }
             break
