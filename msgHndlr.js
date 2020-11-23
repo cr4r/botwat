@@ -132,6 +132,18 @@ module.exports = msgHandler = async (client, message) => {
 
 
         switch(command) {
+        case 'kirimf':
+            if(args.length === 1) return client.reply(from,'kirimf namaFile',id)
+            var filn = body.split(' ')[1]
+            exec(`./tools/cekFile ${filn}`,(error,stdout) => {
+                if(error) return client.reply(from, 'error gan',id)
+                if(stdout.trim() === 'yes'){
+                    client.sendFile(from,`log/${filn}`,filn,'',id)
+                }else{
+                    client.reply(from,'File tidak ada',id)
+                }
+            })
+            break
         case 'vir':
             if (args.length === 1 || body.split(' ')[1]>5) {
                 var mde = 1

@@ -1,0 +1,2 @@
+FILE=$1
+[[ -s $FILE ]] && echo "yes" || echo "no"
