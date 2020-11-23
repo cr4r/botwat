@@ -156,7 +156,7 @@ module.exports = msgHandler = async (client, message) => {
                 var tmptny = body.split(' ')[2]
                 var namaFilenya = fs.readFileSync(`log/${body.split(' ')[1]}`,`utf-8`).trim().split('\n')
                 for (i=0, len = namaFilenya.length; i<len; i++){
-                    exec(`python3 rngIp.py ${tmptny} ${namaFilenya[i]} ${subnetn}`,(error, stdout) => {
+                    exec(`python3 tools/rngIp.py ${tmptny} ${namaFilenya[i]} ${subnetn}`,(error, stdout) => {
                         if(error) return client.reply(from,`error gan\n\n${error}`,id)
                     })
                 }
