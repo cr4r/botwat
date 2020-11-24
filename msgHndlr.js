@@ -449,19 +449,7 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'round':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            try{
-                console.log(body.slice(6))
-                var a = body.slice(6).split(',')[0]
-                var b = body.slice(6).split(',')[1]
-                client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}\n\n${donasi}`)
-                }
-            catch(err){
-                client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`)
-            }
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id);try{console.log(body.slice(6));var a = body.slice(6).split(',')[0];var b = body.slice(6).split(',')[1];client.reply(from,`*Pembulatan dari*\n${body.slice(6)} = ${round(a,b).toString()}\n\n${donasi}`)}catch(err){client.reply(from,`Salah\nContoh Penggunaan:\nround 3.4956,2\nround 34.987,0\n,0-15 untuk menampilkan angka dibelakang koma\n\n${err}`)}break
 
         case 'lg':
         case 'lagi':
