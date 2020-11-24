@@ -121,7 +121,9 @@ module.exports = msgHandler = async (client, message) => {
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             (async () => {
                 var groupMember = await client.getGroupMembers(groupId)
-                client.reply(from, `Selamat anda telah mendapatkan undian motor @${groupMem[rndm(groupMember.length)].id.replace(/@c.us/g, '')} tapi boong`,id)
+                var mntap = await groupMem[rndm(groupMember.length)].id.replace(/@c.us/g, '')
+                await sleep(3000)
+                client.reply(from, `Selamat anda telah mendapatkan undian motor @${mntap} tapi boong`,id)
             })()
             break
         case 'kirimf':
