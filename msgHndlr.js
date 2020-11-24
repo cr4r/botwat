@@ -189,74 +189,18 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'qrcode':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *qrcode [query]*\nContoh : *qrcode cr4r bot*', id)
-            var qrcodes = body.slice(7)
-            client.sendFileFromUrl(from, `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qrcodes}`, 'gambar.png', donasi,id)
-            // fs.close(file_descriptor, (err) => { if (err) return console.error("Failed to close file", err) }
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);if (args.length === 1) return client.reply(from, 'Kirim perintah *qrcode [query]*\nContoh : *qrcode cr4r bot*', id);var qrcodes = body.slice(7); client.sendFileFromUrl(from, `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qrcodes}`, 'gambar.png', donasi,id); break
         case 'kbbi':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *kbbi [query]*\nContoh : *kbbi asu*', id)
-            const kbbl = body.slice(5)
-            const kbbl2 = await axios.get(`https://mnazria.herokuapp.com/api/kbbi?search=${kbbl}`)
-            if (kbbl2.data.error) {
-                client.reply(from, kbbl2.data.error, id)
-            } else {
-                client.sendText(from, `➸ *KBBI* : ${kbbl}\n\n➸ *Hasil* : ${kbbl2.data.result}`, id)
-            }
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);if (args.length === 1) return client.reply(from, 'Kirim perintah *kbbi [query]*\nContoh : *kbbi asu*', id);const kbbl = body.slice(5);const kbbl2 = await axios.get(`https://mnazria.herokuapp.com/api/kbbi?search=${kbbl}`);if (kbbl2.data.error) {client.reply(from, kbbl2.data.error, id)} else {client.sendText(from, `➸ *KBBI* : ${kbbl}\n\n➸ *Hasil* : ${kbbl2.data.result}`, id) }break
         case 'cari':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (args.length === 1) return client.reply(from,`Masukkan gambar apa yang mau dicari\n\nContoh:\ncari boruto`,id)
-            var cr = body.slice(5);
-            var urlny = "https://api.fdci.se/rep.php?gambar=" + cr;
-            axios.get(urlny).then((result) => {
-                var jsnn = JSON.parse(JSON.stringify(result.data));
-                if(jsnn[1]===null) return client.reply(from,'Maaf gambar yang anda cari tidak ada',id)
-                var dapt =  jsnn[Math.floor(Math.random() * jsnn.length)];
-                client.sendFileFromUrl(from,dapt, 'cari.jpg',`Mantap gak?\n\n${donasi}`,id)
-            })
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (args.length === 1) return client.reply(from,`Masukkan gambar apa yang mau dicari\n\nContoh:\ncari boruto`,id);var cr = body.slice(5);var urlny = "https://api.fdci.se/rep.php?gambar=" + cr;axios.get(urlny).then((result) => {var jsnn = JSON.parse(JSON.stringify(result.data));if(jsnn[1]===null) return client.reply(from,'Maaf gambar yang anda cari tidak ada',id);var dapt =  jsnn[Math.floor(Math.random() * jsnn.length)];client.sendFileFromUrl(from,dapt, 'cari.jpg',`Mantap gak?\n\n${donasi}`,id)});break
         case 'loli':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            var loli = await axios.get('https://mhankbarbar.herokuapp.com/api/randomloli')
-            client.sendFileFromUrl(from, loli.data.result, 'loli.jpeg', `*LOLI*\n\n${donasi}`, id)
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);var loli = await axios.get('https://mhankbarbar.herokuapp.com/api/randomloli');client.sendFileFromUrl(from, loli.data.result, 'loli.jpeg', `*LOLI*\n\n${donasi}`, id);break
         case 'dadu':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            const dice = Math.floor(Math.random() * 6) + 1
-            client.sendStickerfromUrl(from, 'https://www.random.org/dice/dice' + dice + '.png', { method: 'get' },id)
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);const dice = Math.floor(Math.random() * 6) + 1;client.sendStickerfromUrl(from, 'https://www.random.org/dice/dice' + dice + '.png', { method: 'get' },id);break
         case 'koin':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            const side = Math.floor(Math.random() * 2) + 1
-            if (side == 1) {
-                client.sendStickerfromUrl(from, 'https://i.ibb.co/YTWZrZV/2003-indonesia-500-rupiah-copy.png', { method: 'get' },id)
-            } else {
-                client.sendStickerfromUrl(from, 'https://i.ibb.co/bLsRM2P/2003-indonesia-500-rupiah-copy-1.png', { method: 'get' },id)
-            }
-            break
-        case 'img':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (quotedMsg && quotedMsg.type == 'sticker') {
-                const mediaData = await decryptMedia(quotedMsg)
-                const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
-                client.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)
-            } else if (!quotedMsg) return client.reply(from, 'tag sticker yang ingin dijadikan gambar!', id)
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);const side = Math.floor(Math.random() * 2) + 1;if (side == 1) {    client.sendStickerfromUrl(from, 'https://i.ibb.co/YTWZrZV/2003-indonesia-500-rupiah-copy.png', { method: 'get' },id)} else {    client.sendStickerfromUrl(from, 'https://i.ibb.co/bLsRM2P/2003-indonesia-500-rupiah-copy-1.png', { method: 'get' },id)};break
+        case 'img':if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (quotedMsg && quotedMsg.type == 'sticker') {const mediaData = await decryptMedia(quotedMsg);const imageBase64 = `data:${quotedMsg.mimetype};base64,${mediaData.toString('base64')}`;client.sendFile(from, imageBase64, 'imagesticker.jpg', `Sukses Convert Sticker ke Image!\n\n${donasi}`, id)} else if (!quotedMsg) return client.reply(from, 'tag sticker yang ingin dijadikan gambar!', id);break
         case 'solat':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
@@ -273,60 +217,16 @@ module.exports = msgHandler = async (client, message) => {
             }
             break
         case 'sh':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id)
-            if (args.length === 1) return client.reply(from,`Ketik\nsh commandnya`,id)
-            psn = body.split('sh ')[1]
-            console.log(psn)
-            exec(`${psn}`, (error, stdout) => {
-                if (error) {
-                    client.reply(`ERROR => ${error.message}`);
-                }
-                else{
-                    client.reply(from, `${stdout}`, id)
-                }
-            });
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id);if (!isOwner) return client.reply(from, 'Mau apa om?, aku bot tapi gak sebodoh itu menerima perintah sembarangan :p',id);if (args.length === 1) return client.reply(from,`Ketik\nsh commandnya`,id);psn = body.split('sh ')[1];console.log(psn);exec(`${psn}`, (error, stdout) => {if (error) {client.reply(`ERROR => ${error.message}`)}else{client.reply(from, `${stdout}`, id)}});break
         case 'scan':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);var outn = `./log/output`;var outj = `./log/output.jpg`;if (isMedia && type === 'image') { const mediaData = await decryptMedia(message, uaOverride);fs.writeFile(outj,mediaData,(err)=>{if(err) return client.reply(from,`Error gan\n\n${err}`,id)}); exec(`tesseract ${outj} ${outn} --dpi 150`, (error, stdout) => { if (error) return client.reply(`ERROR => ${error}`); client.sendFile(from, outn+'.txt','output.txt','',id); client.reply(from,`${donasi}`,id); exec(`rm ${outn}.txt'`)}) } else if (quotedMsg && quotedMsg.type == 'image') { const mediaData = await decryptMedia(quotedMsg, uaOverride); fs.writeFile(outj,mediaData,(err)=>{if(err) return client.reply(from,`Error gan\n\n${err}`,id)}); exec(`tesseract ${outj} ${outn} --dpi 150`, (error, stdout) => {if (error) return client.reply(`ERROR => ${error}`);client.sendFile(from, outn+'.txt','output.txt','',id);client.reply(from,`${donasi}`,id);exec(`rm ${outn}.txt'`)})} else if(args.length === 2&&body.split(' ')[2].match(isUrl)){ var lnk = body.split(' ')[2]; exec(`wget -O ${outj} ${lnk}&&tesseract ${outj} ${outn} --dpi 150`, (error, stdout) => {if (error) {client.reply(from,`ERROR => ${error.message}`,id)}; client.sendFile(from, `${outn}.txt`,'output.txt','',id); client.reply(from,`${donasi}`,id); exec(`rm ${outn}.txt'`)})}else{client.reply(from,'Halo kak, silahkan Baca Ya!\nScan adalah  sebuah fitur yang bisa mengenali character, huruf atau angka dalam sebuah  dokumen photo dan juga bisa menjadi fungsi scaner untuk sebuah objek yang terdapat tulisan sehingga menjadi output berupa teks di perangkat smartphone maupun pc.\n\nAda 3 Cara Penggunaannya:\n1. kirim lah sebuah gambar yang berisikan teks dan sebuah pesan scan\n2.Tag lah sebuah foto yang berisikan teks dengan pesan/caption scan\n3.ketiklah \nscan urlGambarnya')}
             break
         case 'gmail':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id)
-            var usern = body.split(' ')[1].replace('@gmail.com','')
-            gmal(usrn).then((aaa)=>{
-                if(aaa.status==='ok'){
-                    client.reply(from,`${donasi}\n\nSpeed: ${processTime(t, moment())} _Detik_\n\n${aaa.mail}`,id)
-                }else{
-                    client.reply(from, `Gagal Gan, silahkan coba lagi dalam beberapa detik`,id)
-                }
-            })
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id);if (args.length <= 1) return client.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email cr4r@gmail.com, maka ketiklah perintah\nemail cr4r\n\n*tidak perlu mengetik @gmail.com*`,id);var usern = body.split(' ')[1].replace('@gmail.com','');gmal(usrn).then((aaa)=>{if(aaa.status==='ok'){client.reply(from,`${donasi}\n\nSpeed: ${processTime(t, moment())} _Detik_\n\n${aaa.mail}`,id)}else{client.reply(from, `Gagal Gan, silahkan coba lagi dalam beberapa detik`,id)}});break
         case '#kode':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id)
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id);client.reply(from,`Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`,id);break
         case 'trans':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
-            if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\nnContoh:\ntrans Hello word .id`, id)
-            kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi']
-            var lend = body.split('./')[1]
-            var psnn = body.split('trans ')[1].split('./')[0]
-            console.log(kode.indexOf(lend))
-            if(kode.indexOf(lend)==-1){
-                client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans Hello word ./id',id)
-            }else{
-                tranlstae(psnn,lend).then((result) => client.reply(from,result,id))
-            }
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id);if (args.length <= 2) return client.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\nnContoh:\ntrans Hello word .id`, id);kode = ['ar','bg','zh-CHS','zh-CHT','cs','da','nl','en','et','fr','de','el','hi','id','it','ja','ko','ms','pt','ru','th','tr','vi'];var lend = body.split('./')[1];var psnn = body.split('trans ')[1].split('./')[0];console.log(kode.indexOf(lend));if(kode.indexOf(lend)==-1){client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans Hello word ./id',id)}else{tranlstae(psnn,lend).then((result) => client.reply(from,result,id))}break
         case 'des':
         case 'bin':
         case 'asci':
@@ -378,76 +278,10 @@ module.exports = msgHandler = async (client, message) => {
             break
             
         case 'vpn':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             /*Fitur ini hanya bisa digunakan yang mempunyai server bukan cloud!
             Installah openvpn yang sudah tersedia di folder ini, lalu
             ubahlah variabel lokasiBot, userLinuxnya sesuai servermu*/
-            if (!isGroupMsg){
-                if (args.length === 1) return client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id)
-                var ab = body.split(' ')[1]
-                var lokasiBot = '/home/ubuntu/bot'
-                var userLinuxnya = 'ubuntu:ubuntu'
-                if(ab === 'help'){
-                    client.reply(from,`*Android*\n1. Jika kakak menggunakan android, silahkan download Openvpn\n2. Download lah konfigurasi yang telah saya kirimkan\n3. Import file namaFilemu.ovpn di aplikasi openvpn\n4. Lalu klik konek\n\n*PC Linux*\n1. Install Openvpn \'sudo apt install openvpn -y\'\n2. Download File yang telah di kirimkan namaFilemu.ovpn\n3. Ketik \'sudo openvpn --config namaFilemu.ovpn\'\n4. Masukkan username anda, dan password dikosongkan\n\n*Windows*\n1. Silahkan download di https\:\/\/bit\.ly\/ovpnWin\n2. Installah seperti pada umumnya\n3. Download config yang dikirimkan di whatsapp\n4. Silahkan masukkan username, password dikosongkan`,id)
-                }else if(ab === 'snk'){
-                    client.reply(from, `Mohon dibaca Semua pesan saya sebelum menggunakan vpn\nSyarat & Ketentuan:\n1. Jangan melakukan tindakan ilegal\n2. Jika anda melakukannya, kami tidak segan\" akan melaporkan ke pihak berwajib\n3. Jika anda menggunakan vpn untuk menonton, dosa ditanggung anda sendiri\n4. Semua aktivitas anda berada di kendali server bot ini\n\nJika kakak setuju silahkan ikuti petunjuk dengan mengirim pesan\nvpn help`,id)
-                }else if (ab === 'buat'){
-                    var abc = body.split(' ')[2]
-                    lokasin = `media/vpn/${abc}.ovpn`
-                    var ab = 'buat'
-                    exec(`sudo chown -R ${userLinuxnya} /etc/openvpn&&ack ${abc} /etc/openvpn/server/easy-rsa/pki/index.txt  | grep \"\^V\" | cut -d \'=\' -f 2`,(error,stdout) => {
-                        if(error){
-                            client.reply(from, `error pada saat mengecek username \n${error}`,id)
-                        }
-                        if(abc === stdout.replace('\n','')){
-                            client.reply(from,'Halo kak, username yang kakak buat sudah ada, silahkan masukkan username berbeda',id)
-                        }
-                        else{
-                            exec(`cd /etc/openvpn/server/easy-rsa/&&EASYRSA_CERT_EXPIRE=3650 ./easyrsa build-client-full ${abc} nopass&>/dev/null&&cd /home/ubuntu/bot&&sudo chown -R ${userLinuxnya} /etc/openvpn&>/dev/null`,(error,stdout) => {
-                                if(error){
-                                    return client.reply(from, `error pada saat membuat config \n${error}`,id)
-                                }
-                                var common = fs.readFileSync('/etc/openvpn/server/client-common.txt','utf-8')+'\n\n<ca>\n'
-                                var ca = fs.readFileSync('/etc/openvpn/server/easy-rsa/pki/ca.crt','utf-8')+'</ca>\n<cert>\n'
-                                fs.writeFile(lokasin,common+ca,(err)=>{if(err) return console.log(err)})
-                                exec(`sed -ne \'\/BEGIN CERTIFICATE\/,\$ p\' /etc/openvpn/server/easy-rsa/pki/issued/${abc}.crt >> ${lokasin}`,(error, stdout) => {
-                                    if(error) return client.reply(from, `error gan saat import sertifikat ca nya\n\n${error}`,id)
-                                    var key = '</cert>\n<key>\n'+fs.readFileSync(`/etc/openvpn/server/easy-rsa/pki/private/${abc}.key`,'utf-8')+'</key>\n<tls-crypt>\n'
-                                    fs.writeFile(lokasin, key, { flag: 'a+' }, err => {if(err) return console.log(err)})
-                                    exec(`sed -ne \'/BEGIN OpenVPN Static key/,\$ p\' /etc/openvpn/server/tc.key>>${lokasin}&&echo \"</tls-crypt>\">>${lokasin}`,(error)=>{
-                                        if(error) return client.reply(from, `error gan\n\n${error}`,id)
-                                        client.reply(from,`Halo kak, vpn sudah dibuat\nSilahkan ketik vpn help\nuntuk Tutorial cara menggunakannya\nUntuk melihat Syarat \& dan ketentuan berlaku silahkan ketik\nvpn snk`,id)
-                                        client.sendFile(from,lokasin,`${abc}.ovpn`,'',id)
-                                    })
-                                })
-                            })
-                        }
-                    })
-                }else if(ab === 'hapus'){
-                    var abc = body.split(' ')[2]
-                    exec(`sudo chown -R ${userLinuxnya} /etc/openvpn&&ack ${abc} /etc/openvpn/server/easy-rsa/pki/index.txt  | grep \"^V\" | cut -d \'=\' -f 2`,(error,stdout) => {
-                        if(error){
-                            client.reply(from, `error pada saat mengecek username \n${error}`,id)
-                        }
-                        console.log(stdout)
-                        if(abc === stdout.replace('\n','')){
-                            exec(`cd /etc/openvpn/server/easy-rsa/&&./easyrsa --batch revoke ${abc}&>/dev/null&&EASYRSA_CRL_DAYS=3650 ./easyrsa gen-crl&>/dev/null&&sudo rm /etc/openvpn/server/crl.pem&>/dev/null&&sudo cp /etc/openvpn/server/easy-rsa/pki/crl.pem /etc/openvpn/server/crl.pem&&sudo chown -R ${userLinuxnya} /etc/openvpn&&cd ${lokasiBot}`,(error)=>{
-                                if(error) return client.reply(from, `Hem ada yang error nih coba lagi kak`,id)
-                                client.reply(from,`Halo kak, user ${abc} sudah dihapus di server saya. terima kasih sudah mencoba vpn kami`,id)
-                            })
-                        }else{
-                            client.reply(from,`Halo kak, User yang anda ketik tidak ada\n Masukkan user yang benar untuk menghapusnya`,id)
-                        }
-                    })
-                }else{
-                    client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id)
-                }
-            }else{
-                client.reply(from, `Halo kak, Untuk masalah privasi. Fitur vpn ini hanya untuk chat only.`,id)
-            }
-            break
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id);if (!isGroupMsg){if (args.length === 1) return client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id);var ab = body.split(' ')[1];var lokasiBot = '/home/ubuntu/bot';var userLinuxnya = 'ubuntu:ubuntu';if(ab === 'help'){client.reply(from,`*Android*\n1. Jika kakak menggunakan android, silahkan download Openvpn\n2. Download lah konfigurasi yang telah saya kirimkan\n3. Import file namaFilemu.ovpn di aplikasi openvpn\n4. Lalu klik konek\n\n*PC Linux*\n1. Install Openvpn \'sudo apt install openvpn -y\'\n2. Download File yang telah di kirimkan namaFilemu.ovpn\n3. Ketik \'sudo openvpn --config namaFilemu.ovpn\'\n4. Masukkan username anda, dan password dikosongkan\n\n*Windows*\n1. Silahkan download di https\:\/\/bit\.ly\/ovpnWin\n2. Installah seperti pada umumnya\n3. Download config yang dikirimkan di whatsapp\n4. Silahkan masukkan username, password dikosongkan`,id)}else if(ab === 'snk'){client.reply(from, `Mohon dibaca Semua pesan saya sebelum menggunakan vpn\nSyarat & Ketentuan:\n1. Jangan melakukan tindakan ilegal\n2. Jika anda melakukannya, kami tidak segan\" akan melaporkan ke pihak berwajib\n3. Jika anda menggunakan vpn untuk menonton, dosa ditanggung anda sendiri\n4. Semua aktivitas anda berada di kendali server bot ini\n\nJika kakak setuju silahkan ikuti petunjuk dengan mengirim pesan\nvpn help`,id)}else if (ab === 'buat'){var abc = body.split(' ')[2];lokasin = `media/vpn/${abc}.ovpn`;var ab = 'buat';exec(`sudo chown -R ${userLinuxnya} /etc/openvpn&&ack ${abc} /etc/openvpn/server/easy-rsa/pki/index.txt  | grep \"\^V\" | cut -d \'=\' -f 2`,(error,stdout) => {if(error){client.reply(from, `error pada saat mengecek username \n${error}`,id)};if(abc === stdout.replace('\n','')){client.reply(from,'Halo kak, username yang kakak buat sudah ada, silahkan masukkan username berbeda',id)}else{exec(`cd /etc/openvpn/server/easy-rsa/&&EASYRSA_CERT_EXPIRE=3650 ./easyrsa build-client-full ${abc} nopass&>/dev/null&&cd /home/ubuntu/bot&&sudo chown -R ${userLinuxnya} /etc/openvpn&>/dev/null`,(error,stdout) => {if(error){return client.reply(from, `error pada saat membuat config \n${error}`,id);};var common = fs.readFileSync('/etc/openvpn/server/client-common.txt','utf-8')+'\n\n<ca>\n';var ca = fs.readFileSync('/etc/openvpn/server/easy-rsa/pki/ca.crt','utf-8')+'</ca>\n<cert>\n';fs.writeFile(lokasin,common+ca,(err)=>{if(err) return console.log(err)});exec(`sed -ne \'\/BEGIN CERTIFICATE\/,\$ p\' /etc/openvpn/server/easy-rsa/pki/issued/${abc}.crt >> ${lokasin}`,(error, stdout) => {if(error) return client.reply(from, `error gan saat import sertifikat ca nya\n\n${error}`,id);var key = '</cert>\n<key>\n'+fs.readFileSync(`/etc/openvpn/server/easy-rsa/pki/private/${abc}.key`,'utf-8')+'</key>\n<tls-crypt>\n';fs.writeFile(lokasin, key, { flag: 'a+' }, err => {if(err) return console.log(err)});exec(`sed -ne \'/BEGIN OpenVPN Static key/,\$ p\' /etc/openvpn/server/tc.key>>${lokasin}&&echo \"</tls-crypt>\">>${lokasin}`,(error)=>{if(error) return client.reply(from, `error gan\n\n${error}`,id);client.reply(from,`Halo kak, vpn sudah dibuat\nSilahkan ketik vpn help\nuntuk Tutorial cara menggunakannya\nUntuk melihat Syarat \& dan ketentuan berlaku silahkan ketik\nvpn snk`,id);client.sendFile(from,lokasin,`${abc}.ovpn`,'',id)})})})}})}else if(ab === 'hapus'){var abc = body.split(' ')[2];exec(`sudo chown -R ${userLinuxnya} /etc/openvpn&&ack ${abc} /etc/openvpn/server/easy-rsa/pki/index.txt  | grep \"^V\" | cut -d \'=\' -f 2`,(error,stdout) => {if(error){client.reply(from, `error pada saat mengecek username \n${error}`,id)};console.log(stdout);if(abc === stdout.replace('\n','')){exec(`cd /etc/openvpn/server/easy-rsa/&&./easyrsa --batch revoke ${abc}&>/dev/null&&EASYRSA_CRL_DAYS=3650 ./easyrsa gen-crl&>/dev/null&&sudo rm /etc/openvpn/server/crl.pem&>/dev/null&&sudo cp /etc/openvpn/server/easy-rsa/pki/crl.pem /etc/openvpn/server/crl.pem&&sudo chown -R ${userLinuxnya} /etc/openvpn&&cd ${lokasiBot}`,(error)=>{if(error) return client.reply(from, `Hem ada yang error nih coba lagi kak`,id);client.reply(from,`Halo kak, user ${abc} sudah dihapus di server saya. terima kasih sudah mencoba vpn kami`,id)})}else{client.reply(from,`Halo kak, User yang anda ketik tidak ada\n Masukkan user yang benar untuk menghapusnya`,id)}})}else{client.reply(from, `Halo kak, untuk membuat akun vpn silahkan ketik\n*vpn buat username*\n\nUntuk menghapus user ketik\n*vpn hapus username*\n\nIngat ya, username tidak boleh ada spasi\ndan selalu membaca Syarat dan Ketentuan berlaku, untuk melihatnya ketik\n*vpn snk*`,id)}}else{client.reply(from, `Halo kak, Untuk masalah privasi. Fitur vpn ini hanya untuk chat only.`,id)};break
 
         case 'short':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
