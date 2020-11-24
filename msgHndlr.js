@@ -171,6 +171,9 @@ module.exports = msgHandler = async (client, message) => {
         case '.grub':
             client.reply(from,grubKom,id)
             break
+        case '.download':
+            client.reply(from,downKom,id)
+            break
         case 'dns':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
@@ -181,7 +184,7 @@ module.exports = msgHandler = async (client, message) => {
                     datan += `reverse dari  ${address} :\n`; 
                     hostnya = JSON.parse(JSON.stringify(hostnames))
                     for (i=0,len = hostnya.length; i<len;i++){
-                        datan += `${i}. ${hostnya[i]}\n`
+                        datan += `${hostnya[i]}\n\n`
                     }
                     client.reply(from,datan,id)
                 });   
