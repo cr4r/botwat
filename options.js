@@ -4,7 +4,7 @@ module.exports = options = (headless, start) => {
         headless: headless,
         autoRefresh: true,
         restartOnCrash: start,
-        qrTimeout: 0,
+        qrTimeout: 60,
         cacheEnabled: false,
         // executablePath: execPath,
         useChrome: true,

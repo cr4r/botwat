@@ -1,4 +1,3 @@
-const aclip = require('./tools/aclIp')
 var dns = require('dns'); 
 var deepai = require('deepai');
 const inst = require('./lib/instagram')
@@ -110,7 +109,7 @@ module.exports = msgHandler = async (client, message) => {
         
         function rndm(isi){ return Math.floor(Math.random() * isi) + 1 }
         function cek(){var maint = fs.readFileSync('lib/maintance','utf-8');if (maint==='hidup'){return 'ok'}else{return 'off'}}
-        function kotor(ktanya){a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir'];
+        function kotor(ktanya){a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir','memek','mek'];
             try{b = ktanya.split(' ')}catch(err){b = ktanya};for(i=0,len=b.length; i<len; i++){if(a.indexOf(b[i]) >= 0) return 'ok'}
         }
         var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.\ntetapi jika anda mau donasi.\nhubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :)\n\nmau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
