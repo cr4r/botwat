@@ -1008,9 +1008,10 @@ module.exports = msgHandler = async (client, message) => {
             client.deleteMessage(quotedMsgObj.chatId, quotedMsgObj.id, false)
             break
         case 'getses':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
+            if (isGroupMsg) return client.reply(from, 'Fitur ini hanya bisa di gunakan dalam chat', id)
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
             const sesPic = await client.getSnapshot()
             client.sendFile(from, sesPic, 'session.png', `${donasi}`, id)
             break
