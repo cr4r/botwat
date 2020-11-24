@@ -176,6 +176,7 @@ module.exports = msgHandler = async (client, message) => {
         case 'dns':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
             if(cek()==='ok') return client.reply(from,maintan,id)
+            if(args.length === 1) return client.reply(from, `dns domain.tld\n\ncontoh:\ndns cr4r.me`)
             var psnny = body.split('dns ')[1]
             dns.lookup(psnny,  function onLookup(err, address, family) { 
                 let datan = `address:\t ${address}`

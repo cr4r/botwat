@@ -7,7 +7,7 @@ const start = async (client = new Client()) => {
         console.log('[SERVER] Bot Whatsapp sudah mulai!')
         // Force it to keep the current session
         client.onStateChanged((state) => {
-            console.log('Client sudah', state)
+            console.log('[CLIENT]', state)
             if (state === 'CONFLICT' || state === 'UNLAUNCHED') client.forceRefocus()
         })
         // listening on message
