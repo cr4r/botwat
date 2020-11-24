@@ -173,24 +173,6 @@ module.exports = msgHandler = async (client, message) => {
         case '.download':
             client.reply(from,downKom,id)
             break
-        case 'dns':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id)
-            if(cek()==='ok') return client.reply(from,maintan,id)
-            if(args.length === 1) return client.reply(from, `dns domain.tld\n\ncontoh:\ndns cr4r.me`)
-            var psnny = body.split('dns ')[1]
-            dns.lookup(psnny,  function onLookup(err, address, family) { 
-                let datan = `address:\t ${address}`
-                dns.reverse(address, function (err, hostnames) { 
-                    datan += `reverse dari  ${address} :\n`; 
-                    hostnya = JSON.parse(JSON.stringify(hostnames))
-                    for (i=0,len = hostnya.length; i<len;i++){
-                        datan += `${hostnya[i]}\n\n`
-                    }
-                    client.reply(from,datan,id)
-                });   
-            }); 
-            break
-
         case 'qrcode':
             if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id);if(cek()==='ok') return client.reply(from,maintan,id);if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);if (args.length === 1) return client.reply(from, 'Kirim perintah *qrcode [query]*\nContoh : *qrcode cr4r bot*', id);var qrcodes = body.slice(7); client.sendFileFromUrl(from, `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${qrcodes}`, 'gambar.png', donasi,id); break
         case 'kbbi':
