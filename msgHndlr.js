@@ -119,12 +119,14 @@ module.exports = msgHandler = async (client, message) => {
         switch(command) {
         case 'undi':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            (async () => {
-                var groupMember = await client.getGroupMembers(groupId)
-                var mntap = await groupMem[rndm(groupMember.length)].id.replace(/@c.us/g, '')
-                await sleep(3000)
-                client.reply(from, `Selamat anda telah mendapatkan undian motor @${mntap} tapi boong`,id)
-            })()
+            const memberNya = await client.getGroupMembers(groupId)
+            let hayiu = ''
+            for (let i = 0; i < memberNya.length; i++) {
+                hayiu += `@${memberNya[i].id.replace(/@c.us/g, '')},`
+            }
+            await sleep(2000);
+            var orangg = hayiu.split(',')[rndm(hayiu.split(',').length)]
+            client.sendTextWithMentions(from,`Selamat anda telah mendapatkan undian motor ${orangg} tapi boong`)
             break
         case 'kirimf':
             if(args.length === 1) return client.reply(from,'kirimf namaFile',id)
