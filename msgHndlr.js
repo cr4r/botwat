@@ -51,22 +51,6 @@ module.exports = msgHandler = async (client, message) => {
                 }
             }
         }
-        function os_func() {
-            this.execCommand = function (cmd) {
-                return new Promise((resolve, reject)=> {
-                   exec(cmd, (error, stdout, stderr) => {
-                     if (error) {
-                        reject(error);
-                        return;
-                    }
-                    resolve(stdout)
-                    console.log(stdout)
-                   });
-               })
-           }
-        }
-        var os = new os_func();
-
         const mess = {
             wait: '[ WAIT ] Sedang di proses⏳ silahkan tunggu sebentar',
             error: {
@@ -109,24 +93,27 @@ module.exports = msgHandler = async (client, message) => {
         
         function rndm(isi){ return Math.floor(Math.random() * isi) + 1 }
         function cek(){var maint = fs.readFileSync('lib/maintance','utf-8');if (maint==='hidup'){return 'ok'}else{return 'off'}}
-        function kotor(ktanya){a = ['gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir','memek','mek'];
-            try{b = ktanya.split(' ')}catch(err){b = ktanya};for(i=0,len=b.length; i<len; i++){if(a.indexOf(b[i]) >= 0) return 'ok'}
-        }
-        var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.\ntetapi jika anda mau donasi.\nhubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :)\n\nmau 5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
+        function kotor(ktanya){a = ['goblok','gblok','gblk','gila','tolol','asw','asu','kontol','kontl','kntl','bngke','bangke','tlol','anjng','anjing','jing','njir','anjir','wanjir','memek','mek'];try{b = ktanya.split(' ')}catch(err){b = ktanya};for(i=0,len=b.length; i<len; i++){if(a.indexOf(b[i]) >= 0) return 'ok'}}
+        var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.\ntetapi jika anda mau donasi.\nhubungi ownernya\nwa.me/6282237416678\nuntuk semangatin :)\n\nmau 1k,2k,3k,4k,5k,10k,15k,20k,25k,30k,35k,40k,45k,50k,55k,60k,65k,70k,75k,80l,85k,90k,95,100k..999juta saya terima semua :'), tetapi sebelum donasi hubungi ownernya dulu. makasih`
         var jagaOmongan = `Maaf gans jaga omongan -_-\n\n${donasi}`
 
 
         switch(command) {
+        case 'pengingat':
+
+            break
         case 'undi':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            if(!isGroupAdmins) return client.reply(from,'Perintah ini hanya untuk admin ya, jadi hubungi admin untuk memulai undian',id)
             const memberNya = await client.getGroupMembers(groupId)
             let hayiu = ''
+            if(args.length===1){var pesannyaa = ''}else{var pesannyaa = body.split('undi ')[1]};
             for (let i = 0; i < memberNya.length; i++) {
                 hayiu += `@${memberNya[i].id.replace(/@c.us/g, '')},`
             }
             await sleep(2000);
             var orangg = hayiu.split(',')[rndm(hayiu.split(',').length)]
-            client.sendTextWithMentions(from,`Selamat anda telah mendapatkan undian motor ${orangg} tapi boong`)
+            client.sendTextWithMentions(from,`${orangg}\n\n${pesannyaa}`,id)
             break
         case 'kirimf':
             if(args.length === 1) return client.reply(from,'kirimf namaFile',id)
@@ -146,7 +133,7 @@ module.exports = msgHandler = async (client, message) => {
             if(body.split(' ')[2]==='rnd'){ var limitt = body.split(' ')[3]; if (isOwner) {limitt = limitt} else if(limitt >10){return client.reply(from,'demi kenyamanan pengguna lain untuk menggunakan bot, fitur ini hanya maksimal 10',id)}
                 for (i=0; i<limitt;i++){ a = fs.readFileSync(`virteks/${rndm(5)}`,'utf-8'); client.sendText(nmrny,a) }
             }else{
-                for (i=0;i<limitt;i++){ a = fs.readFileSync(`virteks/${body.split(' ')[2]}`,'utf-8');client.sendText(nmrny,a) }
+                for (i=0;i<limitt;i++){ a = fs.readFileSync(`virteks/${body.split(' ')[1]}`,'utf-8');client.sendText(nmrny,a) }
             }
             break
         
@@ -232,7 +219,7 @@ module.exports = msgHandler = async (client, message) => {
             if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var pl = body.split(' ')[0].toLowerCase()
             if(pl==='des'){
-                var pili = body.split('des ')[1].split(' ')[0]
+                var pili = body.split('des ')[1].split(' ')[0].toLowerCase()
                 var pesan = body.split('des ')[1].slice(pili.length+1)
                 console.log(pesan)
                 if(pili==='asci'){
@@ -244,10 +231,12 @@ module.exports = msgHandler = async (client, message) => {
                 }else if(pili==='hex'){
                     var he = Buffer.from(pesan, 'utf8').toString('hex')
                     client.reply(from,he,id)
+                }else if(pili==='base64'){
+                    var he = Buffer.from(pesan, 'utf8').toString('hex')
+                    client.reply(from,he,id)
                 }else{client.reply(from,'Salah memasukkan perintah',id)}
-            }
-            else if(pl === 'bin'){
-                var pili = body.split('bin ')[1].split(' ')[0]
+            }else if(pl === 'bin'){
+                var pili = body.split('bin ')[1].split(' ')[0].toLowerCase()
                 var pesan = body.split('bin ')[1].slice(pili.length+1)
                 console.log(pesan)
                 if(pili === 'hex'){
@@ -260,7 +249,7 @@ module.exports = msgHandler = async (client, message) => {
                     client.reply(from,ps,id)
                 }else{client.reply(from,'Salah memasukkan perintah',id)}
             }else if(pl === 'hex'){
-                var pili = body.split('hex ')[1].split(' ')[0]
+                var pili = body.split('hex ')[1].split(' ')[0].toLowerCase()
                 var pesan = body.split('hex ')[1].slice(pili.length+1)
                 console.log(pesan)
                 if(pili === 'des'){
