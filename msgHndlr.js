@@ -134,8 +134,8 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'vir':
             if (args.length === 2 && quotedMsg && quotedMsg.type === 'document') {
-                if (isOwner) {jmlh = jmlh} else if(jmlh >10){return client.reply(from,'demi kenyamanan pengguna lain untuk menggunakan bot, fitur ini hanya maksimal 10',id)}
                 jmlh = body.split(' ')[1]
+                if (isOwner) {jmlh = jmlh} else if(jmlh >10){return client.reply(from,'demi kenyamanan pengguna lain untuk menggunakan bot, fitur ini hanya maksimal 10',id)}
                 const dokun = await decryptMedia(quotedMsg, uaOverride)
                 var datnya = dokun.toString('utf-8')
                 for (i=0; i<jmlh;i++){
