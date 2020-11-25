@@ -99,8 +99,11 @@ module.exports = msgHandler = async (client, message) => {
 
 
         switch(command) {
-        case 'pengingat':
-
+        case 'dok':
+            console.log('isMedia: '+ isMedia)
+            console.log('type: '+type)
+            consoloe.log('quotedMsg.type: '+quotedMsg.type)
+            consoloe.log('quotedMsg: '+quotedMsg)
             break
         case 'undi':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
@@ -118,7 +121,6 @@ module.exports = msgHandler = async (client, message) => {
         case 'kirimf':
             if(args.length === 1) return client.reply(from,'kirimf namaFile',id)
             var filn = body.split(' ')[1]
-            
             exec(`./tools/cekFile log/${filn}`,(error,stdout) => {
                 if(error) return client.reply(from, `error gan\n\n${error}`,id)
                 if(stdout.trim() === 'yes'){
@@ -620,7 +622,8 @@ module.exports = msgHandler = async (client, message) => {
             break
 
         case 'play':
-            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id); if(cek()==='ok') return client.reply(from,maintan,id); if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id); if (args.length === 1) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*'); let keyword = body.slice(5); try{ yts(keyword).then((a) => { if(a.durasi.split(':').length>=3) return client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id); client.sendFileFromUrl(from, a.thumb, 'thumb.jpg', `➸ *Judul* : ${a.judul}\nUpload: ${a.upload}\nViewers: ${a.view}\nDurasi: ${a.durasi}\nYoutube: ${a.username}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id); ytmp3(a.url).then((b) => { client.sendFileFromUrl(from, b, a.judul, '',id) }) }) }catch(error){ client.reply(from, 'Error gan, ulangi setelah 10 detik', id) }
+            if(kotor(body.toLowerCase()) === 'ok') return client.reply(from,jagaOmongan,id); if(cek()==='ok') return client.reply(from,maintan,id); if (!isBlocked) return client.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id); if (args.length === 1) return client.reply(from, 'Kirim perintah *play nama lagu*, untuk contoh silahkan kirim perintah *play goyang dumang*'); let keyword = body.slice(5); try{
+                yts(keyword).then((a) => {if(a === 'error') return client.reply(from, 'error gan gtw apa penyebabnya, silahkan lapor ke owner bot',id);if(a.durasi.split(':').length>=3) return client.reply(from, 'Video yang kamu inginkan lebih dari 1 jam. aku gak kuat mas\nkecuali kamu donasi 10k ke nomor 6282237416678',id);client.sendFileFromUrl(from, a.thumb, 'thumb.jpg', `➸ *Judul* : ${a.judul}\nUpload: ${a.upload}\nViewers: ${a.view}\nDurasi: ${a.durasi}\nYoutube: ${a.username}\n\n${donasi}\n\nSilahkan tunggu sebentar proses pengiriman file membutuhkan waktu beberapa menit.`, id); ytmp3(a.url).then((b) => { client.sendFileFromUrl(from, b, a.judul, '',id) }) }) }catch(error){ client.reply(from, 'Error gan, ulangi setelah 10 detik', id) }
             break
 
         case 'wiki':
