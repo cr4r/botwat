@@ -99,11 +99,15 @@ module.exports = msgHandler = async (client, message) => {
 
 
         switch(command) {
-        case 'dok':
-            console.log(quotedMsg.type)
+        case 'save':
             if (quotedMsg && quotedMsg.type === 'document') {
                 const dokun = await decryptMedia(quotedMsg, uaOverride)
                 var datnya = dokun.toString('utf-8')
+                var filenam = `${quotedMsg.t}.${mime.extension(quotedMsg.mimetype)}`;
+                fs.writeFile(`log/${filenam}`,'hidup',(err)=>{
+                    if(err) return console.log(err)
+                    client.reply(from,'Maintence Hidup',id)
+                })
                 client.reply(from,datnya,id)
             }
             break
