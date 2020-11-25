@@ -100,14 +100,13 @@ module.exports = msgHandler = async (client, message) => {
 
         switch(command) {
         case 'save':
-            if (quotedMsg && quotedMsg.type === 'document') {
+            if (isMedia && type === 'image' || type === 'document' || quotedMsg && quotedMsg.type === 'document' || quotedMsg.type === 'image') {
                 const dokun = await decryptMedia(quotedMsg, uaOverride)
                 var datnya = dokun.toString('utf-8')
                 fs.writeFile(`log/${quotedMsg.filename}`,'hidup',(err)=>{
                     if(err) return console.log(err)
-                    client.reply(from,'Maintence Hidup',id)
+                    client.reply(from,'File sudah tersimpan, Ingat file tersebut akan hilang tanpa d kasih tau\n\nuntuk mengirim file yang sudah tersimpan\n\nkirimf namafilenya',id)
                 })
-                client.reply(from,datnya,id)
             }
             break
         case 'undi':
@@ -125,7 +124,7 @@ module.exports = msgHandler = async (client, message) => {
             break
         case 'kirimf':
             if(args.length === 1) return client.reply(from,'kirimf namaFile',id)
-            var filn = body.split(' ')[1]
+            var filn = body.split(' ')[1].replace('..','')
             exec(`./tools/cekFile log/${filn}`,(error,stdout) => {
                 if(error) return client.reply(from, `error gan\n\n${error}`,id)
                 if(stdout.trim() === 'yes'){
