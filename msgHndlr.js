@@ -103,8 +103,7 @@ module.exports = msgHandler = async (client, message) => {
             if (quotedMsg && quotedMsg.type === 'document') {
                 const dokun = await decryptMedia(quotedMsg, uaOverride)
                 var datnya = dokun.toString('utf-8')
-                var filenam = `${quotedMsg.t}.${mime.extension(quotedMsg.mimetype)}`;
-                fs.writeFile(`log/${filenam}`,'hidup',(err)=>{
+                fs.writeFile(`log/${quotedMsg.filename}`,'hidup',(err)=>{
                     if(err) return console.log(err)
                     client.reply(from,'Maintence Hidup',id)
                 })
