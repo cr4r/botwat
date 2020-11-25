@@ -100,10 +100,11 @@ module.exports = msgHandler = async (client, message) => {
 
         switch(command) {
         case 'dok':
-            console.log('isMedia: '+ isMedia)
-            console.log('type: '+type)
-            consoloe.log('quotedMsg.type: '+quotedMsg.type)
-            consoloe.log('quotedMsg: '+quotedMsg)
+            console.log(quotedMsg.type)
+            if (quotedMsg && quotedMsg.type == 'document') {
+                const dokun = await decryptMedia(quotedMsg, uaOverride)
+                client.reply(from,dokun,id)
+            }
             break
         case 'undi':
             if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
