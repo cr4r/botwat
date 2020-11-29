@@ -81,7 +81,7 @@ module.exports = msgHandler = async (client, message) => {
         const isBotGroupAdmins = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false
         // const isAdmin = kode.indexOf(lend)==-1
         // if(maintance.indexOf(lend)==-1){ return 'ok'}
-        const isOwner = !(maintance.indexOf(sender.id) === -1)
+        const isOwner = !(ownerNumber.indexOf(sender.id) === -1)
         const isBlocked = blockNumber.indexOf(sender.id)===-1
         const isNsfw = isGroupMsg ? nsfw_.includes(chat.id) : false
         const uaOverride = 'WhatsApp/2.2029.4 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
