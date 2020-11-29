@@ -80,7 +80,7 @@ module.exports = msgHandler = async (client, message) => {
         const isGroupAdmins = isGroupMsg ? groupAdmins.includes(sender.id) : false
         const isBotGroupAdmins = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false
         // const isAdmin = kode.indexOf(lend)==-1
-        if(maintance.indexOf(lend)==-1){client.reply(from,'Salah kodenya\nKetik *#kode* untuk melihat kode translate\n\nContoh:\ntrans Hello word ./id',id)}
+        // if(maintance.indexOf(lend)==-1){ return 'ok'}
         const isOwner = !(maintance.indexOf(sender.id) === -1)
         const isBlocked = blockNumber.indexOf(sender.id)===-1
         const isNsfw = isGroupMsg ? nsfw_.includes(chat.id) : false
