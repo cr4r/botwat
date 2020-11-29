@@ -184,16 +184,16 @@ module.exports = msgHandler = async (client, message) => {
             if(!isOwner) return client.reply(from,'Fitur hanya owner yang bisa :p',id)
             var onof = body.split(' ')[1]
             if(onof === 'on'){
-                require('./jsn.json').maintance = 'hidup'
-                a = require('./jsn.json')
-                fs.writeFile('lib/maintance',a,(err)=>{
+                require('./setting.json').maintance = 'hidup'
+                a = require('./setting.json')
+                fs.writeFile('lib/setting.json',a,(err)=>{
                     if(err) return console.log(err)
                     client.reply(from,'Maintence Hidup',id)
                     })
             }else{
-                require('./jsn.json').maintance = 'mati'
-                a = require('./jsn.json')
-                fs.writeFile('lib/maintance',a,(err)=>{
+                require('./setting.json').maintance = 'mati'
+                a = require('./setting.json')
+                fs.writeFile('lib/setting.json',a,(err)=>{
                     if(err) return console.log(err)
                     client.reply(from,'Maintence telah Mati',id)
                 })
