@@ -1137,7 +1137,9 @@ module.exports = msgHandler = async (CR4R, message) => {
             //#const _query = body.slice(43)
             if (!_query.match(isUrl)) return CR4R.reply(from, mess.error.Iv+"\n\ncontoh ss https://google.com", id)
             if (args.length === 1) return CR4R.reply(from, 'Kirim perintah *ss [web]*\nContoh *ss https://google.com*', id)
-            await ss(_query).then((result) => {
+            var pilihann = false;
+            if(args.length === 3) {pidd = body.split(' ')[2];if(pidd === 'full'){pilihann = true}}
+            await ss(_query,pilihann).then((result) => {
                 CR4R.sendFile(from, `./log/ss.png`, 'ss.png', `${donasi}`, id)
                 exec(`rm ./log/ss.png`)
             })
