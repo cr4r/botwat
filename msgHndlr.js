@@ -1,6 +1,5 @@
 var deepai = require('deepai');
 const nord = require('./lib/ceknord.js')
-// const inst = require('./lib/instagram')
 const cuaca = require('./lib/cuaca')
 const gmal = require('./lib/gmailGen.js')
 const xml2js = require('xml2json');
@@ -18,10 +17,8 @@ const get = require('got')
 const color = require('./lib/color')
 const tranlstae = require('./lib/translate')
 const { spawn, exec } = require('child_process')
-const nhentai = require('nhentai-js')
-const { API } = require('nhentai-api')
-const { liriklagu, quotemaker, randomNimek, fb, sleep, jadwalTv, ss } = require('./lib/functions')
-const {ownerNumber,maintance} = require('./lib/setting.json')
+const { liriklagu, quotemaker, fb, sleep, jadwalTv, ss } = require('./lib/functions')
+const {ownerNumber} = require('./lib/setting.json')
 const { help,webKom,grubKom,gabutKom,cryptoKom,downKom,otherKom, snk, info, donate, readme, listChannel } = require('./lib/help')
 const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'))
 const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
@@ -1144,7 +1141,7 @@ module.exports = msgHandler = async (CR4R, message) => {
                 CR4R.sendFile(from, `./log/ss.png`, 'ss.png', `${donasi}`, id)
                 exec(`rm ./log/ss.png`)
             })
-            .catch(() => CR4R.reply(from, `Error tidak dapat mengambil screenshot website ${_query}`, id))
+            .catch((err) => CR4R.reply(from, `Error tidak dapat mengambil screenshot website ${_query}\n\n${err}`, id))
             break
         case 'quote':
         case 'quotes':
