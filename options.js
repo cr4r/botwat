@@ -20,6 +20,5 @@ module.exports = options = (headless, start) => {
             '--disk-cache-size=0'
         ]
     }
-
     return options
 }
