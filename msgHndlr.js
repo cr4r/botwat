@@ -41,7 +41,7 @@ module.exports = msgHandler = async (CR4R, message) => {
         const args =  commands.split(' ')
         
         const msgs = (message) => {
-            if (command.startsWith('!')) {
+            if (command.startsWith('')) {
                 if (message.length >= 10){
                     return `${message.substr(0, 15)}`
                 }else{
