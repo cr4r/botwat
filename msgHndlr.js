@@ -371,13 +371,13 @@ module.exports = msgHandler = async (CR4R, message) => {
             if (args.length === 1) return CR4R.reply(from,`Ketik\nwget https://linknya`,id)
             var pesan = body.split(' ')[1].replace(';','').replace('\&\&','');
             var namaFile = url3.parse(pesan).pathname.split('/').pop();
+            if(namaFile === ''){ namaFile = pesan.replace('https://','').replace('http://','') }
             exec(`wget ${pesan} -O log/${namaFile}`, (error, stdout) => {
                 if (error) {
                     CR4R.reply(from, `ERROR => ${error}`,id);
                 }
                 else{
                     CR4R.sendFile(from, `./log/${namaFile}`, `${namaFile}`,'', id)
-                    // CR4R.reply(`${stdout}`)
                     exec(`rm ./log/${namaFile}`)
                 }
             });
@@ -1134,8 +1134,8 @@ module.exports = msgHandler = async (CR4R, message) => {
             if(cek()==='ok') return CR4R.reply(from,maintan,id)
             if (!isBlocked) return CR4R.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var _query = body.split(' ')[1]
-            namaF = url3.parse(pesan).pathname.split('/').pop();
-            //#const _query = body.slice(43)
+            namaF = url3.parse(_query).pathname.split('/').pop();
+            if(namaF === ''){ namaF = _query.replace('https://','').replace('http://','') }
             if (!_query.match(isUrl)) return CR4R.reply(from, mess.error.Iv+"\n\nContoh *ss https://google.com*\natau\nss https://google.com full", id)
             if (args.length === 1) return CR4R.reply(from, 'Kirim perintah *ss [web]*\nContoh *ss https://google.com*\natau\nss https://google.com full', id)
             var _pilihann = false;
