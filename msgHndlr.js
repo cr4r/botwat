@@ -1140,7 +1140,7 @@ module.exports = msgHandler = async (CR4R, message) => {
             if (args.length === 1) return CR4R.reply(from, 'Kirim perintah *ss [web]*\nContoh *ss https://google.com*\natau\nss https://google.com full', id)
             var _pilihann = false;
             if(args.length === 3) { pidd = body.split(' ')[2]; if(pidd === 'full'){ _pilihann = true; }; if(pidd === 'pdf'){ _pilihann = 'ya'} }
-            await ss(_query,_pilihann,_query).then((result) => { if(body.split(' ')[2] === 'pdf'){ CR4R.sendFile(from, `./log/${namaF}.pdf`, `${namaF}.pdf`, `${donasi}`, id); exec(`rm ./log/${namaF}.pdf`) }else{ CR4R.sendFile(from, `./log/${namaF}.png`, `${namaF}.png`, `${donasi}`, id); exec(`rm ./log/${namaF}.png`);} })
+            await ss(_query,_pilihann,namaF).then((result) => { if(body.split(' ')[2] === 'pdf'){ CR4R.sendFile(from, `./log/${namaF}.pdf`, `${namaF}.pdf`, `${donasi}`, id); exec(`rm ./log/${namaF}.pdf`) }else{ CR4R.sendFile(from, `./log/${namaF}.png`, `${namaF}.png`, `${donasi}`, id); exec(`rm ./log/${namaF}.png`);} })
             .catch((err) => CR4R.reply(from, `Error tidak dapat mengambil screenshot website ${_query}\n\n${err}`, id))
             break
         case 'quote':
