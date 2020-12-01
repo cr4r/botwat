@@ -1135,7 +1135,7 @@ module.exports = msgHandler = async (CR4R, message) => {
             if (!isBlocked) return CR4R.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot',id)
             var _query = body.slice(3)
             //#const _query = body.slice(43)
-            if (!_query.match(isUrl)) return CR4R.reply(from, mess.error.Iv, id)
+            if (!_query.match(isUrl)) return CR4R.reply(from, mess.error.Iv+"\n\ncontoh ss https://google.com", id)
             if (args.length === 1) return CR4R.reply(from, 'Kirim perintah *ss [web]*\nContoh *ss https://google.com*', id)
             await ss(_query).then((result) => {
                 CR4R.sendFile(from, `./log/ss.png`, 'ss.png', `${donasi}`, id)
