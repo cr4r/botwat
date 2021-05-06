@@ -18,7 +18,7 @@ const tranlstae = require('./lib/translate')
 const { spawn, exec } = require('child_process')
 const { liriklagu, quotemaker, fb, sleep, jadwalTv, ss } = require('./lib/functions')
 const { ownerNumber } = require('./lib/setting.json')
-const { help, webKom, grubKom, gabutKom, cryptoKom, downKom, otherKom, snk, info, donate, readme, listChannel } = require('./lib/help')
+const { help, webKom, grubKom, gabutKom, downKom, otherKom, snk, info, donate, readme, listChannel } = require('./lib/help')
 const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
 const { pow, round, log, evaluate, parse, derivative } = require('mathjs')
 const request = require('request');
@@ -62,7 +62,7 @@ module.exports = msgHandler = async(rahman, message) => {
         }
 
         function aca(lsls) { return lsls[Math.floor(Math.random() * lsls.length)] }
-        var donasi = `Jangan lupa Donasinya (ovo/dana)\n082237416678\natau\n* https://trakteer.id/rahman\nMakasih donasinya :)\njika mau donasi pulsa silahkan chat saya (bot)`
+        var donasi = `Jangan lupa Donasinya (ovo/dana)\n082237416678\natau\n* https://trakteer.id/cr4r\nMakasih donasinya :)\njika mau donasi pulsa silahkan chat saya (bot)`
         var pagi = ['pagi', 'jg', 'pgi jga', 'pgi', 'pagi']
         var sapa = ['hai', 'hello', 'hai kak', 'siapa?', 'ada apa', 'ya?', 'ada apa ya?', 'y', 'ya', 'ada apa kak', 'ya ada apa', 'ada yang bisa saya bantu?', 'hmm', 'oh yes', 'oh no', 'kenapa bang', 'ada apa bang', 'muehehehe']
         var syg = ['ngp sayang', 'apa sayang', 'apa bebeb', 'apa beb', 'opo', 'apo', 'ngp', 'apaan', 'apoh syang', 'ap beb', 'ngp beb', 'yo sayang']
@@ -103,7 +103,7 @@ module.exports = msgHandler = async(rahman, message) => {
             case 'akunnord': //work
                 if (kotor(body.toLowerCase()) === 'ok') return rahman.reply(from, jagaOmongan, id);
                 if (cek() === 'ok') return rahman.reply(from, maintan, id);
-                axios.get('https://raw.githubusercontent.com/rahman/ceknord/main/akun').then(resp => {
+                axios.get('https://raw.githubusercontent.com/cr4r/ceknord/main/akun').then(resp => {
                     var dataanya = resp.data.split('\n');
                     rahman.reply(from, dataanya[rndm(dataanya.length)], id);
                 });
@@ -159,9 +159,6 @@ module.exports = msgHandler = async(rahman, message) => {
             case '.website':
                 rahman.reply(from, webKom, id)
                 break
-            case '.crypto':
-                rahman.reply(from, cryptoKom, id)
-                break
             case '.grub':
                 rahman.reply(from, grubKom, id)
                 break
@@ -179,7 +176,6 @@ module.exports = msgHandler = async(rahman, message) => {
             case 'kbbi': //work
                 if (kotor(body.toLowerCase()) === 'ok') return rahman.reply(from, jagaOmongan, id);
                 if (cek() === 'ok') return rahman.reply(from, maintan, id);
-                if (!isGroupMsg) return rahman.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id);
                 if (args.length === 1) return rahman.reply(from, 'Kirim perintah *kbbi [query]*\nContoh : *kbbi asu*', id);
                 const kbbl = body.slice(5);
                 const kbbl2 = await axios.get(`https://mnazria.herokuapp.com/api/kbbi?search=${kbbl}`);
@@ -187,7 +183,7 @@ module.exports = msgHandler = async(rahman, message) => {
                     rahman.reply(from, kbbl2.data.error, id)
                 } else {
                     rahman.sendText(from, `➸ *KBBI* : ${kbbl}\n\n➸ *Hasil* : ${kbbl2.data.result}`, id)
-                }
+                };
                 break
             case 'cari': //work
                 if (kotor(body.toLowerCase()) === 'ok') return rahman.reply(from, jagaOmongan, id);
@@ -470,7 +466,7 @@ module.exports = msgHandler = async(rahman, message) => {
                 if (cek() === 'ok') return rahman.reply(from, maintan, id);
                 if (!isBlocked) return rahman.reply(from, 'Hey hey orang yang sudah di blok tidak bisa gunakan bot', id);
                 const fetch = require("node-fetch");
-                fetch('https://raw.githubusercontent.com/rahman/text/main/pantun').then(res => res.text()).then(body => {
+                fetch('https://raw.githubusercontent.com/cr4r/text/main/pantun').then(res => res.text()).then(body => {
                     let tod = body.split("\n");
                     let pjr = tod[Math.floor(Math.random() * tod.length)];
                     rahman.reply(from, `${pjr.replace(/grs/g,"\n")}\n\n${donasi}`, id)
@@ -661,7 +657,7 @@ module.exports = msgHandler = async(rahman, message) => {
                             exec(`sudo ffmpeg -i ${filename} \/var\/www\/html\/output\.gif \-vf fps\=30,scale\=240:\-1 \-y`, async function(error, stdout, stderr) {
                                 const gif = await fs.readFileSync('./media/output.gif', { encoding: "base64" })
                                     // console.log(gif.toString('base64'))
-                                await rahman.sendGiphyAsSticker(from, `https://rahman.me/output.gif`)
+                                await rahman.sendGiphyAsSticker(from, `https://cr4r.me/output.gif`)
                             })
                         } else(
                             rahman.reply(from, '[❗] Kirim video dengan caption *stickerGif* max 10 detik!', id)
