@@ -1,10 +1,10 @@
 module.exports = options = (headless, start) => {
     const options = {
-        sessionId: 'CR4R',
+        sessionId: 'cr4r',
         headless: headless,
         autoRefresh: true,
         restartOnCrash: start,
-        qrTimeout: 60,
+        qrTimeout: 120,
         cacheEnabled: false,
         // executablePath: execPath,
         useChrome: true,
