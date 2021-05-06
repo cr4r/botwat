@@ -11,7 +11,16 @@ const dapat = async() => {
 const savedb = async(mode, namadb, text, nomor) => {
     jadi = {};
     textdb = await Object.keys(text);
-    if (mode === "buat" && namadb === "welcome") {
+    if (mode === "get") {
+        if (namadb === "welcome") {
+            a = await wlcm.find().sort();
+            b = await a.filter(d => d.nomor);
+            return b;
+        } else {
+            a = await dapat();
+            return a
+        };
+    } else if (mode === "buat" && namadb === "welcome") {
         jadi.db = await new wlcm();
     } else if (mode === "hapus" && namadb === "welcome") {
         jadi.db = await wlcm.findOne({ nomor: nomor });
