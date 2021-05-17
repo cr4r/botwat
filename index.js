@@ -2,7 +2,7 @@ const { create, Client } = require('@open-wa/wa-automate')
 const welcome = require('./lib/welcome')
 const msgHandler = require('./msgHndlr')
 const options = require('./options');
-const { owner, maintence, welcome } = require('./kontrol/setup');
+// const { owner, maintence, welcome } = require('./kontrol/setup');
 const mongoose = require('mongoose');
 
 (async() => {
@@ -25,14 +25,14 @@ const mongoose = require('mongoose');
         console.log('Database disconnected');
     });
 
-    try {
-        require('./lib/maintence');
-    } catch (e) {
-        ab = await maintence('get');
-        fs.writeFile(`lib/maintence`, ab.maintence, (err) => {
-            if (err) return console.log(err)
-        });
-    }
+    // try {
+    //     require('./lib/maintence');
+    // } catch (e) {
+    //     ab = await maintence('get');
+    //     fs.writeFile(`lib/maintence`, ab.maintence, (err) => {
+    //         if (err) return console.log(err)
+    //     });
+    // }
 })();
 
 const start = async(rahman = new Client()) => {
