@@ -89,7 +89,15 @@ module.exports = msgHandler = async(rahman, message) => {
 
         function rndm(isi) { return Math.floor(Math.random() * isi) + 1 }
 
-        function cek() { var maint = fs.readFileSync('lib/maintence', 'utf-8'); if (maint === 'hidup') { return 'ok' } else { return 'off' } }
+        function cek() {
+            try {
+                var maint = fs.readFileSync('lib/maintence', 'utf-8');
+                if (maint === 'hidup') { return 'ok' } else { return 'off' }
+            } catch (e) {
+                exec(`echo "hidup">lib/maintence`);
+                cek()
+            };
+        };
 
         function kotor(ktanya) {
             katakotor = require('./database/kotor.json');
