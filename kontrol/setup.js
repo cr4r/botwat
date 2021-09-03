@@ -64,7 +64,7 @@ const savedb = async(mode, namadb, text, nomor) => {
 
 const owner = async() => {
     a = await dapat();
-    return a.ownerNumber;
+    return a.ownerNumber;'628895131355@c.us')
 };
 
 const maintence = async(mode, text) => {
