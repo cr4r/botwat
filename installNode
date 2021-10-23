@@ -1,3 +1,1 @@
-cd /opt&&sudo chmod -R 755 .&&sudo wget https://nodejs.org/dist/v15.2.0/node-v15.2.0-linux-x64.tar.gz &>/dev/null&&sudo tar -xvf node-* &>/dev/null&&echo """# NodeJS
-export NODEJS_HOME=/opt/node-v15.2.0-linux-x64/bin
-export PATH=\$NODEJS_HOME:\$PATH""" >>/etc/bash.bashrc&&sudo apt-get update&&sudo apt --fix-broken install -y&&exit
+curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -&&sudo apt-get install -y nodejs
