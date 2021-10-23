@@ -10,7 +10,11 @@
         "@open-wa/wa-automate": "^4.23.3",
         "@open-wa/wa-decrypt": "^4.3.1",
         "axios": "^0.23.0",
-        "mathjs": "^9.3.2"
+        "cheerio": "^1.0.0-rc.10",
+        "mathjs": "^9.3.2",
+        "moment": "^2.29.1",
+        "moment-timezone": "^0.5.33",
+        "urlencode": "^1.1.0"
     },
     "scripts": {
         "start": "node index.js"
