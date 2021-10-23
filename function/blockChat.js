@@ -1,4 +1,5 @@
 const { spawn, exec } = require('child_process')
+const katakotor = require('../database/kotor.json');
 
 var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.
 tetapi jika anda mau donasi.
@@ -27,7 +28,6 @@ const cek = async () => {
 };
 
 function kotor(ktanya) {
-  katakotor = require('../database/kotor.json');
   try { b = ktanya.split(' ') } catch (err) { b = ktanya };
   for (i = 0, len = b.length; i < len; i++) {
     if (katakotor.kata.indexOf(b[i]) > -1) return true
@@ -36,9 +36,9 @@ function kotor(ktanya) {
 
 
 
-const blockCek = (kata, jenis) => {
-  if (kotor(kata)) return maintan;
-  if (cek()) return jagaOmongan;
+const blockCek = async (kata, jenis) => {
+  if (await kotor(kata)) return maintan;
+  if (await cek()) return jagaOmongan;
 
   if (jenis) {
     const { isGroubMsg, isBlocked, isGroupAdmins, isOwner, isBotGroupAdmins, isGroupOwner } = jenis;
