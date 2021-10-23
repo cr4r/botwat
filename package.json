@@ -9,14 +9,7 @@
     "dependencies": {
         "@open-wa/wa-automate": "^3.12.0",
         "@open-wa/wa-decrypt": "^3.1.0",
-        "cheerio": "*",
-        "deepai": "^1.0.17",
-        "fs-extra": "^10.0.0",
-        "mathjs": "^9.3.2",
-        "moment-timezone": "^0.5.33",
-        "mongoose": "^5.12.7",
-        "request": "^2.88.2",
-        "urlencode": "^1.1.0"
+        "mathjs": "^9.3.2"
     },
     "scripts": {
         "start": "node index.js"

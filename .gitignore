@@ -5,3 +5,5 @@ node_modules
 # end managed by open-wa. see: https://github.com/open-wa/wa-automate-nodejs/issues/1632
 setting.json
 welcome.json
+.node-persist
+package-lock.json
