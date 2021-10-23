@@ -112,7 +112,7 @@ module.exports = msgHandler = async (rahman, message) => {
       //     }
       //     break
       case 'undi': //work
-        cekUmum = await blockCek(body.toLowerCase(), { isGroupMsg, isGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isGroupMsg, isGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const memberNya = await rahman.getGroupMembers(groupId);
@@ -163,7 +163,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'qrcode': //work
-        cekUmum = await blockCek(body.toLowerCase(), { isGroupMsg });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isGroupMsg });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, 'Kirim perintah *qrcode [query]*\nContoh : *qrcode rahman bot*', id);
@@ -185,7 +185,7 @@ module.exports = msgHandler = async (rahman, message) => {
       //     break
 
       case 'dadu': //work
-        cekUmum = await blockCek(body.toLowerCase(), { isGroupMsg });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isGroupMsg });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const dice = Math.floor(Math.random() * 6) + 1;
@@ -193,7 +193,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'koin':
-        cekUmum = await blockCek(body.toLowerCase(), { isGroupMsg });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isGroupMsg });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const side = Math.floor(Math.random() * 2) + 1;
@@ -256,7 +256,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'gmail':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length <= 1) return rahman.reply(from, `Fitur gmail adalah sebuah trik untuk memanipulasi sebuah email agar disaat menshare email kita tidak perlu kasih tau email aslinya, cukup kasih tau dengan hasil email di fitur ini.\nContoh:\nKirim lah email kita dari hasil generate, maka akan muncul pesan yang kita kirim kan ke email asli tanpa mengirimnya ke email asli, bingung ya? aku juga bingung kek gak ada kerjaan hehe.\n\nCara penggunaannya:\nmisalkan kita mempunyai email rahman@gmail.com, maka ketiklah perintah\nemail rahman\n\n*tidak perlu mengetik @gmail.com*`, id);
@@ -265,13 +265,13 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case '#kode':
-        cekUmum = await blockCek(body.toLowerCase(), { isGroupMsg });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isGroupMsg });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
         rahman.reply(from, `Halo kak, Kode ini untuk fitur trans, kode ini digunakan untuk mentranslate ke tujuan\nMisalkan dari bahasa indonesia ke jepang, jadi gunakan kode *ja*\n\nar = Arabic\nbg = Nulgarian\nzh-CHS = Chinese Simplifed\nzh-CHT = Chinese Traditional\ncs = Czech\nda = Danish\nnl = Dutch\nen = english\net = Estonian\nfr = French\nde = German\nel = Greek\nhi = Hindi\nid = Indonesia\nit = Italian\nja = Japanse\nko = Korean\nms = Malaysia\npt = Portugis\nru = Rusia\nth = Thailand\ntr = Turkish\nvi = Vietnam`, id);
         break
 
       case 'trans':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length <= 2) return rahman.reply(from, `Maaf, format pesan salah.\nSilahkan reply sebuah pesan dengan caption translate <kode_bahasa>\nnContoh:\ntrans Hello word .id`, id);
@@ -312,7 +312,7 @@ module.exports = msgHandler = async (rahman, message) => {
       //     break
 
       case 'spam': //belum
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length <= 3) return rahman.reply(from, `Halo kak fitur bisa digunakan jika si penerima/pengirim pesan sudah membuka chat (Sudah pernah chatingan sebelumnya), jika belom pernah maka fitur ini tidak akan work.\n\nKetik\nspam [jumlah] [nomornya] [pesan kamu]\n\nContoh:\nspam 5 62822xxxx hay sayang`, id)
@@ -361,7 +361,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'nmap':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, `Ketik\nmap linknya`, id);
@@ -370,7 +370,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'wget':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, `Ketik\nwget https://linknya`, id)
@@ -388,14 +388,14 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'ping':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         statusServer(rahman);
         break
 
       case 'pantun':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const fetch = require("node-fetch");
@@ -407,7 +407,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case '.cewe':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         var items = ["ullzang girl", "cewe cantik", "cewe hijab", "hijaber", "hijab cantik", "korean girl"];
@@ -421,7 +421,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case '.cowo':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         var items = ["ullzang boy", "cowo ganteng", "cogan", "korean boy", "jepang boy", "cowo korea"];
@@ -436,14 +436,14 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'hitung':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         try { rahman.reply(from, `*Kalkulator*\n${body.slice(7)} = ${evaluate(body.slice(7)).toString()}\n\n${donasi}`) } catch (err) { rahman.reply(from, `anda salah masukkan symbol\n* : perkalian\n/ : pembagian\n+ : pertambahan\n- : pengurangan\n\nContoh Penggunaan: ͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏\n   hitung 1.2*(2 + 4.5)  //7.8\n   hitung 9/3+2i  //3+2i\n   hitung det([-1, 2; 3, 1])  //-7\n   hitung 12.7 cm to inch  //5\n\n${err}`) }
         break
 
       case 'pow':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         try {
@@ -457,7 +457,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'round':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         try {
@@ -516,7 +516,7 @@ module.exports = msgHandler = async (rahman, message) => {
 
       case 'sticker':
       case 'stiker':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (isMedia && type === 'image') {
@@ -536,7 +536,7 @@ module.exports = msgHandler = async (rahman, message) => {
         rahman.sendLinkWithAutoPreview(from, '', donate)
         break
       case 'tts':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, 'Kirim perintah *tts [id, en, jp, ar] [teks]*, contoh *tts [id] halo semua*')
@@ -570,7 +570,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
       case 'tulis':
       case 'nulis':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, 'Kirim perintah *nulis [teks]*', id)
@@ -654,13 +654,13 @@ module.exports = msgHandler = async (rahman, message) => {
       //     } catch (error) { rahman.reply(from, 'Error gan, ulangi setelah 10 detik', id) }
       //     break
       case 'creator':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         rahman.sendContact(from, '6282237416678@c.us')
         break
       case 'welcome':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isGroupMsg, isGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isGroupMsg, isGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, 'Pilih enable atau disable!', id)
@@ -679,7 +679,7 @@ module.exports = msgHandler = async (rahman, message) => {
       case 'buatquote':
       case 'quotesmaker':
       case 'quotemaker':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         arg = body.split('|');
@@ -692,7 +692,7 @@ module.exports = msgHandler = async (rahman, message) => {
         } else { rahman.reply(from, 'Cara Penggunaan: \nquotemaker |teks|watermark|theme\nContoh :\nquotemaker |ini contoh|bicit|random', id) }
         break
       case 'linkgroup':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isBotGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isBotGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (isGroupMsg) {
@@ -704,7 +704,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'bc':
-        cekUmum = await blockCek(body.toLowerCase(), { isOwner });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isOwner });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         let msg = body.slice(3)
@@ -717,7 +717,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'adminlist':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isGroupMsg });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isGroupMsg });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         let mimin = ''
@@ -731,7 +731,7 @@ module.exports = msgHandler = async (rahman, message) => {
       case 'ownergroub':
       case 'ownergrub':
       case 'ownergroup':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isGroupMsg });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isGroupMsg });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const Owner_ = chat.groupMetadata.owner
@@ -739,7 +739,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'member':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isGroupMsg, isGroupAdmins, isOwner });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isGroupMsg, isGroupAdmins, isOwner });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         try {
@@ -781,8 +781,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'kickall':
-        const isGroupOwner = sender.id === chat.groupMetadata.owner
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isGroupMsg, isGroupAdmins, isGroupOwner, isOwner });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isGroupMsg, isGroupAdmins, isGroupOwner, isOwner });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const allMem = await rahman.getGroupMembers(groupId)
@@ -797,7 +796,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'leaveall':
-        cekUmum = await blockCek(body.toLowerCase(), { isOwner });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isOwner });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const allChats = await rahman.getAllChatIds()
@@ -810,7 +809,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'clearall':
-        cekUmum = await blockCek(body.toLowerCase(), { isOwner });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isOwner });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         const allChatz = await rahman.getAllChats()
@@ -823,7 +822,7 @@ module.exports = msgHandler = async (rahman, message) => {
       case 'add':
         if (args.length === 1) return rahman.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *add* 628xxxxx', id)
 
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isOwner, isGroupMsg, isGroupAdmins, isBotGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isOwner, isGroupMsg, isGroupAdmins, isBotGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         try {
@@ -834,7 +833,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'kick':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isOwner, isGroupMsg, isGroupAdmins, isBotGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isOwner, isGroupMsg, isGroupAdmins, isBotGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (mentionedJidList.length === 0) return rahman.reply(from, 'Untuk menggunakan Perintah ini, kirim perintah *!kick* @tagmember', id)
@@ -846,14 +845,14 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case '.keluar':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isOwner, isGroupMsg, isGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isOwner, isGroupMsg, isGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         await rahman.sendText(from, 'Sayonara').then(() => rahman.leaveGroup(groupId))
         break
 
       case 'admin':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isOwner, isGroupMsg, isGroupAdmins, isBotGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isOwner, isGroupMsg, isGroupAdmins, isBotGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (mentionedJidList.length === 0) return rahman.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!promote* @tagmember', id)
@@ -865,7 +864,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'unadmin':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isGroupMsg, isOwner, isGroupAdmins, isBotGroupAdmins });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isGroupMsg, isOwner, isGroupAdmins, isBotGroupAdmins });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (mentionedJidList.length === 0) return rahman.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!demote* @tagadmin', id)
@@ -877,7 +876,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'join':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (args.length === 1) return rahman.reply(from, 'Kirim perintah *join* linkgroup\n\nEx:\njoin https://chat.whatsapp.com/blablablablablabla', id)
@@ -901,7 +900,7 @@ module.exports = msgHandler = async (rahman, message) => {
         }
         break
       case 'hapus':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked, isOwner, isGroupMsg, isGroupAdmins, });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked, isOwner, isGroupMsg, isGroupAdmins, });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (!quotedMsg) return rahman.reply(from, 'Salah!!, kirim perintah *!delete [tagpesanbot]*', id)
@@ -911,7 +910,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'getses':
-        cekUmum = await blockCek(body.toLowerCase(), { isOwner });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isOwner });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         if (kotor(body.toLowerCase()) === 'ok') return rahman.reply(from, jagaOmongan, id)
@@ -920,7 +919,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'listblock':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         let hih = `list blok nomor\nTotal : ${blockNumber.length}\n`
@@ -932,7 +931,7 @@ module.exports = msgHandler = async (rahman, message) => {
 
       case 'quote':
       case 'quotes':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         var urll = 'https://jagokata.com/kata-bijak/acak.html'
@@ -945,7 +944,7 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'katacinta':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         var urll = 'https://jagokata.com/kata-bijak/kata-cinta.html'
@@ -959,21 +958,21 @@ module.exports = msgHandler = async (rahman, message) => {
 
       case 'menu':
       case 'help':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         rahman.reply(from, help, id)
         break
 
       case 'readme':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         rahman.reply(from, readme, id)
         break
 
       case 'info':
-        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        cekUmum = await blockCek(body.toLowerCase(), { message, isBlocked });
         if (cekUmum) return rahman.reply(from, cekUmum, id);
 
         rahman.sendLinkWithAutoPreview(from, 'Informasi Bot', info)

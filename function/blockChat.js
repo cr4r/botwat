@@ -36,20 +36,31 @@ function kotor(ktanya) {
 
 
 
-const blockCek = async (kata, jenis) => {
+const blockCek = async (kata, jenis, message) => {
   if (await kotor(kata)) return maintan;
   if (await cek()) return jagaOmongan;
 
   if (jenis) {
-    const { isGroubMsg, isBlocked, isGroupAdmins, isOwner, isBotGroupAdmins, isGroupOwner } = jenis;
+    const { isGroubMsg, isBlocked, isGroupAdmins, isOwner, isBotGroupAdmins, isGroupOwner, message } = jenis;
+    const { type, id, from, t, sender, chat, caption, isMedia, mimetype, quotedMsg, quotedMsgObj, mentionedJidList } = message
 
-    if (!isBlocked) return blocked;
-    if (!isOwner) return owner;
-    if (!isGroubMsg) return grub;
-    if (!isGroupAdmins || !isOwner) return grubAdmin;
-    if (!isBotGroupAdmins) return botGrubAdmin;
-    if (!isGroupOwner) return ownerGrub;
-  }
+    if (message) {
+      const isGroupAdminss = isGroupMsg ? groupAdmins.includes(sender.id) : false;
+      const isBotGroupAdminss = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false;
+      const isOwnerr = ownerNumber.includes(sender.id);
+      const isBlockedd = blockNumber.indexOf(sender.id) === -1;
+      const isGroupOwnerr = sender.id === chat.groupMetadata.owner;
+      const isGroupMsgg = message.isGroupMsg;
+
+
+      if (isBlocked && !isBlockedd) return blocked;
+      if (isOwner && !isOwnerr) return owner;
+      if (isGroubMsg && isGroupMsgg) return grub;
+      if (isGroupAdmins && isGroupAdminss || isOwnerr) return grubAdmin;
+      if (isBotGroupAdmins && isBotGroupAdminss) return botGrubAdmin;
+      if (isGroupOwner && isGroupOwnerr) return ownerGrub;
+    }
+  };
 
   return false;
 
