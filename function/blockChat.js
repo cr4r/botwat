@@ -17,45 +17,46 @@ var owner = "Perintah ini hanya untuk Owner bot!";
 var ownerGrub = "Perintah ini hanya bisa di gunakan oleh Owner group";
 
 const cek = async () => {
-    try {
-        var maint = await fs.readFileSync('lib/maintence', 'utf-8');
-        if (maint === 'hidup') { return true } else { return false }
-    } catch (e) {
-        exec(`echo "hidup">lib/maintence`);
-        cek()
-    };
+  try {
+    var maint = await fs.readFileSync('lib/maintence', 'utf-8');
+    if (maint === 'hidup') { return true } else { return false }
+  } catch (e) {
+    exec(`echo "hidup">lib/maintence`);
+    cek()
+  };
 };
 
 function kotor(ktanya) {
-    katakotor = require('../database/kotor.json');
-    try { b = ktanya.split(' ') } catch (err) { b = ktanya };
-    for (i = 0, len = b.length; i < len; i++) {
-        if (katakotor.kata.indexOf(b[i]) > -1) return true
-    }
+  katakotor = require('../database/kotor.json');
+  try { b = ktanya.split(' ') } catch (err) { b = ktanya };
+  for (i = 0, len = b.length; i < len; i++) {
+    if (katakotor.kata.indexOf(b[i]) > -1) return true
+  }
 };
 
 
 
 const blockCek = (kata, jenis) => {
+  if (kotor(kata)) return maintan;
+  if (cek()) return jagaOmongan;
+
+  if (jenis) {
     const { isGroubMsg, isBlocked, isGroupAdmins, isOwner, isBotGroupAdmins, isGroupOwner } = jenis;
 
-    if (kotor(kata)) return maintan;
-    if (cek()) return jagaOmongan;
-    if (jenis) {
-        if (!isBlocked) return blocked;
-        if (!isOwner) return owner;
-        if (!isGroubMsg) return grub;
-        if (!isGroupAdmins || !isOwner) return grubAdmin;
-        if (!isBotGroupAdmins) return botGrubAdmin;
-        if (!isGroupOwner) return ownerGrub;
-    } else {
-        return false;
-    };
+    if (!isBlocked) return blocked;
+    if (!isOwner) return owner;
+    if (!isGroubMsg) return grub;
+    if (!isGroupAdmins || !isOwner) return grubAdmin;
+    if (!isBotGroupAdmins) return botGrubAdmin;
+    if (!isGroupOwner) return ownerGrub;
+  }
+
+  return false;
 
 };
 
 module.exports = {
-    blockCek,
-    cek,
-    kotor
+  blockCek,
+  cek,
+  kotor
 }
