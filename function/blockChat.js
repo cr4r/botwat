@@ -1,3 +1,5 @@
+const { spawn, exec } = require('child_process')
+
 var maintan = `Maaf botnya lagi sedang perbaikan, mohon tunggu sehari atau 2 hari.
 tetapi jika anda mau donasi.
 hubungi ownernya

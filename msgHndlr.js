@@ -500,10 +500,10 @@ module.exports = msgHandler = async (rahman, message) => {
       case 'kak':
       case 'ini bot':
         if (body.split(' ')[0] === 'kak') {
-          return rahman.reply(from, `Ada apa kak\n\n${donasi}`, id)
+          return rahman.reply(from, `Ada apa kak ~ Bot`, id)
         }
         ac = aca(sapa)
-        rahman.reply(from, `${ac}\n\n${donasi}`, id)
+        rahman.reply(from, `${ac} ~ Bot`, id)
         break
 
       case "assalamualaikum":
