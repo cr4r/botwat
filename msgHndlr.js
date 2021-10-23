@@ -972,8 +972,9 @@ module.exports = msgHandler = async (rahman, message) => {
         break
 
       case 'info':
-        if (kotor(body.toLowerCase()) === 'ok') return rahman.reply(from, jagaOmongan, id)
-        if (cek() === 'ok') return rahman.reply(from, maintan, id)
+        cekUmum = await blockCek(body.toLowerCase(), { isBlocked });
+        if (cekUmum) return rahman.reply(from, cekUmum, id);
+
         rahman.sendLinkWithAutoPreview(from, 'Informasi Bot', info)
         break
 
