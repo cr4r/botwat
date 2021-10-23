@@ -1,5 +1,3 @@
-// const { ownerNumber, maintence, welcome } = require('./kontrol/setup')
-var deepai = require('deepai');
 const gmal = require('./lib/gmailGen.js')
 const cheerio = require("cheerio");
 const yts = require("./lib/cmd.js");
