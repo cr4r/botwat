@@ -91,11 +91,14 @@ module.exports = msgHandler = async (rahman, message) => {
     switch (command) {
       case 'akunnord': //work
         cekUmum = await blockCek(body.toLowerCase());
-        if (cekUmum) return rahman.reply(from, cekUmum, id);
-        axios.get('https://raw.githubusercontent.com/cr4r/ceknord/main/akun').then(resp => {
-          var dataanya = resp.data.split('\n');
+        if (cekUmum) {
+          rahman.reply(from, cekUmum, id)
+        } else {
+          var hasil = await axios.get('https://raw.githubusercontent.com/cr4r/ceknord/main/akun')
+          var dataanya = hasil.data.split('\n');
+
           rahman.reply(from, dataanya[rndm(dataanya.length)], id);
-        });
+        };
         break
 
       // case 'save':
