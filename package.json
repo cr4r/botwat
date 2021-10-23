@@ -7,8 +7,9 @@
         "lib": "lib"
     },
     "dependencies": {
-        "@open-wa/wa-automate": "^3.12.0",
-        "@open-wa/wa-decrypt": "^3.1.0",
+        "@open-wa/wa-automate": "^4.23.3",
+        "@open-wa/wa-decrypt": "^4.3.1",
+        "axios": "^0.23.0",
         "mathjs": "^9.3.2"
     },
     "scripts": {
